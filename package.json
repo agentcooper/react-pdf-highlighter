@@ -7,14 +7,13 @@
     "build": "nwb build-react-component && npm run copy-files",
     "copy-styles": "cp -r src/style lib/",
     "copy-flow": "flow-copy-source src lib",
-    "copy-files":
-      "npm run copy-package-json && npm run copy-styles && npm run copy-flow",
+    "copy-files": "npm run copy-styles && npm run copy-flow",
     "clean": "nwb clean-module && npm clean-demo",
     "start": "nwb serve-react-demo",
     "test": "npm run flow",
     "flow": "flow",
     "precommit": "npm run flow",
-    "publish": "npm run build && gh-pages --dist ./lib --branch lib",
+    "publish": "npm run build && gh-pages --dist ./demo/dist --branch gh-pages",
     "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'"
   },
   "dependencies": {

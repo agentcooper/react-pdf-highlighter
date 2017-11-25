@@ -20,6 +20,12 @@ function Sidebar({ highlights, resetHighlights }: Props) {
       <div className="description" style={{ padding: "1rem" }}>
         <h2 style={{ marginBottom: "1rem" }}>react-pdf-annotator</h2>
 
+        <p style={{ fontSize: "0.7rem" }}>
+          <a href="https://github.com/agentcooper/react-pdf-annotator">
+            Open in GitHub
+          </a>
+        </p>
+
         <p>
           <small>
             To create area highlight hold ⌥ Option key (Alt), then click and
