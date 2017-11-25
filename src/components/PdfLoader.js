@@ -25,7 +25,6 @@ class PdfLoader extends Component<Props, State> {
     const { url } = this.props;
 
     PDFJS.getDocument(url).then(pdfDocument => {
-      console.log("Got!", pdfDocument);
       this.setState({
         pdfDocument: pdfDocument
       });

@@ -136,12 +136,7 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
       linkService: this.linkService
     });
 
-    this.linkService.setViewer(this.viewer);
-
-    console.log(this.viewer);
-
     this.viewer.setDocument(pdfDocument);
-
     this.linkService.setDocument(pdfDocument);
 
     // debug
