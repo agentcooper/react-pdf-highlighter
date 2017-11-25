@@ -1,6 +1,8 @@
 ## react-pdf-annotator
 
-⚠️ Work in progress
+```
+npm install react-pdf-annotator
+```
 
 `react-pdf-annotator` provides annotation experience for PDF documents on web
 built on top of PDF.js. Text and rectangular highlights are supported. Highlight
