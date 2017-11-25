@@ -36,6 +36,24 @@
   },
   "author": "Artem Tyurin <artem.tyurin@gmail.com>",
   "license": "MIT",
-  "keywords": ["pdf", "highlight", "annotator", "react-component"],
-  "files": ["lib"]
+  "keywords": [
+    "pdf",
+    "highlight",
+    "annotator",
+    "react-component"
+  ],
+  "files": [
+    "lib"
+  ],
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agentcooper/react-pdf-annotator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/agentcooper/react-pdf-annotator/issues"
+  },
+  "homepage": "https://github.com/agentcooper/react-pdf-annotator#readme"
 }
