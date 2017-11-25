@@ -93,7 +93,7 @@ class App extends Component<Props, State> {
     console.log("Saving highlight", highlight);
 
     this.setState({
-      highlights: [...highlights, { ...highlight, id: getNextId() }]
+      highlights: [{ ...highlight, id: getNextId() }, ...highlights]
     });
   }
 
