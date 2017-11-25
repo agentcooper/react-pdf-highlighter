@@ -1,6 +1,6 @@
 {
   "name": "react-pdf-annotator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Set of React components for PDF annotation",
   "main": "lib/index.js",
   "scripts": {
@@ -38,8 +38,15 @@
   },
   "author": "Artem Tyurin <artem.tyurin@gmail.com>",
   "license": "MIT",
-  "keywords": ["pdf", "highlight", "annotator", "react-component"],
-  "files": ["lib"],
+  "keywords": [
+    "pdf",
+    "highlight",
+    "annotator",
+    "react-component"
+  ],
+  "files": [
+    "lib"
+  ],
   "directories": {
     "lib": "lib"
   },
