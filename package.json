@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "pdfjs-dist": "^2.0.159",
-    "react-rnd": "4.2.0"
+    "react-rnd": "^7.1.5"
   },
   "peerDependencies": {
     "react": ">=0.14",

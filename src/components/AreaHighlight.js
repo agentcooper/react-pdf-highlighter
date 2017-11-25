@@ -2,6 +2,7 @@
 
 import React, { Component } from "react";
 
+// $FlowFixMe
 import Rnd from "react-rnd";
 
 import "../style/AreaHighlight.css";
@@ -20,24 +21,26 @@ class AreaHighlight extends Component<Props> {
     return (
       <Rnd
         className="AreaHighlight"
-        onDragStop={(_, ui: { position: T_LTWH }) => {
+        onDragStop={(_, data) => {
           const boundingRect = {
             ...highlight.position.boundingRect,
-            ...ui.position
+            top: data.y,
+            left: data.x
           };
 
           onChange(boundingRect);
         }}
-        onResizeStop={(direction, styleSize, clientSize, delta, position) => {
+        onResizeStop={(_, direction, ref, delta, position) => {
           const boundingRect = {
-            ...styleSize,
             top: position.y,
-            left: position.x
+            left: position.x,
+            width: ref.offsetWidth,
+            height: ref.offsetHeight
           };
 
           onChange(boundingRect);
         }}
-        initial={{
+        default={{
           x: highlight.position.boundingRect.left,
           y: highlight.position.boundingRect.top,
           width: highlight.position.boundingRect.width,
