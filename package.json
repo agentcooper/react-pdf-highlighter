@@ -1,0 +1,42 @@
+{
+  "name": "react-pdf-annotator",
+  "version": "0.0.1",
+  "description": "Set of React components for PDF annotation",
+  "main": "index.js",
+  "scripts": {
+    "build": "nwb build-react-component && npm run copy-files",
+    "copy-styles": "cp -r src/style lib/",
+    "copy-flow": "flow-copy-source src lib",
+    "copy-files":
+      "npm run copy-package-json && npm run copy-styles && npm run copy-flow",
+    "clean": "nwb clean-module && npm clean-demo",
+    "start": "nwb serve-react-demo",
+    "test": "npm run flow",
+    "flow": "flow",
+    "precommit": "npm run flow",
+    "publish": "npm run build && gh-pages --dist ./lib --branch lib",
+    "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'"
+  },
+  "dependencies": {
+    "pdfjs-dist": "^2.0.159",
+    "react-rnd": "4.2.0"
+  },
+  "peerDependencies": {
+    "react": ">=0.14",
+    "react-dom": ">=0.14"
+  },
+  "devDependencies": {
+    "flow-bin": "0.59.0",
+    "flow-copy-source": "^1.1.0",
+    "gh-pages": "0.11.0",
+    "husky": "0.11.9",
+    "nwb": "^0.19.2",
+    "prettier": "^1.8.2",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "url-search-params": "0.6.1"
+  },
+  "author": "Artem Tyurin <artem.tyurin@gmail.com>",
+  "license": "MIT",
+  "keywords": ["pdf", "highlight", "annotator", "react-component"]
+}

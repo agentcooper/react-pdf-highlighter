@@ -1,0 +1,17 @@
+[version]
+0.59.0
+
+[ignore]
+<PROJECT_ROOT>/node_modules/nwb/*
+<PROJECT_ROOT>/node_modules/babel-plugin-transform-react-remove-prop-types/
+<PROJECT_ROOT>/lib/*
+
+[include]
+
+[libs]
+
+[lints]
+all=warn
+
+[options]
+emoji=true
