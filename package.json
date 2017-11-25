@@ -14,7 +14,7 @@
     "flow": "flow",
     "precommit": "npm run flow",
     "deploy": "npm run build && gh-pages --dist ./demo/dist --branch gh-pages",
-    "publish": "npm run build && npm run copy-files && npm publish",
+    "prepublish": "npm run build && npm run copy-files",
     "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'"
   },
   "dependencies": {
@@ -38,15 +38,8 @@
   },
   "author": "Artem Tyurin <artem.tyurin@gmail.com>",
   "license": "MIT",
-  "keywords": [
-    "pdf",
-    "highlight",
-    "annotator",
-    "react-component"
-  ],
-  "files": [
-    "lib"
-  ],
+  "keywords": ["pdf", "highlight", "annotator", "react-component"],
+  "files": ["lib"],
   "directories": {
     "lib": "lib"
   },
