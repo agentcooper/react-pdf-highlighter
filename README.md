@@ -5,6 +5,10 @@ built on top of PDF.js. Text and rectangular highlights are supported. Highlight
 data format is independent of the viewport, making it suitable for saving on the
 server.
 
+### Demo
+
+http://agentcooper.github.io/react-pdf-annotator/
+
 ### Installation
 
 `npm install react-pdf-annotator`
@@ -24,7 +28,7 @@ type signatures.
 [`react-pdfjs`](https://github.com/erikras/react-pdfjs) only provide React
 wrappers for PDF.js and do not have built-in annotation functionality.
 
-[`pdf-annotate.js/`](https://github.com/instructure/pdf-annotate.js/) does not
+[`pdfjs-annotate`](https://github.com/instructure/pdf-annotate.js/) does not
 provide text highlights out of the box.
 
 PDF.js provides only viewer:
