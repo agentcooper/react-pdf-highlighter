@@ -1,0 +1,24 @@
+/* overrides for pdf_viewer.css from PDF.JS web viewer */
+
+.textLayer {
+  z-index: 2;
+  opacity: 1;
+}
+
+.annotationLayer {
+  position: absolute;
+  top: 0;
+
+  z-index: 3;
+}
+
+html
+  body
+  .textLayer
+  > div:not(.PdfAnnotator__highlight-layer):not(.Highlight):not(.Highlight-emoji) {
+  opacity: 0.5;
+}
+
+.textLayer ::selection {
+  background: rgba(252, 232, 151, 1);
+}

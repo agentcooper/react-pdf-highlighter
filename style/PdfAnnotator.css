@@ -1,0 +1,22 @@
+.PdfAnnotator {
+  position: absolute;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.PdfAnnotator__highlight-layer {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+}
+
+.PdfAnnotator__tip-container {
+  z-index: 6;
+  position: absolute;
+}
+
+.PdfAnnotator--disable-selection {
+  user-select: none;
+  pointer-events: none;
+}
