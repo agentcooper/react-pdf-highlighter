@@ -1,6 +1,6 @@
 {
   "name": "react-pdf-annotator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Set of React components for PDF annotation",
   "main": "lib/index.js",
   "scripts": {
