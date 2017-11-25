@@ -12,7 +12,7 @@
     "flow": "flow",
     "precommit": "npm run flow",
     "deploy": "npm run build && gh-pages --dist ./demo/dist --branch gh-pages",
-    "publish": "npm run build && npm run copy-flow && npm pack",
+    "publish": "npm run build && npm run copy-flow && npm publish",
     "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'"
   },
   "dependencies": {
