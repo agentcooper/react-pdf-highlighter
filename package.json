@@ -2,18 +2,17 @@
   "name": "react-pdf-annotator",
   "version": "0.0.1",
   "description": "Set of React components for PDF annotation",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "build": "nwb build-react-component && npm run copy-files",
-    "copy-styles": "cp -r src/style lib/",
+    "build": "nwb build-react-component",
     "copy-flow": "flow-copy-source src lib",
-    "copy-files": "npm run copy-styles && npm run copy-flow",
     "clean": "nwb clean-module && npm clean-demo",
     "start": "nwb serve-react-demo",
     "test": "npm run flow",
     "flow": "flow",
     "precommit": "npm run flow",
-    "publish": "npm run build && gh-pages --dist ./demo/dist --branch gh-pages",
+    "deploy": "npm run build && gh-pages --dist ./demo/dist --branch gh-pages",
+    "publish": "npm run build && npm run copy-flow && npm pack",
     "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'"
   },
   "dependencies": {
@@ -37,5 +36,6 @@
   },
   "author": "Artem Tyurin <artem.tyurin@gmail.com>",
   "license": "MIT",
-  "keywords": ["pdf", "highlight", "annotator", "react-component"]
+  "keywords": ["pdf", "highlight", "annotator", "react-component"],
+  "files": ["lib"]
 }
