@@ -7,7 +7,7 @@ server.
 
 ### Demo
 
-http://agentcooper.github.io/react-pdf-annotator/
+https://agentcooper.github.io/react-pdf-annotator/
 
 ### Installation
 
