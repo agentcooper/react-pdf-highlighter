@@ -18,7 +18,7 @@
     "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'"
   },
   "dependencies": {
-    "pdfjs-dist": "^2.0.159",
+    "pdfjs-dist": "2.0.159",
     "react-rnd": "^7.1.5"
   },
   "peerDependencies": {
@@ -38,8 +38,15 @@
   },
   "author": "Artem Tyurin <artem.tyurin@gmail.com>",
   "license": "MIT",
-  "keywords": ["pdf", "highlight", "annotator", "react-component"],
-  "files": ["lib"],
+  "keywords": [
+    "pdf",
+    "highlight",
+    "annotator",
+    "react-component"
+  ],
+  "files": [
+    "lib"
+  ],
   "directories": {
     "lib": "lib"
   },
