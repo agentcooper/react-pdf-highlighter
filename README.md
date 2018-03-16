@@ -43,6 +43,11 @@ See also:
 * https://github.com/instructure/pdf-annotate.js/
 * https://blogs.dropbox.com/tech/2016/11/annotations-on-document-previews/
 
+### FAQ
+
+##### Can I get a new PDF with the highlights embedded into the document?
+No, but [pdf-annotation-service](https://github.com/agentcooper/pdf-annotation-service) might be helpful for you.
+
 ### Compatibility
 
 Works in Google Chrome, Safari 10+, Firefox 52+. Not tested in Internet
