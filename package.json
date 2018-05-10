@@ -18,7 +18,7 @@
     "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'"
   },
   "dependencies": {
-    "pdfjs-dist": "2.0.159",
+    "pdfjs-dist": "2.0.489",
     "react-rnd": "^7.1.5"
   },
   "peerDependencies": {

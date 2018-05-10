@@ -1,10 +1,7 @@
 // @flow
-
 import React, { Component } from "react";
 import ReactDom from "react-dom";
-
-import { PDFJS } from "pdfjs-dist";
-require("pdfjs-dist/web/pdf_viewer");
+import { PDFViewer, PDFLinkService } from "pdfjs-dist/web/pdf_viewer";
 
 import "pdfjs-dist/web/pdf_viewer.css";
 import "../style/pdf_viewer.css";
@@ -20,8 +17,6 @@ import {
   getPageFromElement,
   findOrCreateContainerLayer
 } from "../lib/pdfjs-dom";
-
-import TextLayerBuilder_bindMouse from "../PDFJS/TextLayerBuilder_bindMouse";
 
 import TipContainer from "./TipContainer";
 import MouseSelection from "./MouseSelection";
@@ -39,11 +34,6 @@ import type {
   T_PDFJS_Document,
   T_PDFJS_LinkService
 } from "../types";
-
-// @FIXME: hack
-PDFJS.TextLayerBuilder.prototype._bindMouse = TextLayerBuilder_bindMouse;
-
-PDFJS.disableWorker = true;
 
 type T_ViewportHighlight<T_HT> = { position: T_Position } & T_HT;
 
@@ -91,6 +81,12 @@ type Props<T_HT> = {
 const CLICK_TIMEOUT = 300;
 const EMPTY_ID = "empty-id";
 
+const disableEvent = (event: Event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  return false;
+};
+
 let clickTimeoutId = 0;
 
 class PdfAnnotator<T_HT: T_Highlight> extends Component<
@@ -127,9 +123,9 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
   componentDidMount() {
     const { pdfDocument } = this.props;
 
-    this.linkService = new PDFJS.PDFLinkService();
+    this.linkService = new PDFLinkService();
 
-    this.viewer = new PDFJS.PDFViewer({
+    this.viewer = new PDFViewer({
       container: this.containerNode,
       enhanceTextSelection: true,
       removePageBorders: true,
@@ -141,6 +137,8 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
 
     // debug
     window.PdfViewer = this;
+
+    window.oncontextmenu = disableEvent;
 
     document.addEventListener("selectionchange", this.onSelectionChange);
     document.addEventListener("keydown", this.handleKeyDown);
@@ -426,6 +424,8 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
       isCollapsed: false,
       range
     });
+
+    this.afterSelection();
   };
 
   onScroll = () => {
@@ -467,7 +467,7 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
     }
   };
 
-  onMouseUp = () => {
+  afterSelection = () => {
     clearTimeout(clickTimeoutId);
     this.setState({ isMouseDown: false });
 
@@ -531,7 +531,6 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
     return (
       <div
         ref={node => (this.containerNode = node)}
-        onMouseUp={() => setTimeout(this.onMouseUp, 0)}
         className="PdfAnnotator"
       >
         <div className="pdfViewer" />
