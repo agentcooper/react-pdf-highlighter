@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from "react";
 import ReactDom from "react-dom";
+import _ from "lodash/fp";
 import { PDFViewer, PDFLinkService } from "pdfjs-dist/web/pdf_viewer";
 
 import "pdfjs-dist/web/pdf_viewer.css";
@@ -29,7 +30,6 @@ import type {
   T_Highlight,
   T_Scaled,
   T_LTWH,
-  T_PDFJS,
   T_PDFJS_Viewer,
   T_PDFJS_Document,
   T_PDFJS_LinkService
@@ -86,6 +86,8 @@ const disableEvent = (event: Event) => {
   event.stopPropagation();
   return false;
 };
+
+const debounced = _.debounce(500);
 
 let clickTimeoutId = 0;
 
@@ -425,7 +427,7 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
       range
     });
 
-    this.afterSelection();
+    debounced(this.onMouseUp);
   };
 
   onScroll = () => {
@@ -467,7 +469,7 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
     }
   };
 
-  afterSelection = () => {
+  onMouseUp = () => {
     clearTimeout(clickTimeoutId);
     this.setState({ isMouseDown: false });
 
@@ -531,6 +533,7 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
     return (
       <div
         ref={node => (this.containerNode = node)}
+        onMouseUp={this.onMouseUp}
         className="PdfAnnotator"
       >
         <div className="pdfViewer" />

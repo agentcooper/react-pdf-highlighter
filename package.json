@@ -18,6 +18,7 @@
     "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'"
   },
   "dependencies": {
+    "lodash": "^4.17.10",
     "pdfjs-dist": "2.0.489",
     "react-rnd": "^7.1.5"
   },
