@@ -20,6 +20,7 @@
   "dependencies": {
     "lodash": "^4.17.10",
     "pdfjs-dist": "2.0.489",
+    "react-pointable": "^1.1.1",
     "react-rnd": "^7.1.5"
   },
   "peerDependencies": {
