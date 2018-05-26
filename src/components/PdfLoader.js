@@ -4,7 +4,7 @@ import React, { Component } from "react";
 
 import type { T_PDFJS, T_PDFJS_Document } from "../types";
 
-import { PDFJS } from "pdfjs-dist";
+import pdfjs from 'pdfjs-dist/webpack';
 
 type Props = {
   url: string,
@@ -24,7 +24,7 @@ class PdfLoader extends Component<Props, State> {
   componentDidMount() {
     const { url } = this.props;
 
-    PDFJS.getDocument(url).then(pdfDocument => {
+    pdfjs.getDocument(url).then(pdfDocument => {
       this.setState({
         pdfDocument: pdfDocument
       });
