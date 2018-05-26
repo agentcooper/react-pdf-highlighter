@@ -46,11 +46,17 @@ class MouseMonitor extends Component<Props> {
 
   render() {
     // eslint-disable-next-line
-    const { onMoveAway, paddingX, paddingY, ...restProps } = this.props;
+    const {
+      onMoveAway,
+      paddingX,
+      paddingY,
+      children,
+      ...restProps
+    } = this.props;
 
     return (
       <div ref={node => (this.container = node)}>
-        {React.cloneElement(this.props.children, restProps)}
+        {React.cloneElement(children, restProps)}
       </div>
     );
   }

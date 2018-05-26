@@ -85,6 +85,7 @@ const disableEvent = (event: Event) => {
   event.stopPropagation();
   return false;
 };
+let clickTimeoutId: TimeoutID;
 
 class PdfAnnotator<T_HT: T_Highlight> extends Component<
   Props<T_HT>,
@@ -514,75 +515,70 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
     const { onSelectionFinished, enableAreaSelection } = this.props;
 
     return (
-      <Pointable
-        onPointerDown={this.onMouseDown}
-      >
-        <div
-          ref={node => (this.containerNode = node)}
-          className="PdfAnnotator"
-        >
+      <Pointable onPointerDown={this.onMouseDown}>
+        <div ref={node => (this.containerNode = node)} className="PdfAnnotator">
           <div className="pdfViewer" />
           {typeof enableAreaSelection === "function" ? (
-              <MouseSelection
-                onDragStart={() => this.toggleTextSelection(true)}
-                onDragEnd={() => this.toggleTextSelection(false)}
-                onChange={isVisible =>
-              this.setState({ isAreaSelectionInProgress: isVisible })
-            }
-                shouldStart={event =>
-              enableAreaSelection(event) &&
-              event.target instanceof HTMLElement &&
-              Boolean(event.target.closest(".page"))
-            }
-                onSelection={(startTarget, boundingRect, resetSelection) => {
-              const page = getPageFromElement(startTarget);
-
-              if (!page) {
-                return;
+            <MouseSelection
+              onDragStart={() => this.toggleTextSelection(true)}
+              onDragEnd={() => this.toggleTextSelection(false)}
+              onChange={isVisible =>
+                this.setState({ isAreaSelectionInProgress: isVisible })
               }
+              shouldStart={event =>
+                enableAreaSelection(event) &&
+                event.target instanceof HTMLElement &&
+                Boolean(event.target.closest(".page"))
+              }
+              onSelection={(startTarget, boundingRect, resetSelection) => {
+                const page = getPageFromElement(startTarget);
 
-              const pageBoundingRect = {
-                ...boundingRect,
-                top: boundingRect.top - page.node.offsetTop,
-                left: boundingRect.left - page.node.offsetLeft
-              };
+                if (!page) {
+                  return;
+                }
 
-              const viewportPosition = {
-                boundingRect: pageBoundingRect,
-                rects: [],
-                pageNumber: page.number
-              };
+                const pageBoundingRect = {
+                  ...boundingRect,
+                  top: boundingRect.top - page.node.offsetTop,
+                  left: boundingRect.left - page.node.offsetLeft
+                };
 
-              const scaledPosition = this.viewportPositionToScaled(
-                viewportPosition
-              );
+                const viewportPosition = {
+                  boundingRect: pageBoundingRect,
+                  rects: [],
+                  pageNumber: page.number
+                };
 
-              const image = this.screenshot(pageBoundingRect, page.number);
+                const scaledPosition = this.viewportPositionToScaled(
+                  viewportPosition
+                );
 
-              this.renderTipAtPosition(
-                viewportPosition,
-                onSelectionFinished(
-                  scaledPosition,
-                  { image },
-                  () => this.hideTipAndSelection(),
-                  () =>
-                    this.setState(
-                      {
-                        ghostHighlight: {
-                          position: scaledPosition,
-                          content: { image }
+                const image = this.screenshot(pageBoundingRect, page.number);
+
+                this.renderTipAtPosition(
+                  viewportPosition,
+                  onSelectionFinished(
+                    scaledPosition,
+                    { image },
+                    () => this.hideTipAndSelection(),
+                    () =>
+                      this.setState(
+                        {
+                          ghostHighlight: {
+                            position: scaledPosition,
+                            content: { image }
+                          }
+                        },
+                        () => {
+                          resetSelection();
+                          this.renderHighlights();
                         }
-                      },
-                      () => {
-                        resetSelection();
-                        this.renderHighlights();
-                      }
-                    )
-                )
-              );
-            }}
-              />
-            ) : null}
+                      )
+                  )
+                );
+              }}
+            />
+          ) : null}
         </div>
       </Pointable>
     );

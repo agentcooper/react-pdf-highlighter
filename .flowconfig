@@ -1,5 +1,5 @@
 [version]
-0.59.0
+0.73.0
 
 [ignore]
 <PROJECT_ROOT>/node_modules/nwb/*
