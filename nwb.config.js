@@ -1,7 +1,7 @@
 module.exports = {
-  type: 'react-component',
+  type: "react-component",
   babel: {
-    cherryPick: 'lodash',
+    cherryPick: "lodash"
   },
   npm: {
     esModules: false,
