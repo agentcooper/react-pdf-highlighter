@@ -1,5 +1,5 @@
 {
-  "name": "react-pdf-annotator",
+  "name": "react-pdf-highlighter",
   "version": "1.0.0",
   "description": "Set of React components for PDF annotation",
   "main": "lib/index.js",
@@ -54,10 +54,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/agentcooper/react-pdf-annotator.git"
+    "url": "git+https://github.com/agentcooper/react-pdf-highlighter.git"
   },
   "bugs": {
-    "url": "https://github.com/agentcooper/react-pdf-annotator/issues"
+    "url": "https://github.com/agentcooper/react-pdf-highlighter/issues"
   },
-  "homepage": "https://github.com/agentcooper/react-pdf-annotator#readme"
+  "homepage": "https://github.com/agentcooper/react-pdf-highlighter#readme"
 }

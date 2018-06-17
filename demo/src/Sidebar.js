@@ -18,10 +18,10 @@ function Sidebar({ highlights, resetHighlights }: Props) {
   return (
     <div className="sidebar" style={{ width: "25vw" }}>
       <div className="description" style={{ padding: "1rem" }}>
-        <h2 style={{ marginBottom: "1rem" }}>react-pdf-annotator</h2>
+        <h2 style={{ marginBottom: "1rem" }}>react-pdf-highlighter</h2>
 
         <p style={{ fontSize: "0.7rem" }}>
-          <a href="https://github.com/agentcooper/react-pdf-annotator">
+          <a href="https://github.com/agentcooper/react-pdf-highlighter">
             Open in GitHub
           </a>
         </p>

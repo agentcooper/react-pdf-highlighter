@@ -1,22 +1,22 @@
-## react-pdf-annotator
+## react-pdf-highlighter
 
-`react-pdf-annotator` provides annotation experience for PDF documents on web
+`react-pdf-highlighter` provides annotation experience for PDF documents on web
 built on top of PDF.js. Text and rectangular highlights are supported. Highlight
 data format is independent of the viewport, making it suitable for saving on the
 server.
 
 ### Demo
 
-https://agentcooper.github.io/react-pdf-annotator/
+https://agentcooper.github.io/react-pdf-highlighter/
 
 ### Installation
 
-`npm install react-pdf-annotator`
+`npm install react-pdf-highlighter`
 
 ### Example
 
 See
-[`demo/src/App.js`](https://github.com/agentcooper/react-pdf-annotator/blob/master/demo/src/App.js)
+[`demo/src/App.js`](https://github.com/agentcooper/react-pdf-highlighter/blob/master/demo/src/App.js)
 for React component API example.
 
 While docs are in progress, feel free to check the source annotated with Flow
