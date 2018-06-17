@@ -46,7 +46,12 @@ See also:
 ### FAQ
 
 ##### Can I get a new PDF with the highlights embedded into the document?
+
 No, but [pdf-annotation-service](https://github.com/agentcooper/pdf-annotation-service) might be helpful for you.
+
+##### Wasn't this named react-pdf-annotator at some point?
+
+Yes, but people from https://www.pdfannotator.com/ asked me to rename, since [they have a trademark for PDF Annotator](https://www.pdfannotator.com/en/help/infodisclaimer).
 
 ### Compatibility
 
