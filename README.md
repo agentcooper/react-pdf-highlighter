@@ -53,6 +53,10 @@ No, but [pdf-annotation-service](https://github.com/agentcooper/pdf-annotation-s
 
 Yes, but people from https://www.pdfannotator.com/ asked me to rename, since [they have a trademark for PDF Annotator](https://www.pdfannotator.com/en/help/infodisclaimer).
 
+##### I'm trying the demo with my PDF and it is not loading!
+
+Please check the [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) on your url. It is required for the cross-domain request.
+
 ### Compatibility
 
 Works in Google Chrome, Safari 10+, Firefox 52+. Not tested in Internet
