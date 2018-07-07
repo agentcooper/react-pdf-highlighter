@@ -86,7 +86,7 @@ class TipContainer extends Component<Props, State> {
 
     return (
       <div
-        className="PdfAnnotator__tip-container"
+        className="PdfHighlighter__tip-container"
         style={{
           visibility: isStyleCalculationInProgress ? "hidden" : "visible",
           top,

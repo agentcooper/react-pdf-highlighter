@@ -8,7 +8,7 @@ import { PDFViewer, PDFLinkService } from "pdfjs-dist/web/pdf_viewer";
 import "pdfjs-dist/web/pdf_viewer.css";
 import "../style/pdf_viewer.css";
 
-import "../style/PdfAnnotator.css";
+import "../style/PdfHighlighter.css";
 
 import getBoundingRect from "../lib/get-bounding-rect";
 import getClientRects from "../lib/get-client-rects";
@@ -87,7 +87,7 @@ const disableEvent = (event: Event) => {
 };
 let clickTimeoutId: TimeoutID;
 
-class PdfAnnotator<T_HT: T_Highlight> extends Component<
+class PdfHighlighter<T_HT: T_Highlight> extends Component<
   Props<T_HT>,
   State<T_HT>
 > {
@@ -176,7 +176,7 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
 
     return findOrCreateContainerLayer(
       textLayer.textLayerDiv,
-      "PdfAnnotator__highlight-layer"
+      "PdfHighlighter__highlight-layer"
     );
   }
 
@@ -314,7 +314,7 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
   hideTipAndSelection = () => {
     const tipNode = findOrCreateContainerLayer(
       this.viewer.viewer,
-      "PdfAnnotator__tip-layer"
+      "PdfHighlighter__tip-layer"
     );
 
     ReactDom.unmountComponentAtNode(tipNode);
@@ -335,7 +335,7 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
 
     const tipNode = findOrCreateContainerLayer(
       this.viewer.viewer,
-      "PdfAnnotator__tip-layer"
+      "PdfHighlighter__tip-layer"
     );
 
     ReactDom.render(
@@ -444,7 +444,7 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
       return;
     }
 
-    if (event.target.closest(".PdfAnnotator__tip-container")) {
+    if (event.target.closest(".PdfHighlighter__tip-container")) {
       return;
     }
 
@@ -506,7 +506,7 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
 
   toggleTextSelection(flag: boolean) {
     this.viewer.viewer.classList.toggle(
-      "PdfAnnotator--disable-selection",
+      "PdfHighlighter--disable-selection",
       flag
     );
   }
@@ -516,7 +516,10 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
 
     return (
       <Pointable onPointerDown={this.onMouseDown}>
-        <div ref={node => (this.containerNode = node)} className="PdfAnnotator">
+        <div
+          ref={node => (this.containerNode = node)}
+          className="PdfHighlighter"
+        >
           <div className="pdfViewer" />
           {typeof enableAreaSelection === "function" ? (
             <MouseSelection
@@ -585,4 +588,4 @@ class PdfAnnotator<T_HT: T_Highlight> extends Component<
   }
 }
 
-export default PdfAnnotator;
+export default PdfHighlighter;

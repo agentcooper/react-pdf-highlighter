@@ -15,7 +15,7 @@
 html
   body
   .textLayer
-  > div:not(.PdfAnnotator__highlight-layer):not(.Highlight):not(.Highlight-emoji) {
+  > div:not(.PdfHighlighter__highlight-layer):not(.Highlight):not(.Highlight-emoji) {
   opacity: 0.5;
 }
 

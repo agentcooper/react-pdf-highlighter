@@ -6,7 +6,7 @@ import URLSearchParams from "url-search-params";
 
 import {
   PdfLoader,
-  PdfAnnotator,
+  PdfHighlighter,
   Tip,
   Highlight,
   Popup,
@@ -132,7 +132,7 @@ class App extends Component<Props, State> {
         >
           <PdfLoader url={url} beforeLoad={<Spinner />}>
             {pdfDocument => (
-              <PdfAnnotator
+              <PdfHighlighter
                 pdfDocument={pdfDocument}
                 enableAreaSelection={event => event.altKey}
                 onScrollChange={resetHash}
