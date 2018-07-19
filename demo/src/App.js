@@ -141,7 +141,6 @@ class App extends Component<Props, State> {
 
                   this.scrollToHighlightFromHash();
                 }}
-                url={url}
                 onSelectionFinished={(
                   position,
                   content,
