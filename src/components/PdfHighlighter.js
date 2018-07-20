@@ -139,8 +139,6 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
     // debug
     window.PdfViewer = this;
 
-    window.oncontextmenu = disableEvent;
-
     document.addEventListener("selectionchange", this.onSelectionChange);
     document.addEventListener("keydown", this.handleKeyDown);
 
@@ -519,6 +517,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
         <div
           ref={node => (this.containerNode = node)}
           className="PdfHighlighter"
+          onContextMenu={(e) => e.preventDefault()}
         >
           <div className="pdfViewer" />
           {typeof enableAreaSelection === "function" ? (
