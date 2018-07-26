@@ -54,7 +54,7 @@ export const scaledToViewport = (
     return pdfToViewport(scaled, viewport);
   }
 
-  if (!scaled.x1) {
+  if (scaled.x1 === undefined) {
     throw new Error("You are using old position format, please update");
   }
 
