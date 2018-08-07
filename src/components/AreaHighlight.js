@@ -40,9 +40,11 @@ class AreaHighlight extends Component<Props> {
 
           onChange(boundingRect);
         }}
-        default={{
+        position={{
           x: highlight.position.boundingRect.left,
-          y: highlight.position.boundingRect.top,
+          y: highlight.position.boundingRect.top
+        }}
+        size={{
           width: highlight.position.boundingRect.width,
           height: highlight.position.boundingRect.height
         }}
