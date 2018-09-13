@@ -135,6 +135,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
 
     this.viewer.setDocument(pdfDocument);
     this.linkService.setDocument(pdfDocument);
+    this.linkService.setViewer(this.viewer);
 
     // debug
     window.PdfViewer = this;
