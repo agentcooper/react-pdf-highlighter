@@ -29,3 +29,13 @@ html
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .textLayer {opacity: 0.5;}
 }
+
+/* Internet Explorer support method */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .textLayer {opacity: 0.5 }
+}
+
+/* Microsoft Edge Browser 12+ (All) - @supports method */
+@supports (-ms-ime-align:auto) {
+  .textLayer {opacity: 0.5 }
+}
