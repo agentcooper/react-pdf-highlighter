@@ -25,3 +25,7 @@ html
   background: rgba(252, 232, 151, 1);
   mix-blend-mode: multiply;
 }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .textLayer {opacity: 0.5;}
+}
