@@ -10,7 +10,7 @@
 }
 
 .Highlight__parts {
-  opacity: 0.4;
+  opacity: 1;
 }
 
 .Highlight__part {
@@ -32,5 +32,5 @@
 }
 
 .Highlight--scrolledTo .Highlight__part {
-  background: #c0392b;
+  background: #ff4141;
 }
