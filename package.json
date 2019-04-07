@@ -1,6 +1,6 @@
 {
   "name": "react-pdf-highlighter",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Set of React components for PDF annotation",
   "main": "lib/index.js",
   "scripts": {
