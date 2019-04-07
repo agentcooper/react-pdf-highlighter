@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import ReactDom from "react-dom";
 import Pointable from "react-pointable";
 import _ from "lodash/fp";
@@ -80,14 +80,7 @@ type Props<T_HT> = {
 
 const EMPTY_ID = "empty-id";
 
-const disableEvent = (event: Event) => {
-  event.preventDefault();
-  event.stopPropagation();
-  return false;
-};
-let clickTimeoutId: TimeoutID;
-
-class PdfHighlighter<T_HT: T_Highlight> extends Component<
+class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   Props<T_HT>,
   State<T_HT>
 > {
@@ -110,14 +103,10 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
 
   debouncedAfterSelection: () => void;
 
-  componentWillReceiveProps(nextProps: Props<T_HT>) {
-    if (this.props.highlights !== nextProps.highlights) {
-      this.renderHighlights(nextProps);
+  componentDidUpdate(prevProps: Props<T_HT>) {
+    if (prevProps.highlights !== this.props.highlights) {
+      this.renderHighlights(this.props)
     }
-  }
-
-  shouldComponentUpdate() {
-    return false;
   }
 
   componentDidMount() {
