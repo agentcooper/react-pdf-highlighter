@@ -4,7 +4,10 @@ import React, { Component } from "react";
 
 import type { T_PDFJS, T_PDFJS_Document } from "../types";
 
-import pdfjs from 'pdfjs-dist/webpack';
+import pdfjs from "pdfjs-dist";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${
+  pdfjs.version
+}/pdf.worker.js`;
 
 type Props = {
   url: string,

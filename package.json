@@ -18,7 +18,7 @@
     "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'"
   },
   "dependencies": {
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.15",
     "pdfjs-dist": "2.0.489",
     "react-pointable": "^1.1.1",
     "react-rnd": "^7.1.5"
@@ -32,7 +32,7 @@
     "flow-copy-source": "^1.1.0",
     "gh-pages": "0.11.0",
     "husky": "0.11.9",
-    "nwb": "0.21.0",
+    "nwb": "^0.23.0",
     "prettier": "^1.8.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
