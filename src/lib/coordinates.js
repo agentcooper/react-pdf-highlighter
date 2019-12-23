@@ -36,7 +36,7 @@ const pdfToViewport = (pdf, viewport): T_LTWH => {
 
   return {
     left: x1,
-    top: y1,
+    top: y2,
 
     width: x2 - x1,
     height: y1 - y2
