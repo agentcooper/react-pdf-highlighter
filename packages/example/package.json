@@ -19,7 +19,7 @@
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
-    "test": "jest -c jest.config.js"
+    "test": "jest -c jest.config.js --runInBand"
   },
   "eslintConfig": {
     "extends": "react-app"
