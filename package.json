@@ -12,6 +12,7 @@
     "start": "nwb serve-react-demo",
     "test": "npm run flow",
     "flow": "flow",
+    "integration": "jest",
     "precommit": "npm run flow",
     "deploy": "npm run build && gh-pages --dist ./demo/dist --branch gh-pages",
     "prepublishOnly": "npm run build && npm run copy-files",
@@ -19,7 +20,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.10",
-    "pdfjs-dist": "2.0.489",
+    "pdfjs-dist": "2.2.228",
     "react-pointable": "^1.1.1",
     "react-rnd": "^7.1.5"
   },
@@ -32,8 +33,11 @@
     "flow-copy-source": "^1.1.0",
     "gh-pages": "0.11.0",
     "husky": "0.11.9",
+    "jest": "^25.1.0",
+    "jest-puppeteer": "^4.4.0",
     "nwb": "0.21.0",
     "prettier": "^1.8.2",
+    "puppeteer": "^2.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "url-search-params": "0.6.1"
