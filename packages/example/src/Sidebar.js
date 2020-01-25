@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import type { T_Highlight } from "../../react-pdf-highlighter/src/types";
+import type { T_Highlight } from "react-pdf-highlighter/src/types";
 type T_ManuscriptHighlight = T_Highlight;
 
 type Props = {

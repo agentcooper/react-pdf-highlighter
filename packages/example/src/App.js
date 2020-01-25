@@ -18,7 +18,7 @@ import testHighlights from "./test-highlights";
 import Spinner from "./Spinner";
 import Sidebar from "./Sidebar";
 
-import type { T_Highlight, T_NewHighlight } from "../../react-pdf-highlighter/src/types";
+import type { T_Highlight, T_NewHighlight } from "react-pdf-highlighter/src/types";
 
 import "./style/App.css";
 

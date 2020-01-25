@@ -1,15 +1,15 @@
 {
   "private": true,
   "scripts": {
-    "flow": "flow",
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "clean": "lerna clean && lerna run clean",
     "start": "lerna run build --scope=react-pdf-highlighter && lerna run start --scope=example",
     "test": "npm run flow && lerna run test",
+    "flow": "flow",
     "deploy": "npm run build && gh-pages --dist ./demo/dist --branch gh-pages",
-    "prepublishOnly": "npm run build && npm run copy-files",
-    "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'"
+    "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'",
+    "postinstall": "npm run bootstrap"
   },
   "devDependencies": {
     "flow-bin": "^0.73.0",

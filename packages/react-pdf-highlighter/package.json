@@ -4,8 +4,8 @@
   "description": "Set of React components for PDF annotation",
   "main": "build/index.js",
   "scripts": {
-    "build": "NODE_ENV=production babel src -d build && npm run copy-styles",
-    "copy-flow": "flow-copy-source src lib",
+    "build": "NODE_ENV=production babel src -d build && npm run copy-files",
+    "copy-flow": "flow-copy-source src build",
     "copy-styles": "cp -r src/style build",
     "copy-files": "npm run copy-flow && npm run copy-styles",
     "clean": "rm -rf build",
@@ -27,7 +27,8 @@
     "@babel/core": "^7.8.3",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-flow": "^7.8.3",
-    "@babel/preset-react": "^7.8.3"
+    "@babel/preset-react": "^7.8.3",
+    "flow-copy-source": "^2.0.9"
   },
   "author": "Artem Tyurin <artem.tyurin@gmail.com>",
   "license": "MIT",
@@ -38,11 +39,9 @@
     "react-component"
   ],
   "files": [
-    "build"
+    "build",
+    "src"
   ],
-  "directories": {
-    "build": "build"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/agentcooper/react-pdf-highlighter.git"
