@@ -36,8 +36,6 @@ class MouseSelection extends Component<Props, State> {
     end: null
   };
 
-  props: Props;
-
   root: ?HTMLElement;
 
   reset = () => {

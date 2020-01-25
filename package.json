@@ -1,67 +1,19 @@
 {
-  "name": "react-pdf-highlighter",
-  "version": "3.0.0",
-  "description": "Set of React components for PDF annotation",
-  "main": "lib/index.js",
+  "private": true,
   "scripts": {
-    "build": "nwb build-react-component",
-    "copy-flow": "flow-copy-source src lib",
-    "copy-styles": "cp -r src/style lib",
-    "copy-files": "npm run copy-flow && npm run copy-styles",
-    "clean": "nwb clean-module && npm clean-demo",
-    "start": "nwb serve-react-demo",
-    "test": "npm run flow && npm run jest",
     "flow": "flow",
-    "jest": "jest",
-    "precommit": "npm run flow",
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "clean": "lerna clean && lerna run clean",
+    "start": "lerna run build --scope=react-pdf-highlighter && lerna run start --scope=example",
+    "test": "npm run flow && lerna run test",
     "deploy": "npm run build && gh-pages --dist ./demo/dist --branch gh-pages",
     "prepublishOnly": "npm run build && npm run copy-files",
     "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'"
   },
-  "dependencies": {
-    "lodash": "^4.17.10",
-    "pdfjs-dist": "2.2.228",
-    "react-pointable": "^1.1.1",
-    "react-rnd": "^7.1.5"
-  },
-  "peerDependencies": {
-    "react": ">=0.14",
-    "react-dom": ">=0.14"
-  },
   "devDependencies": {
-    "flow-bin": "0.73.0",
-    "flow-copy-source": "^1.1.0",
+    "flow-bin": "^0.73.0",
     "gh-pages": "0.11.0",
-    "husky": "0.11.9",
-    "jest": "^25.1.0",
-    "jest-puppeteer": "^4.4.0",
-    "nwb": "0.21.0",
-    "prettier": "^1.8.2",
-    "puppeteer": "^2.0.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "url-search-params": "0.6.1"
-  },
-  "author": "Artem Tyurin <artem.tyurin@gmail.com>",
-  "license": "MIT",
-  "keywords": [
-    "pdf",
-    "highlight",
-    "annotator",
-    "react-component"
-  ],
-  "files": [
-    "lib"
-  ],
-  "directories": {
-    "lib": "lib"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/agentcooper/react-pdf-highlighter.git"
-  },
-  "bugs": {
-    "url": "https://github.com/agentcooper/react-pdf-highlighter/issues"
-  },
-  "homepage": "https://github.com/agentcooper/react-pdf-highlighter#readme"
+    "lerna": "^3.20.2"
+  }
 }

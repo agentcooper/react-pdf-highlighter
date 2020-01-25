@@ -19,13 +19,10 @@ type Props = {
 const clamp = (value, left, right) => Math.min(Math.max(value, left), right);
 
 class TipContainer extends Component<Props, State> {
-  state = {
+  state: State = {
     height: 0,
     width: 0
   };
-
-  state: State;
-  props: Props;
 
   componentDidUpdate(nextProps: Props) {
     if (this.props.children !== nextProps.children) {

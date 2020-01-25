@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import type { T_Highlight } from "../../src/types";
+import type { T_Highlight } from "../../react-pdf-highlighter/src/types";
 type T_ManuscriptHighlight = T_Highlight;
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const updateHash = highlight => {
-  location.hash = `highlight-${highlight.id}`;
+  document.location.hash = `highlight-${highlight.id}`;
 };
 
 function Sidebar({ highlights, resetHighlights }: Props) {
@@ -67,9 +67,7 @@ function Sidebar({ highlights, resetHighlights }: Props) {
       </ul>
       {highlights.length > 0 ? (
         <div style={{ padding: "1rem" }}>
-          <a href="#" onClick={resetHighlights}>
-            Reset highlights
-          </a>
+          <button onClick={resetHighlights}>Reset highlights</button>
         </div>
       ) : null}
     </div>

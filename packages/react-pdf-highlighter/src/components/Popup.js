@@ -20,8 +20,6 @@ class Popup extends Component<Props, State> {
     mouseIn: false
   };
 
-  props: Props;
-
   render() {
     const { onMouseOver, popupContent, onMouseOut } = this.props;
 

@@ -1,0 +1,54 @@
+{
+  "name": "react-pdf-highlighter",
+  "version": "3.0.0",
+  "description": "Set of React components for PDF annotation",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "NODE_ENV=production babel src -d build && npm run copy-styles",
+    "copy-flow": "flow-copy-source src lib",
+    "copy-styles": "cp -r src/style build",
+    "copy-files": "npm run copy-flow && npm run copy-styles",
+    "clean": "rm -rf build",
+    "deploy": "npm run build && gh-pages --dist ./demo/dist --branch gh-pages",
+    "prepublishOnly": "npm run build && npm run copy-files"
+  },
+  "dependencies": {
+    "lodash": "^4.17.10",
+    "pdfjs-dist": "2.2.228",
+    "react-pointable": "^1.1.1",
+    "react-rnd": "^7.1.5"
+  },
+  "peerDependencies": {
+    "react": ">=0.14",
+    "react-dom": ">=0.14"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-flow": "^7.8.3",
+    "@babel/preset-react": "^7.8.3"
+  },
+  "author": "Artem Tyurin <artem.tyurin@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "pdf",
+    "highlight",
+    "annotator",
+    "react-component"
+  ],
+  "files": [
+    "build"
+  ],
+  "directories": {
+    "build": "build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agentcooper/react-pdf-highlighter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/agentcooper/react-pdf-highlighter/issues"
+  },
+  "homepage": "https://github.com/agentcooper/react-pdf-highlighter#readme"
+}
