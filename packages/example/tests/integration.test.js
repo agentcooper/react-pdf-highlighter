@@ -13,6 +13,8 @@ async function highlight(start, end) {
   await page.mouse.up();
 }
 
+jest.setTimeout(30000);
+
 beforeAll(async () => {
   await page.goto("http://localhost:3000");
 });
