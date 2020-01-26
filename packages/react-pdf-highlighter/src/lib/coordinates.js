@@ -58,11 +58,11 @@ export const scaledToViewport = (
     throw new Error("You are using old position format, please update");
   }
 
-  const x1 = width * scaled.x1 / scaled.width;
-  const y1 = height * scaled.y1 / scaled.height;
+  const x1 = (width * scaled.x1) / scaled.width;
+  const y1 = (height * scaled.y1) / scaled.height;
 
-  const x2 = width * scaled.x2 / scaled.width;
-  const y2 = height * scaled.y2 / scaled.height;
+  const x2 = (width * scaled.x2) / scaled.width;
+  const y2 = (height * scaled.y2) / scaled.height;
 
   return {
     left: x1,

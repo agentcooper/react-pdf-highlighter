@@ -8,12 +8,14 @@
     "start": "lerna run build --scope=react-pdf-highlighter && lerna run start --scope=example",
     "test": "npm run flow && lerna run test",
     "flow": "flow",
-    "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'",
-    "postinstall": "npm run bootstrap"
+    "postinstall": "npm run bootstrap",
+    "format": "prettier --write 'packages/**/*.js'",
+    "format:check": "prettier --check 'packages/**/*.js'"
   },
   "devDependencies": {
     "flow-bin": "^0.73.0",
     "gh-pages": "0.11.0",
-    "lerna": "^3.20.2"
+    "lerna": "^3.20.2",
+    "prettier": "^1.19.1"
   }
 }

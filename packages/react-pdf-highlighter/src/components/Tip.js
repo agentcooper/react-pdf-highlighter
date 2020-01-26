@@ -49,48 +49,48 @@ class Tip extends Component<Props, State> {
             Add highlight
           </div>
         ) : (
-            <form
-              className="Tip__card"
-              onSubmit={event => {
-                event.preventDefault();
-                onConfirm({ text, emoji });
-              }}
-            >
+          <form
+            className="Tip__card"
+            onSubmit={event => {
+              event.preventDefault();
+              onConfirm({ text, emoji });
+            }}
+          >
+            <div>
+              <textarea
+                width="100%"
+                placeholder="Your comment"
+                autoFocus
+                value={text}
+                onChange={event => this.setState({ text: event.target.value })}
+                ref={node => {
+                  if (node) {
+                    node.focus();
+                  }
+                }}
+              />
               <div>
-                <textarea
-                  width="100%"
-                  placeholder="Your comment"
-                  autoFocus
-                  value={text}
-                  onChange={event => this.setState({ text: event.target.value })}
-                  ref={node => {
-                    if (node) {
-                      node.focus();
-                    }
-                  }}
-                />
-                <div>
-                  {["💩", "😱", "😍", "🔥", "😳", "⚠️"].map(_emoji => (
-                    <label key={_emoji}>
-                      <input
-                        checked={emoji === _emoji}
-                        type="radio"
-                        name="emoji"
-                        value={_emoji}
-                        onChange={event =>
-                          this.setState({ emoji: event.target.value })
-                        }
-                      />
-                      {_emoji}
-                    </label>
-                  ))}
-                </div>
+                {["💩", "😱", "😍", "🔥", "😳", "⚠️"].map(_emoji => (
+                  <label key={_emoji}>
+                    <input
+                      checked={emoji === _emoji}
+                      type="radio"
+                      name="emoji"
+                      value={_emoji}
+                      onChange={event =>
+                        this.setState({ emoji: event.target.value })
+                      }
+                    />
+                    {_emoji}
+                  </label>
+                ))}
               </div>
-              <div>
-                <input type="submit" value="Save" />
-              </div>
-            </form>
-          )}
+            </div>
+            <div>
+              <input type="submit" value="Save" />
+            </div>
+          </form>
+        )}
       </div>
     );
   }
