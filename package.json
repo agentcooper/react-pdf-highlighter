@@ -8,7 +8,6 @@
     "start": "lerna run build --scope=react-pdf-highlighter && lerna run start --scope=example",
     "test": "npm run flow && lerna run test",
     "flow": "flow",
-    "deploy": "npm run build && gh-pages --dist ./demo/dist --branch gh-pages",
     "prettier": "prettier --write 'src/**/*.js' 'demo/src/**/*.js'",
     "postinstall": "npm run bootstrap"
   },

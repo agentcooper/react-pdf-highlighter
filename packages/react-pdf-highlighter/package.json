@@ -9,7 +9,6 @@
     "copy-styles": "cp -r src/style build",
     "copy-files": "npm run copy-flow && npm run copy-styles",
     "clean": "rm -rf build",
-    "deploy": "npm run build && gh-pages --dist ./demo/dist --branch gh-pages",
     "prepublishOnly": "npm run build && npm run copy-files"
   },
   "dependencies": {
