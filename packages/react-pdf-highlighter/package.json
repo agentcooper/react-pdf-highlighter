@@ -4,12 +4,12 @@
   "description": "Set of React components for PDF annotation",
   "main": "build/index.js",
   "scripts": {
-    "build": "NODE_ENV=production babel src -d build && npm run copy-files",
+    "start": "npm run watch",
+    "build": "NODE_ENV=production babel src -d build --copy-files",
+    "watch": "NODE_ENV=development babel --watch src -d build --copy-files",
     "copy-flow": "flow-copy-source src build",
-    "copy-styles": "cp -r src/style build",
-    "copy-files": "npm run copy-flow && npm run copy-styles",
     "clean": "rm -rf build",
-    "prepublishOnly": "npm run build && npm run copy-files"
+    "prepublishOnly": "npm run build && npm run copy-flow"
   },
   "dependencies": {
     "lodash": "^4.17.10",
