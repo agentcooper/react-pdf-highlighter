@@ -10,7 +10,7 @@
     "test": "npm run flow && lerna run test",
     "build": "lerna run build",
     "clean": "lerna clean && lerna run clean",
-    "flow": "flow",
+    "flow": "flow check",
     "format": "prettier --write 'packages/**/*.js'",
     "format:check": "prettier --check 'packages/**/*.js'"
   },
