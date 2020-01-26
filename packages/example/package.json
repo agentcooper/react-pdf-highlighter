@@ -24,6 +24,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "homepage": "https://agentcooper.github.io/react-pdf-highlighter",
   "browserslist": {
     "production": [
       ">0.2%",
