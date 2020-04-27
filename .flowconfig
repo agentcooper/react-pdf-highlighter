@@ -12,3 +12,4 @@ all=warn
 
 [options]
 emoji=true
+module.name_mapper='react-pdf-highlighter' -> '<PROJECT_ROOT>/packages/react-pdf-highlighter/src/index.js'
