@@ -10,7 +10,8 @@ import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
 type Props = {
   url: string,
   beforeLoad: React$Element<*>,
-  children: (pdfDocument: T_PDFJS_Document) => React$Element<*>
+  children: (pdfDocument: T_PDFJS_Document) => React$Element<*>,
+  onError?: (error: Error) => void
 };
 
 type State = {
@@ -28,10 +29,11 @@ class PdfLoader extends Component<Props, State> {
     pdfjs
       .getDocument({ url: url, eventBusDispatchToDOM: true })
       .promise.then(pdfDocument => {
-          this.setState({
-            pdfDocument: pdfDocument
-          });
-        }).catch(onError);
+        this.setState({
+          pdfDocument: pdfDocument
+        });
+      })
+      .catch(onError);
   }
 
   render() {
