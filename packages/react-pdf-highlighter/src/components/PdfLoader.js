@@ -23,6 +23,26 @@ class PdfLoader extends Component<Props, State> {
     pdfDocument: null
   };
 
+  async fetchPdf() {
+    let pdfDocument = await pdfjs.getDocument({
+      url: this.props.url,
+      eventBusDispatchToDOM: true
+    });
+
+    if (pdfDocument) {
+      console.log(`pdfDocument: ${pdfDocument.numPages}`);
+      this.setState({
+        pdfDocument: pdfDocument
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.url !== this.props.url) {
+      this.fetchPdf();
+    }
+  }
+
   componentDidMount() {
     const { url, onError } = this.props;
 

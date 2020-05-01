@@ -110,7 +110,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     }
   }
 
-  componentDidMount() {
+  init() {
     const { pdfDocument } = this.props;
 
     this.debouncedAfterSelection = _.debounce(500, this.afterSelection);
@@ -138,6 +138,15 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     });
 
     document.addEventListener("textlayerrendered", this.onTextLayerRendered);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.pdfDocument === this.props.pdfDocument) return;
+    this.init();
+  }
+
+  componentDidMount() {
+    this.init();
   }
 
   componentWillUnmount() {
