@@ -78,7 +78,7 @@ type Props<T_HT> = {
     content: { text?: string, image?: string },
     hideTipAndSelection: () => void,
     transformSelection: () => void
-  ) => ?React$Element<*>,
+  ) =>?React$Element<*>,
   enableAreaSelection: (event: MouseEvent) => boolean
 };
 
@@ -87,7 +87,7 @@ const EMPTY_ID = "empty-id";
 class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   Props<T_HT>,
   State<T_HT>
-> {
+  > {
   state: State<T_HT> = {
     ghostHighlight: null,
     isCollapsed: true,
@@ -104,13 +104,21 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
 
   debouncedAfterSelection: () => void;
 
+  componentDidMount() {
+    this.init();
+  }
+
   componentDidUpdate(prevProps: Props<T_HT>) {
+    if (prevProps.pdfDocument !== this.props.pdfDocument) {
+      this.init();
+      return;
+    }
     if (prevProps.highlights !== this.props.highlights) {
       this.renderHighlights(this.props);
     }
   }
 
-  componentDidMount() {
+  init() {
     const { pdfDocument } = this.props;
 
     this.debouncedAfterSelection = _.debounce(500, this.afterSelection);
@@ -354,7 +362,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
         ...pageViewport.convertToPdfPoint(
           0,
           scaledToViewport(boundingRect, pageViewport, usePdfCoordinates).top -
-            scrollMargin
+          scrollMargin
         ),
         0
       ]

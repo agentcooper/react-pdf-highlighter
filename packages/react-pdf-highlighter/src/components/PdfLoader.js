@@ -24,7 +24,18 @@ class PdfLoader extends Component<Props, State> {
   };
 
   componentDidMount() {
+    this.load();
+  }
+
+  componentDidUpdate({ url }: Props) {
+    if (this.props.url !== url) {
+      this.load();
+    }
+  }
+
+  load() {
     const { url, onError } = this.props;
+    this.setState({ pdfDocument: null });
 
     pdfjs
       .getDocument({ url: url, eventBusDispatchToDOM: true })
