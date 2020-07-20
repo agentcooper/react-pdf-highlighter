@@ -4,8 +4,8 @@ import React, { Component } from "react";
 
 import type { T_PDFJS, T_PDFJS_Document } from "../types";
 
-import pdfjs from "pdfjs-dist";
-import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
+import { getDocument } from "pdfjs-dist";
+import "pdfjs-dist/build/pdf.worker.entry";
 
 type Props = {
   url: string,
@@ -27,6 +27,13 @@ class PdfLoader extends Component<Props, State> {
     this.load();
   }
 
+  componentWillUnmount() {
+    const { pdfDocument: discardedDocument } = this.state;
+    if (discardedDocument) {
+      discardedDocument.destroy();
+    }
+  }
+
   componentDidUpdate({ url }: Props) {
     if (this.props.url !== url) {
       this.load();
@@ -35,15 +42,16 @@ class PdfLoader extends Component<Props, State> {
 
   load() {
     const { url, onError } = this.props;
+    const { pdfDocument: discardedDocument } = this.state;
+    if (discardedDocument) {
+      discardedDocument.destroy();
+    }
     this.setState({ pdfDocument: null });
 
     if (url) {
-      pdfjs
-        .getDocument({ url: url, eventBusDispatchToDOM: true })
+      getDocument({ url })
         .promise.then(pdfDocument => {
-          this.setState({
-            pdfDocument: pdfDocument
-          });
+          this.setState({ pdfDocument });
         })
         .catch(onError);
     }

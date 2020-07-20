@@ -26,10 +26,11 @@ export const findOrCreateContainerLayer = (
   container: HTMLElement,
   className: string
 ) => {
+  const doc = container.ownerDocument;
   let layer = container.querySelector(`.${className}`);
 
   if (!layer) {
-    layer = document.createElement("div");
+    layer = doc.createElement("div");
     layer.className = className;
     container.appendChild(layer);
   }

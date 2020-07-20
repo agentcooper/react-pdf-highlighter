@@ -2,12 +2,9 @@
 import React, { PureComponent } from "react";
 import ReactDom from "react-dom";
 import Pointable from "react-pointable";
-import _ from "lodash/fp";
-import {
-  PDFViewer,
-  PDFLinkService,
-  getGlobalEventBus
-} from "pdfjs-dist/web/pdf_viewer";
+import debounce from "lodash.debounce";
+
+import { EventBus, PDFViewer, PDFLinkService } from "pdfjs-dist/web/pdf_viewer";
 
 import "pdfjs-dist/web/pdf_viewer.css";
 import "../style/pdf_viewer.css";
@@ -35,6 +32,7 @@ import type {
   T_Highlight,
   T_Scaled,
   T_LTWH,
+  T_EventBus,
   T_PDFJS_Viewer,
   T_PDFJS_Document,
   T_PDFJS_LinkService
@@ -97,16 +95,39 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     tip: null
   };
 
+  eventBus: T_EventBus = new EventBus();
+  linkService: T_PDFJS_LinkService = new PDFLinkService({
+    eventBus: this.eventBus
+  });
   viewer: T_PDFJS_Viewer;
-  linkService: T_PDFJS_LinkService;
 
   containerNode: ?HTMLDivElement = null;
-
-  debouncedAfterSelection: () => void;
+  unsubscribe = () => {};
 
   componentDidMount() {
     this.init();
   }
+
+  attachRef = (ref: ?HTMLDivElement) => {
+    const { eventBus } = this;
+    this.containerNode = ref;
+    this.unsubscribe();
+
+    if (ref) {
+      const { ownerDocument: doc } = ref;
+      eventBus.on("textlayerrendered", this.onTextLayerRendered);
+      eventBus.on("pagesinit", this.onDocumentReady);
+      doc.addEventListener("selectionchange", this.onSelectionChange);
+      doc.addEventListener("keydown", this.handleKeyDown);
+
+      this.unsubscribe = () => {
+        eventBus.off("pagesinit", this.onDocumentReady);
+        eventBus.off("textlayerrendered", this.onTextLayerRendered);
+        doc.removeEventListener("selectionchange", this.onSelectionChange);
+        doc.removeEventListener("keydown", this.handleKeyDown);
+      };
+    }
+  };
 
   componentDidUpdate(prevProps: Props<T_HT>) {
     if (prevProps.pdfDocument !== this.props.pdfDocument) {
@@ -121,41 +142,30 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   init() {
     const { pdfDocument } = this.props;
 
-    this.debouncedAfterSelection = _.debounce(500, this.afterSelection);
-    this.linkService = new PDFLinkService();
+    this.viewer =
+      this.viewer ||
+      new PDFViewer({
+        container: this.containerNode,
+        eventBus: this.eventBus,
+        enhanceTextSelection: true,
+        removePageBorders: true,
+        linkService: this.linkService
+      });
 
-    this.viewer = new PDFViewer({
-      container: this.containerNode,
-      enhanceTextSelection: true,
-      removePageBorders: true,
-      linkService: this.linkService
-    });
-
-    this.viewer.setDocument(pdfDocument);
     this.linkService.setDocument(pdfDocument);
     this.linkService.setViewer(this.viewer);
+    this.viewer.setDocument(pdfDocument);
 
     // debug
     window.PdfViewer = this;
-
-    document.addEventListener("selectionchange", this.onSelectionChange);
-    document.addEventListener("keydown", this.handleKeyDown);
-
-    document.addEventListener("pagesinit", () => {
-      this.onDocumentReady();
-    });
-
-    document.addEventListener("textlayerrendered", this.onTextLayerRendered);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("selectionchange", this.onSelectionChange);
-    document.removeEventListener("keydown", this.handleKeyDown);
-    document.removeEventListener("textlayerrendered", this.onTextLayerRendered);
+    this.unsubscribe();
   }
 
   findOrCreateHighlightLayer(page: number) {
-    const textLayer = this.viewer.getPageView(page - 1).textLayer;
+    const { textLayer } = this.viewer.getPageView(page - 1) || {};
 
     if (!textLayer) {
       return null;
@@ -391,15 +401,19 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
 
   onSelectionChange = () => {
     const selection: Selection = window.getSelection();
+    const container = this.containerNode;
+    const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
 
     if (selection.isCollapsed) {
       this.setState({ isCollapsed: true });
       return;
     }
 
-    const range = selection.getRangeAt(0);
-
-    if (!range) {
+    if (
+      !range ||
+      !container ||
+      !container.contains(range.commonAncestorContainer)
+    ) {
       return;
     }
 
@@ -491,6 +505,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     );
   };
 
+  debouncedAfterSelection: () => void = debounce(this.afterSelection, 500);
+
   toggleTextSelection(flag: boolean) {
     this.viewer.viewer.classList.toggle(
       "PdfHighlighter--disable-selection",
@@ -504,7 +520,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     return (
       <Pointable onPointerDown={this.onMouseDown}>
         <div
-          ref={node => (this.containerNode = node)}
+          ref={this.attachRef}
           className="PdfHighlighter"
           onContextMenu={e => e.preventDefault()}
         >

@@ -5,8 +5,9 @@ import type { T_LTWH } from "../types.js";
 const getAreaAsPNG = (canvas: HTMLCanvasElement, position: T_LTWH): string => {
   const { left, top, width, height } = position;
 
+  const doc = canvas ? canvas.ownerDocument : null;
   // @TODO: cache this?
-  const newCanvas = document.createElement("canvas");
+  const newCanvas = doc && doc.createElement("canvas");
 
   if (!(newCanvas instanceof HTMLCanvasElement)) {
     return "";

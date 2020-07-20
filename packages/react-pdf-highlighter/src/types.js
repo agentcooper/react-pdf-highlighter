@@ -54,6 +54,11 @@ export type T_VIEWPORT = {
   height: number
 };
 
+export type T_EventBus = {
+  on: (eventName: string, callback: () => void) => void,
+  off: (eventName: string, callback: () => void) => void
+};
+
 export type T_PDFJS_Viewer = {
   container: HTMLDivElement,
   viewer: HTMLDivElement,
@@ -74,6 +79,7 @@ export type T_PDFJS_Viewer = {
 };
 
 export type T_PDFJS_Document = {
+  destroy: () => void,
   numPages: number
 };
 

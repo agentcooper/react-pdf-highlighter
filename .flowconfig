@@ -1,7 +1,9 @@
 [version]
-0.73.0
+0.130.0
 
 [ignore]
+.*/\.history/.*
+.*/build/.*
 
 [include]
 

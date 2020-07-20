@@ -169,8 +169,9 @@ class MouseSelection extends Component<Props, State> {
         );
       };
 
-      if (document.body) {
-        document.body.addEventListener("mouseup", onMouseUp);
+      const { ownerDocument: doc } = container;
+      if (doc.body) {
+        doc.body.addEventListener("mouseup", onMouseUp);
       }
     });
   }

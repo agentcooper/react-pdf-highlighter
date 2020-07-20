@@ -2,8 +2,7 @@
 
 import React, { Component } from "react";
 
-// $FlowFixMe
-import Rnd from "react-rnd";
+import { Rnd } from "react-rnd";
 
 import "../style/AreaHighlight.css";
 
