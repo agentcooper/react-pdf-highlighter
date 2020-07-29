@@ -49,14 +49,19 @@ const HighlightPopup = ({ comment }) =>
     </div>
   ) : null;
 
-const DEFAULT_URL = "https://arxiv.org/pdf/1708.08021.pdf";
+const PRIMARY_PDF_URL = "https://arxiv.org/pdf/1708.08021.pdf";
+const SECONDARY_PDF_URL = "https://arxiv.org/pdf/1604.02480.pdf";
 
 const searchParams = new URLSearchParams(document.location.search);
-const url = searchParams.get("url") || DEFAULT_URL;
+
+const initialUrl = searchParams.get("url") || PRIMARY_PDF_URL;
 
 class App extends Component<Props, State> {
   state = {
-    highlights: testHighlights[url] ? [...testHighlights[url]] : []
+    url: initialUrl,
+    highlights: testHighlights[initialUrl]
+      ? [...testHighlights[initialUrl]]
+      : []
   };
 
   state: State;
@@ -64,6 +69,16 @@ class App extends Component<Props, State> {
   resetHighlights = () => {
     this.setState({
       highlights: []
+    });
+  };
+
+  toggleDocument = () => {
+    const newUrl =
+      this.state.url === PRIMARY_PDF_URL ? SECONDARY_PDF_URL : PRIMARY_PDF_URL;
+
+    this.setState({
+      url: newUrl,
+      highlights: testHighlights[newUrl] ? [...testHighlights[newUrl]] : []
     });
   };
 
@@ -118,13 +133,14 @@ class App extends Component<Props, State> {
   }
 
   render() {
-    const { highlights } = this.state;
+    const { url, highlights } = this.state;
 
     return (
       <div className="App" style={{ display: "flex", height: "100vh" }}>
         <Sidebar
           highlights={highlights}
           resetHighlights={this.resetHighlights}
+          toggleDocument={this.toggleDocument}
         />
         <div
           style={{

@@ -7,14 +7,15 @@ type T_ManuscriptHighlight = T_Highlight;
 
 type Props = {
   highlights: Array<T_ManuscriptHighlight>,
-  resetHighlights: () => void
+  resetHighlights: () => void,
+  toggleDocument: () => void
 };
 
 const updateHash = highlight => {
   document.location.hash = `highlight-${highlight.id}`;
 };
 
-function Sidebar({ highlights, resetHighlights }: Props) {
+function Sidebar({ highlights, toggleDocument, resetHighlights }: Props) {
   return (
     <div className="sidebar" style={{ width: "25vw" }}>
       <div className="description" style={{ padding: "1rem" }}>
@@ -65,6 +66,9 @@ function Sidebar({ highlights, resetHighlights }: Props) {
           </li>
         ))}
       </ul>
+      <div style={{ padding: "1rem" }}>
+        <button onClick={toggleDocument}>Toggle PDF document</button>
+      </div>
       {highlights.length > 0 ? (
         <div style={{ padding: "1rem" }}>
           <button onClick={resetHighlights}>Reset highlights</button>
