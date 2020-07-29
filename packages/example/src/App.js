@@ -30,6 +30,7 @@ type T_ManuscriptHighlight = T_Highlight;
 type Props = {};
 
 type State = {
+  url: string,
   highlights: Array<T_ManuscriptHighlight>
 };
 
