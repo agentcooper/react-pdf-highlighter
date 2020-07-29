@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/react-pdf-highlighter/static/css/main.765757f6.chunk.css",
-    "main.js": "/react-pdf-highlighter/static/js/main.e1f7dbb9.chunk.js",
+    "main.js": "/react-pdf-highlighter/static/js/main.7d9877ac.chunk.js",
     "runtime-main.js": "/react-pdf-highlighter/static/js/runtime-main.fc987ad8.js",
     "static/css/2.303b2a07.chunk.css": "/react-pdf-highlighter/static/css/2.303b2a07.chunk.css",
-    "static/js/2.798029a9.chunk.js": "/react-pdf-highlighter/static/js/2.798029a9.chunk.js",
+    "static/js/2.edce721a.chunk.js": "/react-pdf-highlighter/static/js/2.edce721a.chunk.js",
     "index.html": "/react-pdf-highlighter/index.html",
-    "precache-manifest.72615ec0f96d48d9044b3aa816fb21f5.js": "/react-pdf-highlighter/precache-manifest.72615ec0f96d48d9044b3aa816fb21f5.js",
+    "precache-manifest.40076b5f7b8b84230cce6cad426762e1.js": "/react-pdf-highlighter/precache-manifest.40076b5f7b8b84230cce6cad426762e1.js",
     "service-worker.js": "/react-pdf-highlighter/service-worker.js",
-    "static/js/2.798029a9.chunk.js.LICENSE": "/react-pdf-highlighter/static/js/2.798029a9.chunk.js.LICENSE"
+    "static/js/2.edce721a.chunk.js.LICENSE": "/react-pdf-highlighter/static/js/2.edce721a.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.fc987ad8.js",
     "static/css/2.303b2a07.chunk.css",
-    "static/js/2.798029a9.chunk.js",
+    "static/js/2.edce721a.chunk.js",
     "static/css/main.765757f6.chunk.css",
-    "static/js/main.e1f7dbb9.chunk.js"
+    "static/js/main.7d9877ac.chunk.js"
   ]
 }
