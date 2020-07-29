@@ -218,7 +218,8 @@ const testHighlights = {
       comment: {
         text: "Static Single Assignment",
         emoji: "😎"
-      }
+      },
+      id: "29668244118038056"
     }
   ]
 };
