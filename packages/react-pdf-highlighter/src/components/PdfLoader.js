@@ -24,16 +24,29 @@ class PdfLoader extends Component<Props, State> {
   };
 
   componentDidMount() {
-    const { url, onError } = this.props;
+    this.load();
+  }
 
-    pdfjs
-      .getDocument({ url: url, eventBusDispatchToDOM: true })
-      .promise.then(pdfDocument => {
-        this.setState({
-          pdfDocument: pdfDocument
-        });
-      })
-      .catch(onError);
+  componentDidUpdate({ url }: Props) {
+    if (this.props.url !== url) {
+      this.load();
+    }
+  }
+
+  load() {
+    const { url, onError } = this.props;
+    this.setState({ pdfDocument: null });
+
+    if (url) {
+      pdfjs
+        .getDocument({ url: url, eventBusDispatchToDOM: true })
+        .promise.then(pdfDocument => {
+          this.setState({
+            pdfDocument: pdfDocument
+          });
+        })
+        .catch(onError);
+    }
   }
 
   render() {
