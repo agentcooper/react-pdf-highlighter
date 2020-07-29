@@ -31,21 +31,34 @@ export type T_ScaledPosition = {
   usePdfCoordinates?: boolean
 };
 
-export type T_NewHighlight = {
-  position: T_ScaledPosition,
-  content: {
-    text?: string,
-    image?: string
-  },
-  comment: {
-    text: string,
-    emoji: string
-  }
+export type T_Content = {
+  text?: string,
+  image?: string
 };
+
+export type T_HighlightContent = {
+  content: T_Content
+};
+
+export type T_Comment = {
+  text: string,
+  emoji: string
+};
+export type T_HighlightComment = {
+  comment: T_Comment
+};
+
+export type T_NewHighlight = {
+  position: T_ScaledPosition
+} & T_HighlightContent &
+  T_HighlightComment;
 
 export type T_Highlight = { id: string } & T_NewHighlight;
 
-export type T_ViewportHighlight = { position: T_Position } & T_Highlight;
+export type T_ViewportHighlight = {
+  position: T_Position
+} & T_HighlightContent &
+  T_HighlightComment;
 
 export type T_VIEWPORT = {
   convertToPdfPoint: (x: number, y: number) => Array<number>,

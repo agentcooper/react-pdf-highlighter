@@ -6,6 +6,7 @@ import debounce from "lodash.debounce";
 
 import { EventBus, PDFViewer, PDFLinkService } from "pdfjs-dist/web/pdf_viewer";
 
+//$FlowFixMe
 import "pdfjs-dist/web/pdf_viewer.css";
 import "../style/pdf_viewer.css";
 
@@ -263,21 +264,18 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
         ReactDom.render(
           <div>
             {(highlightsByPage[String(pageNumber)] || []).map(
-              (highlight, index) => {
-                const { position, ...rest } = highlight;
-
-                const viewportHighlight = {
+              ({ position, id, ...highlight }, index) => {
+                const viewportHighlight: T_ViewportHighlight<T_HT> = {
+                  id,
                   position: this.scaledPositionToViewport(position),
-                  ...rest
+                  ...highlight
                 };
 
-                if (tip && tip.highlight.id === String(highlight.id)) {
+                if (tip && tip.highlight.id === String(id)) {
                   this.showTip(tip.highlight, tip.callback(viewportHighlight));
                 }
 
-                const isScrolledTo = Boolean(
-                  scrolledToHighlightId === highlight.id
-                );
+                const isScrolledTo = Boolean(scrolledToHighlightId === id);
 
                 return highlightTransform(
                   viewportHighlight,

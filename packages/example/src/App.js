@@ -2,8 +2,6 @@
 
 import React, { Component } from "react";
 
-import URLSearchParams from "url-search-params";
-
 import {
   PdfLoader,
   PdfHighlighter,
@@ -25,13 +23,11 @@ import type {
 
 import "./style/App.css";
 
-type T_ManuscriptHighlight = T_Highlight;
-
 type Props = {};
 
 type State = {
   url: string,
-  highlights: Array<T_ManuscriptHighlight>
+  highlights: Array<T_Highlight>
 };
 
 const getNextId = () => String(Math.random()).slice(2);
@@ -122,11 +118,18 @@ class App extends Component<Props, State> {
 
     this.setState({
       highlights: this.state.highlights.map(h => {
-        return h.id === highlightId
+        const {
+          id,
+          position: originalPosition,
+          content: originalContent,
+          ...rest
+        } = h;
+        return id === highlightId
           ? {
-              ...h,
-              position: { ...h.position, ...position },
-              content: { ...h.content, ...content }
+              id,
+              position: { ...originalPosition, ...position },
+              content: { ...originalContent, ...content },
+              ...rest
             }
           : h;
       })

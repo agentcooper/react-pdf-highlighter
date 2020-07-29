@@ -27,7 +27,11 @@
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-flow": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
-    "flow-copy-source": "^2.0.9"
+    "flow-bin": "^0.130.0",
+    "flow-copy-source": "^2.0.9",
+    "flow-typed": "^3.2.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "author": "Artem Tyurin <artem.tyurin@gmail.com>",
   "license": "MIT",
