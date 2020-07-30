@@ -1,6 +1,8 @@
 // @flow
+/* eslint import/no-webpack-loader-syntax: 0 */
 
 import React, { Component } from "react";
+import PDFWorker from "worker-loader!pdfjs-dist/lib/pdf.worker";
 
 import {
   PdfLoader,
@@ -8,7 +10,8 @@ import {
   Tip,
   Highlight,
   Popup,
-  AreaHighlight
+  AreaHighlight,
+  setPdfWorker
 } from "react-pdf-highlighter";
 
 import testHighlights from "./test-highlights";
@@ -22,6 +25,8 @@ import type {
 } from "react-pdf-highlighter/src/types";
 
 import "./style/App.css";
+
+setPdfWorker(PDFWorker);
 
 type Props = {};
 

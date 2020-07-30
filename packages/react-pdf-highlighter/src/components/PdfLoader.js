@@ -10,21 +10,17 @@ import PdfjsWorker from "pdfjs-dist/lib/pdf.worker";
 setPdfWorker(PdfjsWorker);
 
 export function setPdfWorker(workerSrcOrClass: any) {
-  if (typeof window !== 'undefined')
-    delete window.pdfjsWorker;
+  if (typeof window !== "undefined") delete window.pdfjsWorker;
   delete GlobalWorkerOptions.workerSrc;
   delete GlobalWorkerOptions.workerPort;
 
-  if (typeof workerSrcOrClass === 'string') {
+  if (typeof workerSrcOrClass === "string") {
     GlobalWorkerOptions.workerSrc = workerSrcOrClass;
-  }
-  else if (typeof workerSrcOrClass === 'function') {
+  } else if (typeof workerSrcOrClass === "function") {
     GlobalWorkerOptions.workerPort = workerSrcOrClass();
-  }
-  else if (workerSrcOrClass instanceof Worker) {
+  } else if (workerSrcOrClass instanceof Worker) {
     GlobalWorkerOptions.workerPort = workerSrcOrClass;
-  }
-  else if (typeof window !== 'undefined' && workerSrcOrClass) {
+  } else if (typeof window !== "undefined" && workerSrcOrClass) {
     window.pdfjsWorker = workerSrcOrClass;
   }
 }

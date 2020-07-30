@@ -15,7 +15,8 @@
     "flow-typed": "^3.2.1",
     "jest-puppeteer": "^4.4.0",
     "react-scripts": "3.4.1",
-    "puppeteer": "^5.2.1"
+    "puppeteer": "^5.2.1",
+    "worker-loader": "^2.0.0"
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false react-scripts start",

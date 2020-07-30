@@ -7,4 +7,12 @@ import Popup from "./components/Popup";
 import AreaHighlight from "./components/AreaHighlight";
 import PdfLoader, { setPdfWorker } from "./components/PdfLoader";
 
-export { PdfHighlighter, Tip, Highlight, Popup, AreaHighlight, PdfLoader, setPdfWorker };
+export {
+  PdfHighlighter,
+  Tip,
+  Highlight,
+  Popup,
+  AreaHighlight,
+  PdfLoader,
+  setPdfWorker
+};
