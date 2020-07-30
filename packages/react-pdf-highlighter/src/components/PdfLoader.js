@@ -4,8 +4,30 @@ import React, { Component } from "react";
 
 import type { T_PDFJS, T_PDFJS_Document } from "../types";
 
-import { getDocument } from "pdfjs-dist/lib/pdf";
-import "pdfjs-dist/build/pdf.worker.entry";
+import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/lib/pdf";
+import PdfjsWorker from "pdfjs-dist/lib/pdf.worker";
+
+setPdfWorker(PdfjsWorker);
+
+export function setPdfWorker(workerSrcOrClass: any) {
+  if (typeof window !== 'undefined')
+    delete window.pdfjsWorker;
+  delete GlobalWorkerOptions.workerSrc;
+  delete GlobalWorkerOptions.workerPort;
+
+  if (typeof workerSrcOrClass === 'string') {
+    GlobalWorkerOptions.workerSrc = workerSrcOrClass;
+  }
+  else if (typeof workerSrcOrClass === 'function') {
+    GlobalWorkerOptions.workerPort = workerSrcOrClass();
+  }
+  else if (workerSrcOrClass instanceof Worker) {
+    GlobalWorkerOptions.workerPort = workerSrcOrClass;
+  }
+  else if (typeof window !== 'undefined' && workerSrcOrClass) {
+    window.pdfjsWorker = workerSrcOrClass;
+  }
+}
 
 type Props = {
   url: string,
