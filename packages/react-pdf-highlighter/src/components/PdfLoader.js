@@ -4,7 +4,7 @@ import React, { Component } from "react";
 
 import type { T_PDFJS, T_PDFJS_Document } from "../types";
 
-import { getDocument } from "pdfjs-dist";
+import { getDocument } from "pdfjs-dist/lib/pdf";
 import "pdfjs-dist/build/pdf.worker.entry";
 
 type Props = {
