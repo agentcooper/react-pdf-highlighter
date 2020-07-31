@@ -1,9 +1,12 @@
 // @flow
 
+const getDocument = elm => (elm || {}).ownerDocument;
+const getWindow = elm => (getDocument(elm) || {}).defaultView;
+
 export const getPageFromElement = (target: HTMLElement) => {
   const node = target.closest(".page");
 
-  if (!(node instanceof HTMLElement)) {
+  if (!node || !(node instanceof getWindow(target).HTMLElement)) {
     return null;
   }
 
@@ -15,7 +18,7 @@ export const getPageFromElement = (target: HTMLElement) => {
 export const getPageFromRange = (range: Range) => {
   const parentElement = range.startContainer.parentElement;
 
-  if (!(parentElement instanceof HTMLElement)) {
+  if (!(parentElement instanceof getWindow(parentElement).HTMLElement)) {
     return;
   }
 
@@ -26,7 +29,7 @@ export const findOrCreateContainerLayer = (
   container: HTMLElement,
   className: string
 ) => {
-  const doc = container.ownerDocument;
+  const doc = getDocument(container);
   let layer = container.querySelector(`.${className}`);
 
   if (!layer) {
