@@ -44,6 +44,8 @@ class PdfLoader extends Component<Props, State> {
     error: null
   };
 
+  documentRef = React.createRef<HTMLElement>();
+
   componentDidMount() {
     this.load();
   }
@@ -72,6 +74,7 @@ class PdfLoader extends Component<Props, State> {
   }
 
   load() {
+    const { ownerDocument = document } = this.documentRef.current || {};
     const { url } = this.props;
     const { pdfDocument: discardedDocument } = this.state;
     this.setState({ pdfDocument: null, error: null });
@@ -81,7 +84,7 @@ class PdfLoader extends Component<Props, State> {
       .then(
         () =>
           url &&
-          getDocument({ url }).promise.then(pdfDocument => {
+          getDocument({ url, ownerDocument }).promise.then(pdfDocument => {
             this.setState({ pdfDocument });
           })
       )
@@ -94,6 +97,7 @@ class PdfLoader extends Component<Props, State> {
 
     return (
       <>
+        <span ref={this.documentRef} />
         {error
           ? this.renderError()
           : !pdfDocument || !children
