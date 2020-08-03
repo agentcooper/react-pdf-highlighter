@@ -17,9 +17,9 @@
   },
   "devDependencies": {
     "concurrently": "^5.0.2",
-    "gh-pages": "0.11.0",
+    "gh-pages": "^3.1.0",
     "lerna": "^3.20.2",
-    "prettier": "^1.19.1",
-    "wait-on": "^4.0.0"
+    "prettier": "^2.0.5",
+    "wait-on": "^5.1.0"
   }
 }
