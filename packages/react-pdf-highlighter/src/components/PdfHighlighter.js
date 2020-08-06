@@ -72,6 +72,7 @@ type Props<T_HT> = {
   onScrollChange: () => void,
   scrollRef: (scrollTo: (highlight: T_Highlight) => void) => void,
   pdfDocument: T_PDFJS_Document,
+  pdfScaleValue: string,
   onSelectionFinished: (
     position: T_ScaledPosition,
     content: { text?: string, image?: string },
@@ -87,6 +88,10 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   Props<T_HT>,
   State<T_HT>
 > {
+  static defaultProps = {
+    pdfScaleValue: "auto"
+  };
+
   state: State<T_HT> = {
     ghostHighlight: null,
     isCollapsed: true,
@@ -102,15 +107,23 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   });
   viewer: T_PDFJS_Viewer;
 
+  resizeObserver = null;
   containerNode: ?HTMLDivElement = null;
   unsubscribe = () => {};
+
+  constructor(props: Props<T_HT>) {
+    super(props);
+    if (typeof ResizeObserver !== "undefined") {
+      this.resizeObserver = new ResizeObserver(this.debouncedScaleValue);
+    }
+  }
 
   componentDidMount() {
     this.init();
   }
 
   attachRef = (ref: ?HTMLDivElement) => {
-    const { eventBus } = this;
+    const { eventBus, resizeObserver: observer } = this;
     this.containerNode = ref;
     this.unsubscribe();
 
@@ -120,12 +133,16 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
       eventBus.on("pagesinit", this.onDocumentReady);
       doc.addEventListener("selectionchange", this.onSelectionChange);
       doc.addEventListener("keydown", this.handleKeyDown);
+      doc.defaultView.addEventListener("resize", this.debouncedScaleValue);
+      if (observer) observer.observe(ref);
 
       this.unsubscribe = () => {
         eventBus.off("pagesinit", this.onDocumentReady);
         eventBus.off("textlayerrendered", this.onTextLayerRendered);
         doc.removeEventListener("selectionchange", this.onSelectionChange);
         doc.removeEventListener("keydown", this.handleKeyDown);
+        doc.defaultView.removeEventListener("resize", this.debouncedScaleValue);
+        if (observer) observer.disconnect();
       };
     }
   };
@@ -392,7 +409,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   onDocumentReady = () => {
     const { scrollRef } = this.props;
 
-    this.viewer.currentScaleValue = "auto";
+    this.handleScaleValue();
 
     scrollRef(this.scrollTo);
   };
@@ -511,6 +528,14 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
       flag
     );
   }
+
+  handleScaleValue = () => {
+    if (this.viewer) {
+      this.viewer.currentScaleValue = this.props.pdfScaleValue; //"page-width";
+    }
+  };
+
+  debouncedScaleValue: () => void = debounce(this.handleScaleValue, 500);
 
   render() {
     const { onSelectionFinished, enableAreaSelection } = this.props;

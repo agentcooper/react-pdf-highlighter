@@ -155,7 +155,6 @@ class App extends Component<Props, State> {
           style={{
             height: "100vh",
             width: "75vw",
-            overflowY: "scroll",
             position: "relative"
           }}
         >
@@ -165,6 +164,7 @@ class App extends Component<Props, State> {
                 pdfDocument={pdfDocument}
                 enableAreaSelection={event => event.altKey}
                 onScrollChange={resetHash}
+                // pdfScaleValue="page-width"
                 scrollRef={scrollTo => {
                   this.scrollViewerTo = scrollTo;
 
