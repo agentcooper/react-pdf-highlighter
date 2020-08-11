@@ -1,16 +1,24 @@
 // @flow
 
-const getDocument = elm => (elm || {}).ownerDocument;
-const getWindow = elm => (getDocument(elm) || {}).defaultView;
+export const getDocument = (elm: any): Document =>
+  (elm || {}).ownerDocument || document;
+export const getWindow = (elm: any): typeof window =>
+  (getDocument(elm) || {}).defaultView || window;
+export const isHTMLElement = (elm: any) =>
+  elm instanceof HTMLElement || elm instanceof getWindow(elm).HTMLElement;
+export const isHTMLCanvasElement = (elm: any) =>
+  elm instanceof HTMLCanvasElement ||
+  elm instanceof getWindow(elm).HTMLCanvasElement;
+export const asElement = (x: any): HTMLElement => (x: HTMLElement);
 
 export const getPageFromElement = (target: HTMLElement) => {
-  const node = target.closest(".page");
+  const node = asElement(target.closest(".page"));
 
-  if (!node || !(node instanceof getWindow(target).HTMLElement)) {
+  if (!node || !isHTMLElement(node)) {
     return null;
   }
 
-  const number = Number(node.dataset.pageNumber);
+  const number = Number(asElement(node).dataset.pageNumber);
 
   return { node, number };
 };
@@ -18,11 +26,11 @@ export const getPageFromElement = (target: HTMLElement) => {
 export const getPageFromRange = (range: Range) => {
   const parentElement = range.startContainer.parentElement;
 
-  if (!(parentElement instanceof getWindow(parentElement).HTMLElement)) {
+  if (!isHTMLElement(parentElement)) {
     return;
   }
 
-  return getPageFromElement(parentElement);
+  return getPageFromElement(asElement(parentElement));
 };
 
 export const findOrCreateContainerLayer = (

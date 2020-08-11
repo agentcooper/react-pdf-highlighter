@@ -1,5 +1,5 @@
 // @flow
-
+import { isHTMLCanvasElement } from "../lib/pdfjs-dom";
 import type { T_LTWH } from "../types.js";
 
 const getAreaAsPNG = (canvas: HTMLCanvasElement, position: T_LTWH): string => {
@@ -9,7 +9,7 @@ const getAreaAsPNG = (canvas: HTMLCanvasElement, position: T_LTWH): string => {
   // @TODO: cache this?
   const newCanvas = doc && doc.createElement("canvas");
 
-  if (!(newCanvas instanceof HTMLCanvasElement)) {
+  if (!newCanvas || !isHTMLCanvasElement(newCanvas)) {
     return "";
   }
 

@@ -17,9 +17,12 @@ import getClientRects from "../lib/get-client-rects";
 import getAreaAsPng from "../lib/get-area-as-png";
 
 import {
+  asElement,
   getPageFromRange,
   getPageFromElement,
-  findOrCreateContainerLayer
+  getWindow,
+  findOrCreateContainerLayer,
+  isHTMLElement
 } from "../lib/pdfjs-dom";
 
 import TipContainer from "./TipContainer";
@@ -415,8 +418,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   };
 
   onSelectionChange = () => {
-    const selection: Selection = window.getSelection();
     const container = this.containerNode;
+    const selection: Selection = getWindow(container).getSelection();
     const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
 
     if (selection.isCollapsed) {
@@ -456,11 +459,11 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   };
 
   onMouseDown = (event: MouseEvent) => {
-    if (!(event.target instanceof HTMLElement)) {
+    if (!isHTMLElement(event.target)) {
       return;
     }
 
-    if (event.target.closest(".PdfHighlighter__tip-container")) {
+    if (asElement(event.target).closest(".PdfHighlighter__tip-container")) {
       return;
     }
 
@@ -557,8 +560,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
               }
               shouldStart={event =>
                 enableAreaSelection(event) &&
-                event.target instanceof HTMLElement &&
-                Boolean(event.target.closest(".page"))
+                isHTMLElement(event.target) &&
+                Boolean(asElement(event.target).closest(".page"))
               }
               onSelection={(startTarget, boundingRect, resetSelection) => {
                 const page = getPageFromElement(startTarget);
