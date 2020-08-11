@@ -28,17 +28,20 @@ export function setPdfWorker(workerSrcOrClass: any) {
 type Props = {
   url: string,
   beforeLoad: React$Element<*>,
+  errorMessage?: React$Element<*>,
   children: (pdfDocument: T_PDFJS_Document) => React$Element<*>,
   onError?: (error: Error) => void
 };
 
 type State = {
-  pdfDocument: ?T_PDFJS_Document
+  pdfDocument: ?T_PDFJS_Document,
+  error: ?Error
 };
 
 class PdfLoader extends Component<Props, State> {
   state = {
-    pdfDocument: null
+    pdfDocument: null,
+    error: null
   };
 
   componentDidMount() {
@@ -58,10 +61,20 @@ class PdfLoader extends Component<Props, State> {
     }
   }
 
+  componentDidCatch(error: Error, info?: any) {
+    const { onError } = this.props;
+
+    if (onError) {
+      onError(error);
+    }
+
+    this.setState({ pdfDocument: null, error });
+  }
+
   load() {
-    const { url, onError } = this.props;
+    const { url } = this.props;
     const { pdfDocument: discardedDocument } = this.state;
-    this.setState({ pdfDocument: null });
+    this.setState({ pdfDocument: null, error: null });
 
     Promise.resolve()
       .then(() => discardedDocument && discardedDocument.destroy())
@@ -72,18 +85,31 @@ class PdfLoader extends Component<Props, State> {
             this.setState({ pdfDocument });
           })
       )
-      .catch(onError);
+      .catch(e => this.componentDidCatch(e));
   }
 
   render() {
     const { children, beforeLoad } = this.props;
-    const { pdfDocument } = this.state;
+    const { pdfDocument, error } = this.state;
 
-    if (pdfDocument) {
-      return children(pdfDocument);
+    return (
+      <>
+        {error
+          ? this.renderError()
+          : !pdfDocument || !children
+          ? beforeLoad
+          : children(pdfDocument)}
+      </>
+    );
+  }
+
+  renderError() {
+    const { errorMessage } = this.props;
+    if (errorMessage) {
+      return React.cloneElement(errorMessage, { error: this.state.error });
     }
 
-    return beforeLoad;
+    return null;
   }
 }
 
