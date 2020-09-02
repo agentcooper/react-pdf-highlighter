@@ -37,12 +37,16 @@ class TipContainer extends Component<Props, State> {
   updatePosition = () => {
     const { container } = this.refs;
 
-    const { offsetHeight, offsetWidth } = container;
+    try {
+      const { offsetHeight, offsetWidth } = container;
 
-    this.setState({
-      height: offsetHeight,
-      width: offsetWidth
-    });
+      this.setState({
+        height: offsetHeight,
+        width: offsetWidth
+      });
+    } catch (e) {
+      console.log("Error update Position", e);
+    }
   };
 
   render() {
