@@ -1,11 +1,11 @@
 {
   "name": "example",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "private": true,
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-pdf-highlighter": "^3.2.0"
+    "react-pdf-highlighter": "^3.3.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.2",
@@ -14,8 +14,8 @@
     "flow-bin": "^0.130.0",
     "flow-typed": "^3.2.1",
     "jest-puppeteer": "^4.4.0",
-    "react-scripts": "3.4.1",
     "puppeteer": "^5.2.1",
+    "react-scripts": "3.4.1",
     "worker-loader": "^2.0.0"
   },
   "scripts": {
