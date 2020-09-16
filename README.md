@@ -70,6 +70,17 @@ Please check the [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTT
 Works in Google Chrome, Safari 10+, Firefox 52+. Not tested in Internet
 Explorer.
 
+### Contributing
+
+To publish a new version:
+
+```
+npx lerna version
+
+cd ./packages/react-pdf-highlighter
+npm publish
+```
+
 # PDF.js worker thread
 
 The default worker is an inline "fake" worker. To improve performance, either add the worker-loader (preferred) to your webpack config or use the inline loader syntax.
