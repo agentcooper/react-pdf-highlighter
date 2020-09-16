@@ -2,17 +2,16 @@
 
 import React, { Component } from "react";
 
-// $FlowFixMe
-import Rnd from "react-rnd";
+import { Rnd } from "react-rnd";
 
 import "../style/AreaHighlight.css";
 
 import type { T_ViewportHighlight, T_LTWH } from "../types";
 
-type Props = {
+type Props = {|
   highlight: T_ViewportHighlight,
   onChange: (rect: T_LTWH) => void
-};
+|};
 
 class AreaHighlight extends Component<Props> {
   render() {

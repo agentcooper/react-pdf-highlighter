@@ -69,3 +69,39 @@ Please check the [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTT
 
 Works in Google Chrome, Safari 10+, Firefox 52+. Not tested in Internet
 Explorer.
+
+# PDF.js worker thread
+
+The default worker is an inline "fake" worker. To improve performance, either add the worker-loader (preferred) to your webpack config or use the inline loader syntax.
+
+#### Webpack config example snippet
+
+> Use this if have your own config
+
+```js
+{
+  ...
+  module: {
+    rules: [
+      {
+        test: /\.worker\.js$/,
+        use: 'worker-loader',
+      },
+      ...
+    ]
+  }
+}
+```
+
+#### Inline Webpack-loader syntax
+
+> Use in Create React App projects
+
+```js
+import PDFWorker from "worker-loader!pdfjs-dist/lib/pdf.worker";
+
+import {setPdfWorker} from 'react-pdf-highlighter;
+
+setPdfWorker(PDFWorker);
+...
+```

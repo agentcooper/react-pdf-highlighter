@@ -12,22 +12,26 @@
     "prepublishOnly": "npm run build && npm run copy-flow"
   },
   "dependencies": {
-    "lodash": "^4.17.10",
-    "pdfjs-dist": "2.2.228",
+    "lodash.debounce": "^4.0.8",
+    "pdfjs-dist": "^2.6.347",
     "react-pointable": "^1.1.1",
-    "react-rnd": "^7.1.5"
+    "react-rnd": "^10.1.10"
   },
   "peerDependencies": {
     "react": ">=0.14",
     "react-dom": ">=0.14"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.3",
-    "@babel/core": "^7.8.3",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/preset-flow": "^7.8.3",
-    "@babel/preset-react": "^7.8.3",
-    "flow-copy-source": "^2.0.9"
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-flow": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "flow-bin": "^0.130.0",
+    "flow-copy-source": "^2.0.9",
+    "flow-typed": "^3.2.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "author": "Artem Tyurin <artem.tyurin@gmail.com>",
   "license": "MIT",

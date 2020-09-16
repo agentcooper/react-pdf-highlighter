@@ -11,6 +11,7 @@ type Props = {
 
 class MouseMonitor extends Component<Props> {
   container: ?HTMLDivElement;
+  unsubscribe = () => {};
 
   onMouseMove = (event: MouseEvent) => {
     if (!this.container) {
@@ -36,13 +37,18 @@ class MouseMonitor extends Component<Props> {
     }
   };
 
-  componentDidMount() {
-    document.addEventListener("mousemove", this.onMouseMove);
-  }
+  attachRef = (ref: ?HTMLDivElement) => {
+    this.container = ref;
+    this.unsubscribe();
 
-  componentWillUnmount() {
-    document.removeEventListener("mousemove", this.onMouseMove);
-  }
+    if (ref) {
+      const { ownerDocument: doc } = ref;
+      doc.addEventListener("mousemove", this.onMouseMove);
+      this.unsubscribe = () => {
+        doc.removeEventListener("mousemove", this.onMouseMove);
+      };
+    }
+  };
 
   render() {
     // eslint-disable-next-line
@@ -55,9 +61,7 @@ class MouseMonitor extends Component<Props> {
     } = this.props;
 
     return (
-      <div ref={node => (this.container = node)}>
-        {React.cloneElement(children, restProps)}
-      </div>
+      <div ref={this.attachRef}>{React.cloneElement(children, restProps)}</div>
     );
   }
 }
