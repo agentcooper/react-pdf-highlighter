@@ -111,7 +111,7 @@ The default worker is an inline "fake" worker. To improve performance, either ad
 ```js
 import PDFWorker from "worker-loader!pdfjs-dist/lib/pdf.worker";
 
-import {setPdfWorker} from 'react-pdf-highlighter;
+import {setPdfWorker} from 'react-pdf-highlighter';
 
 setPdfWorker(PDFWorker);
 ...
