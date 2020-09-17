@@ -13,7 +13,7 @@
 
 .PdfHighlighter__tip-container {
   z-index: 6;
-  position: absolute;
+  /* position: absolute; */
 }
 
 .PdfHighlighter--disable-selection {

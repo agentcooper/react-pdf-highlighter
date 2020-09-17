@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Tip from "./Tip";
 
 import "../style/ContextMenu.css";
 
@@ -10,11 +11,7 @@ type State = {
 
 type Props = {
   onConfirm: (comment: { text: string, emoji: string }) => void,
-  onOpen: () => void,
-  onUpdate?: () => void,
-  compact: boolean,
-  text: string,
-  emoji: string
+  onOpen: () => void
 };
 
 class ContextMenu extends Component<Props, State> {
@@ -26,18 +23,17 @@ class ContextMenu extends Component<Props, State> {
 
   handleContextMenu = e => {
     e.preventDefault();
+    debugger;
+    this.setState({
+      xPos: e.pageX + "px",
+      yPos: e.pageY + "px",
+      showMenu: true
+    });
 
-    e &&
-      this.setState({
-        xPos: e.pageX + "px",
-        yPos: e.pageY + "px",
-        showMenu: true
-      });
-    console.log("why", e, this.state);
+    console.log("handleContextMenu", this, e.pageX, this.state);
   };
 
   handleClick = e => {
-    console.log("why2", this.state);
     if (this.state.showMenu) {
       this.setState({ showMenu: false });
     }
@@ -49,7 +45,7 @@ class ContextMenu extends Component<Props, State> {
   }
 
   componentWillUnmount() {
-    //fix Warning: Can't perform a React state update on an unmounted component
+    // fix Warning: Can't perform a React state update on an unmounted component
     this.setState = (state, callback) => {
       return;
     };
@@ -59,66 +55,19 @@ class ContextMenu extends Component<Props, State> {
 
   render() {
     const { showMenu, xPos, yPos } = this.state;
-    const { onConfirm, onOpen, compact, text, emoji } = this.props;
+    const { onConfirm, onOpen } = this.props;
 
     // if (showMenu)
     return (
-      <div className="Tip">
-        {compact ? (
-          <div
-            className="Tip__compact"
-            onClick={() => {
-              onOpen();
-              this.setState({ compact: false });
-            }}
-            style={{ top: xPos || "563px", left: yPos || "407px" }}
-          >
-            Add highlightgggggggggg
-          </div>
-        ) : (
-          <form
-            className="Tip__card"
-            onSubmit={event => {
-              event.preventDefault();
-              onConfirm({ text, emoji });
-            }}
-          >
-            <div>
-              <textarea
-                width="100%"
-                placeholder="Your comment"
-                autoFocus
-                value={text}
-                onChange={event => this.setState({ text: event.target.value })}
-                ref={node => {
-                  if (node) {
-                    node.focus();
-                  }
-                }}
-              />
-              {/* <div>
-                    {["💩", "😱", "😍", "🔥", "😳", "⚠️"].map(_emoji => (
-                      <label key={_emoji}>
-                        <input
-                          checked={emoji === _emoji}
-                          type="radio"
-                          name="emoji"
-                          value={_emoji}
-                          onChange={event =>
-                            this.setState({ emoji: event.target.value })
-                          }
-                        />
-                        {_emoji}
-                      </label>
-                    ))}
-                  </div> */}
-            </div>
-            <div>
-              <input type="submit" value="Save" />
-            </div>
-          </form>
-        )}
-      </div>
+      <Tip
+        onOpen={onOpen}
+        onConfirm={onConfirm}
+        style={{
+          top: xPos,
+          left: yPos,
+          position: "absolute"
+        }}
+      />
     );
     // else return null;
   }

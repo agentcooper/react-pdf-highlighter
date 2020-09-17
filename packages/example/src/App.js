@@ -7,7 +7,7 @@ import URLSearchParams from "url-search-params";
 import {
   PdfLoader,
   PdfHighlighter,
-  Tip,
+  ContextMenu,
   Highlight,
   Popup,
   AreaHighlight
@@ -167,7 +167,7 @@ class App extends Component<Props, State> {
                 hideTipAndSelection,
                 transformSelection
               ) => (
-                <Tip
+                <ContextMenu
                   onOpen={transformSelection}
                   onConfirm={comment => {
                     this.addHighlight({ content, position, comment });
