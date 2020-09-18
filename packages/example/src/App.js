@@ -167,7 +167,6 @@ class App extends Component<Props, State> {
                 hideTipAndSelection,
                 transformSelection,
                 clientPosition,
-                isRightClicked
               ) => (
                 <ContextMenu
                   onOpen={transformSelection}
@@ -178,7 +177,6 @@ class App extends Component<Props, State> {
                   content={content}
                   position={position}
                   clientPosition={clientPosition}
-                  isRightClicked={isRightClicked}
                 />
               )}
               highlightTransform={(

@@ -57,10 +57,6 @@ type State<T_HT> = {
   clientPosition: {
     xPos: number,
     yPos: number
-  },
-  pageOffset: {
-    top: number,
-    left: number
   }
 };
 
@@ -110,8 +106,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     clientPosition: {
       xPos: 0,
       yPos: 0
-    },
-    pageOffset: { top: 0, left: 0 }
+    }
   };
 
   viewer: T_PDFJS_Viewer;
@@ -417,6 +412,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     }
 
     const range = selection.getRangeAt(0);
+    console.log("content", selection);
 
     if (!range) {
       return;
@@ -467,9 +463,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     this.setState({
       clientPosition: {
         xPos: event.clientX,
-        yPos: this.state.pageOffset
-          ? event.clientY + Math.abs(this.state.pageOffset.top)
-          : event.clientY,
+        yPos: event.clientY,
         viewer: this.viewer
       }
     });
@@ -485,7 +479,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     }
 
     const page = getPageFromRange(range);
-
+    console.log("page", page);
     if (!page) {
       return;
     }
@@ -503,6 +497,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     const content = {
       text: range.toString()
     };
+
     const scaledPosition = this.viewportPositionToScaled(viewportPosition);
 
     this.renderTipAtPosition(

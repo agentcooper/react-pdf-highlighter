@@ -44,16 +44,12 @@ class ContextMenu extends Component<Props, State> {
 
   render() {
     const { showMenu } = this.state;
-    const {
-      onConfirm,
-      onOpen,
-      clientPosition,
-      isRightClicked,
-      position
-    } = this.props;
+    const { onConfirm, onOpen, clientPosition, position } = this.props;
 
-    console.log(this.props.content);
-    const page = clientPosition.viewer.getPageView(position.pageNumber - 1).div;
+    // console.log(this.props.content);
+    const page =
+      clientPosition.viewer &&
+      clientPosition.viewer.getPageView(position.pageNumber - 1).div;
     const topOffset = Math.abs(page.getBoundingClientRect().top);
 
     // if (showMenu)
