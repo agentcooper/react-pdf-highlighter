@@ -15,6 +15,6 @@ export {
   Popup,
   AreaHighlight,
   PdfLoader,
-  ContextMenu
+  ContextMenu,
   setPdfWorker
 };
