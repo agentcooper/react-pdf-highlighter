@@ -62,7 +62,6 @@ class Tip extends Component<Props, State> {
             }}
             style={style}
           >
-            {console.log("gererer")}
             <div>
               <textarea
                 width="100%"

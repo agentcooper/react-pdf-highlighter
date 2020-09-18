@@ -4,8 +4,6 @@ import Tip from "./Tip";
 import "../style/ContextMenu.css";
 
 type State = {
-  xPos: string,
-  yPos: string,
   showMenu: boolean
 };
 
@@ -16,21 +14,12 @@ type Props = {
 
 class ContextMenu extends Component<Props, State> {
   state: State = {
-    xPos: "0px",
-    yPos: "0px",
     showMenu: false
   };
 
   handleContextMenu = e => {
     e.preventDefault();
-    debugger;
-    this.setState({
-      xPos: e.pageX + "px",
-      yPos: e.pageY + "px",
-      showMenu: true
-    });
-
-    console.log("handleContextMenu", this, e.pageX, this.state);
+    this.setState.showMenu = true;
   };
 
   handleClick = e => {
@@ -46,29 +35,29 @@ class ContextMenu extends Component<Props, State> {
 
   componentWillUnmount() {
     // fix Warning: Can't perform a React state update on an unmounted component
-    this.setState = (state, callback) => {
-      return;
-    };
+    // this.setState = (state, callback) => {
+    //   return;
+    // };
     document.removeEventListener("click", e => this.handleClick(e));
     document.removeEventListener("contextmenu", e => this.handleContextMenu(e));
   }
 
   render() {
-    const { showMenu, xPos, yPos } = this.state;
-    const { onConfirm, onOpen } = this.props;
-
-    // if (showMenu)
-    return (
-      <Tip
-        onOpen={onOpen}
-        onConfirm={onConfirm}
-        style={{
-          top: xPos,
-          left: yPos,
-          position: "absolute"
-        }}
-      />
-    );
+    const { showMenu} = this.state;
+    const { onConfirm, onOpen, clientPosition, isRightClicked } = this.props;
+    console.log("client pos", isRightClicked);
+    // if (clientPosition.xPos || clientPosition.yPos)
+      return (
+        <Tip
+          onOpen={onOpen}
+          onConfirm={onConfirm}
+          style={{
+            top: clientPosition.xPos,
+            left: clientPosition.yPos,
+            position: "absolute"
+          }}
+        />
+      );
     // else return null;
   }
 }

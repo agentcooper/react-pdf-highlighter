@@ -53,7 +53,11 @@ type State<T_HT> = {
     callback: (highlight: T_ViewportHighlight<T_HT>) => React$Element<*>
   },
   isAreaSelectionInProgress: boolean,
-  scrolledToHighlightId: string
+  scrolledToHighlightId: string,
+  clientPosition: {
+    xPos: number,
+    yPos: number
+  }
 };
 
 type Props<T_HT> = {
@@ -77,7 +81,11 @@ type Props<T_HT> = {
     position: T_ScaledPosition,
     content: { text?: string, image?: string },
     hideTipAndSelection: () => void,
-    transformSelection: () => void
+    transformSelection: () => void,
+    clientPosition: {
+      xPos: number,
+      yPos: number
+    }
   ) => ?React$Element<*>,
   enableAreaSelection: (event: MouseEvent) => boolean
 };
@@ -94,7 +102,11 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     range: null,
     scrolledToHighlightId: EMPTY_ID,
     isAreaSelectionInProgress: false,
-    tip: null
+    tip: null,
+    clientPosition: {
+      xPos: 0,
+      yPos: 0
+    }
   };
 
   viewer: T_PDFJS_Viewer;
@@ -431,6 +443,10 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
       return;
     }
 
+    this.setState({
+      clientPosition: { xPos: event.clientX, yPos: event.clientY }
+    });
+
     if (event.target.closest(".PdfHighlighter__tip-container")) {
       return;
     }
@@ -447,7 +463,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   afterSelection = () => {
     const { onSelectionFinished } = this.props;
 
-    const { isCollapsed, range } = this.state;
+    const { isCollapsed, range, clientPosition } = this.state;
 
     if (!range || isCollapsed) {
       return;
@@ -486,7 +502,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
               ghostHighlight: { position: scaledPosition }
             },
             () => this.renderHighlights()
-          )
+          ),
+        clientPosition
       )
     );
   };
