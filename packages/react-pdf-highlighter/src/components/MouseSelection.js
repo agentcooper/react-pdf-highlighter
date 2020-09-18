@@ -2,6 +2,7 @@
 
 import React, { Component } from "react";
 
+import { asElement, isHTMLElement } from "../lib/pdfjs-dom";
 import "../style/MouseSelection.css";
 
 import type { T_LTWH } from "../types.js";
@@ -73,9 +74,9 @@ class MouseSelection extends Component<Props, State> {
 
     const { onSelection, onDragStart, onDragEnd, shouldStart } = this.props;
 
-    const container = this.root.parentElement;
+    const container = asElement(this.root.parentElement);
 
-    if (!(container instanceof HTMLElement)) {
+    if (!isHTMLElement(container)) {
       return;
     }
 
@@ -111,9 +112,8 @@ class MouseSelection extends Component<Props, State> {
         return;
       }
 
-      const startTarget = event.target;
-
-      if (!(startTarget instanceof HTMLElement)) {
+      const startTarget = asElement(event.target);
+      if (!isHTMLElement(startTarget)) {
         return;
       }
 
@@ -140,8 +140,8 @@ class MouseSelection extends Component<Props, State> {
         const boundingRect = that.getBoundingRect(start, end);
 
         if (
-          !(event.target instanceof HTMLElement) ||
-          !container.contains(event.target) ||
+          !isHTMLElement(event.target) ||
+          !container.contains(asElement(event.target)) ||
           !that.shouldRender(boundingRect)
         ) {
           that.reset();
@@ -160,7 +160,7 @@ class MouseSelection extends Component<Props, State> {
               return;
             }
 
-            if (event.target instanceof HTMLElement) {
+            if (isHTMLElement(event.target)) {
               onSelection(startTarget, boundingRect, that.reset);
 
               onDragEnd();
@@ -169,8 +169,9 @@ class MouseSelection extends Component<Props, State> {
         );
       };
 
-      if (document.body) {
-        document.body.addEventListener("mouseup", onMouseUp);
+      const { ownerDocument: doc } = container;
+      if (doc.body) {
+        doc.body.addEventListener("mouseup", onMouseUp);
       }
     });
   }

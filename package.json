@@ -3,23 +3,23 @@
   "name": "react-pdf-highlighter-monorepo",
   "scripts": {
     "postinstall": "npm run bootstrap",
-    "bootstrap": "lerna bootstrap",
-    "start": "concurrently --kill-others 'npm run start:example' 'npm run start:react-pdf-highlighter'",
+    "bootstrap": "lerna bootstrap --hoist",
+    "types": "lerna exec flow-typed \"install -i dev -l ../../flow-typed\"",
+    "start": "concurrently --kill-others 'npm run \"start:example\"' 'npm run \"start:react-pdf-highlighter\"'",
     "start:example": "wait-on ./packages/react-pdf-highlighter/build && lerna run start --scope=example",
     "start:react-pdf-highlighter": "lerna run start --scope=react-pdf-highlighter",
     "test": "npm run flow && lerna run test",
     "build": "lerna run build",
-    "clean": "lerna clean && lerna run clean",
-    "flow": "flow check",
+    "clean": "lerna clean -y && lerna run clean",
+    "flow": "lerna exec flow check",
     "format": "prettier --write 'packages/**/*.js'",
     "format:check": "prettier --check 'packages/**/*.js'"
   },
   "devDependencies": {
     "concurrently": "^5.0.2",
-    "flow-bin": "^0.73.0",
-    "gh-pages": "0.11.0",
+    "gh-pages": "^3.1.0",
     "lerna": "^3.20.2",
-    "prettier": "^1.19.1",
-    "wait-on": "^4.0.0"
+    "prettier": "^2.0.5",
+    "wait-on": "^5.1.0"
   }
 }

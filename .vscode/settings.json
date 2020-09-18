@@ -2,5 +2,9 @@
   "javascript.validate.enable": false,
   "flow.useNPMPackagedFlow": true,
   "editor.formatOnSave": true,
-  "deepscan.enable": true
+  "deepscan.enable": true,
+  "cSpell.words": ["LTWH", "Pointable", "pagesinit", "textlayerrendered"],
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

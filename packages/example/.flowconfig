@@ -1,0 +1,18 @@
+[version]
+0.130.0
+
+[ignore]
+.*/build/.*
+.*/node_modules/.*
+
+[include]
+
+[libs]
+../../flow-typed
+
+[lints]
+all=warn
+
+[options]
+emoji=true
+module.name_mapper='react-pdf-highlighter' -> '<PROJECT_ROOT>/../react-pdf-highlighter/src/index.js'
