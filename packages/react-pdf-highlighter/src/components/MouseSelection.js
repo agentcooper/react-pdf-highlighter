@@ -38,7 +38,6 @@ class MouseSelection extends Component<Props, State> {
   };
 
   root: ?HTMLElement;
-  container = () => this.root.parentElement;
 
   reset = () => {
     const { onDragEnd } = this.props;
@@ -66,24 +65,14 @@ class MouseSelection extends Component<Props, State> {
     onChange(isVisible);
   }
 
-  handleMouseMove(event) {
-    const { start, locked } = this.state;
-
-    if (!start || locked) {
+  componentDidMount() {
+    if (!this.root) {
       return;
     }
 
-    that.setState({
-      ...this.state,
-      end: containerCoords(event.pageX, event.pageY)
-    });
-  }
+    const that = this;
 
-  handleMouseDown(event, shouldStart) {
-    if (!shouldStart(event)) {
-      this.reset();
-      return;
-    }
+    const { onSelection, onDragStart, onDragEnd, shouldStart } = this.props;
 
     const container = asElement(this.root.parentElement);
 
@@ -91,70 +80,64 @@ class MouseSelection extends Component<Props, State> {
       return;
     }
 
-    onDragStart();
+    let containerBoundingRect = null;
 
-    this.setState({
-      start: containerCoords(event.pageX, event.pageY),
-      end: null,
-      locked: false
+    const containerCoords = (pageX: number, pageY: number) => {
+      if (!containerBoundingRect) {
+        containerBoundingRect = container.getBoundingClientRect();
+      }
+
+      return {
+        x: pageX - containerBoundingRect.left + container.scrollLeft,
+        y: pageY - containerBoundingRect.top + container.scrollTop
+      };
+    };
+
+    container.addEventListener("mousemove", (event: MouseEvent) => {
+      const { start, locked } = this.state;
+
+      if (!start || locked) {
+        return;
+      }
+
+      that.setState({
+        ...this.state,
+        end: containerCoords(event.pageX, event.pageY)
+      });
     });
 
-    if (document.body) {
-      document.body.addEventListener("mouseup", handleMouseUp);
-    }
-  }
-
-  handleMouseUp = event => {
-    // emulate listen once
-    event.currentTarget.removeEventListener("mouseup", handleMouseUp);
-
-    const { start } = this.state;
-
-    if (!start) {
-      return;
-    }
+    container.addEventListener("mousedown", (event: MouseEvent) => {
+      if (!shouldStart(event)) {
+        this.reset();
+        return;
+      }
 
       const startTarget = asElement(event.target);
       if (!isHTMLElement(startTarget)) {
         return;
       }
 
-    if (
-      !(event.target instanceof HTMLElement) ||
-      !container.contains(event.target) ||
-      !that.shouldRender(boundingRect)
-    ) {
-      that.reset();
-      return;
-    }
+      onDragStart();
 
-    that.setState(
-      {
-        end,
-        locked: true
-      },
-      () => {
-        const { start, end } = that.state;
+      this.setState({
+        start: containerCoords(event.pageX, event.pageY),
+        end: null,
+        locked: false
+      });
 
-        if (!start || !end) {
+      const onMouseUp = (event: MouseEvent): void => {
+        // emulate listen once
+        event.currentTarget.removeEventListener("mouseup", onMouseUp);
+
+        const { start } = this.state;
+
+        if (!start) {
           return;
         }
 
-        if (event.target instanceof HTMLElement) {
-          onSelection(startTarget, boundingRect, that.reset);
+        const end = containerCoords(event.pageX, event.pageY);
 
-          onDragEnd();
-        }
-      }
-    );
-  };
-
-  componentDidMount() {
-    if (!this.root) {
-      return;
-    }
-
-    const that = this;
+        const boundingRect = that.getBoundingRect(start, end);
 
         if (
           !isHTMLElement(event.target) ||
@@ -190,29 +173,7 @@ class MouseSelection extends Component<Props, State> {
       if (doc.body) {
         doc.body.addEventListener("mouseup", onMouseUp);
       }
-
-      return {
-        x: pageX - containerBoundingRect.left + container.scrollLeft,
-        y: pageY - containerBoundingRect.top + container.scrollTop
-      };
-    };
-
-    container.addEventListener("mousemove", e => this.handleMouseMove(e));
-    container.addEventListener("mousedown", (event: MouseEvent) =>
-      this.handleMouseDown(event, shouldStart)
-    );
-  }
-
-  componentWillUnmount() {
-    this.container
-      .removeEventListener("mousemove", e => this.handleMouseMove(e))
-      .bind(this);
-    this.container
-      .removeEventListener("mousedown", (event: MouseEvent) =>
-        this.handleMouseDown(event, shouldStart)
-      )
-      .bind(this);
-    document.body.removeEventListener("mouseup", e => this.handleMouseUp(e));
+    });
   }
 
   shouldRender(boundingRect: T_LTWH) {
