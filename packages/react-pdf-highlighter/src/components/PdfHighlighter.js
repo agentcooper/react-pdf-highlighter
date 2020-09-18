@@ -2,13 +2,11 @@
 import React, { PureComponent } from "react";
 import ReactDom from "react-dom";
 import Pointable from "react-pointable";
-import _ from "lodash/fp";
-import {
-  PDFViewer,
-  PDFLinkService,
-  getGlobalEventBus
-} from "pdfjs-dist/web/pdf_viewer";
+import debounce from "lodash.debounce";
 
+import { EventBus, PDFViewer, PDFLinkService } from "pdfjs-dist/web/pdf_viewer";
+
+//$FlowFixMe
 import "pdfjs-dist/web/pdf_viewer.css";
 import "../style/pdf_viewer.css";
 
@@ -19,9 +17,12 @@ import getClientRects from "../lib/get-client-rects";
 import getAreaAsPng from "../lib/get-area-as-png";
 
 import {
+  asElement,
   getPageFromRange,
   getPageFromElement,
-  findOrCreateContainerLayer
+  getWindow,
+  findOrCreateContainerLayer,
+  isHTMLElement
 } from "../lib/pdfjs-dom";
 
 import TipContainer from "./TipContainer";
@@ -35,6 +36,7 @@ import type {
   T_Highlight,
   T_Scaled,
   T_LTWH,
+  T_EventBus,
   T_PDFJS_Viewer,
   T_PDFJS_Document,
   T_PDFJS_LinkService
@@ -77,6 +79,7 @@ type Props<T_HT> = {
   onScrollChange: () => void,
   scrollRef: (scrollTo: (highlight: T_Highlight) => void) => void,
   pdfDocument: T_PDFJS_Document,
+  pdfScaleValue: string,
   onSelectionFinished: (
     position: T_ScaledPosition,
     content: { text?: string, image?: string },
@@ -96,6 +99,10 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   Props<T_HT>,
   State<T_HT>
 > {
+  static defaultProps = {
+    pdfScaleValue: "auto"
+  };
+
   state: State<T_HT> = {
     ghostHighlight: null,
     isCollapsed: true,
@@ -109,16 +116,53 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     }
   };
 
+  eventBus: T_EventBus = new EventBus();
+  linkService: T_PDFJS_LinkService = new PDFLinkService({
+    eventBus: this.eventBus
+  });
   viewer: T_PDFJS_Viewer;
-  linkService: T_PDFJS_LinkService;
 
+  resizeObserver = null;
   containerNode: ?HTMLDivElement = null;
+  unsubscribe = () => {};
 
-  debouncedAfterSelection: () => void;
+  constructor(props: Props<T_HT>) {
+    super(props);
+    if (typeof ResizeObserver !== "undefined") {
+      this.resizeObserver = new ResizeObserver(this.debouncedScaleValue);
+    }
+  }
 
   componentDidMount() {
     this.init();
   }
+
+  attachRef = (ref: ?HTMLDivElement) => {
+    const { eventBus, resizeObserver: observer } = this;
+    this.containerNode = ref;
+    this.unsubscribe();
+
+    if (ref) {
+      const { ownerDocument: doc } = ref;
+      eventBus.on("textlayerrendered", this.onTextLayerRendered);
+      eventBus.on("pagesinit", this.onDocumentReady);
+      doc.addEventListener("selectionchange", this.onSelectionChange);
+      doc.addEventListener("keydown", this.handleKeyDown);
+      doc.addEventListener("click", this.handleClick);
+      doc.defaultView.addEventListener("resize", this.debouncedScaleValue);
+      if (observer) observer.observe(ref);
+
+      this.unsubscribe = () => {
+        eventBus.off("pagesinit", this.onDocumentReady);
+        eventBus.off("textlayerrendered", this.onTextLayerRendered);
+        doc.removeEventListener("selectionchange", this.onSelectionChange);
+        doc.removeEventListener("keydown", this.handleKeyDown);
+        doc.removeEventListener("click", this.handleClick);
+        doc.defaultView.removeEventListener("resize", this.debouncedScaleValue);
+        if (observer) observer.disconnect();
+      };
+    }
+  };
 
   componentDidUpdate(prevProps: Props<T_HT>) {
     if (prevProps.pdfDocument !== this.props.pdfDocument) {
@@ -133,43 +177,32 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   init() {
     const { pdfDocument } = this.props;
 
-    this.debouncedAfterSelection = _.debounce(500, this.afterSelection);
-    this.linkService = new PDFLinkService();
+    document.addEventListener("click", this.handleClick);
 
-    this.viewer = new PDFViewer({
-      container: this.containerNode,
-      enhanceTextSelection: true,
-      removePageBorders: true,
-      linkService: this.linkService
-    });
+    this.viewer =
+      this.viewer ||
+      new PDFViewer({
+        container: this.containerNode,
+        eventBus: this.eventBus,
+        enhanceTextSelection: true,
+        removePageBorders: true,
+        linkService: this.linkService
+      });
 
-    this.viewer.setDocument(pdfDocument);
     this.linkService.setDocument(pdfDocument);
     this.linkService.setViewer(this.viewer);
+    this.viewer.setDocument(pdfDocument);
 
     // debug
     window.PdfViewer = this;
-
-    document.addEventListener("selectionchange", this.onSelectionChange);
-    document.addEventListener("keydown", this.handleKeyDown);
-    document.addEventListener("click", this.handleClick);
-
-    document.addEventListener("pagesinit", () => {
-      this.onDocumentReady();
-    });
-
-    document.addEventListener("textlayerrendered", this.onTextLayerRendered);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("selectionchange", this.onSelectionChange);
-    document.removeEventListener("keydown", this.handleKeyDown);
-    document.removeEventListener("click", this.handleClick);
-    document.removeEventListener("textlayerrendered", this.onTextLayerRendered);
+    this.unsubscribe();
   }
 
   findOrCreateHighlightLayer(page: number) {
-    const textLayer = this.viewer.getPageView(page - 1).textLayer;
+    const { textLayer } = this.viewer.getPageView(page - 1) || {};
 
     if (!textLayer) {
       return null;
@@ -267,21 +300,18 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
         ReactDom.render(
           <div>
             {(highlightsByPage[String(pageNumber)] || []).map(
-              (highlight, index) => {
-                const { position, ...rest } = highlight;
-
-                const viewportHighlight = {
+              ({ position, id, ...highlight }, index) => {
+                const viewportHighlight: T_ViewportHighlight<T_HT> = {
+                  id,
                   position: this.scaledPositionToViewport(position),
-                  ...rest
+                  ...highlight
                 };
 
-                if (tip && tip.highlight.id === String(highlight.id)) {
+                if (tip && tip.highlight.id === String(id)) {
                   this.showTip(tip.highlight, tip.callback(viewportHighlight));
                 }
 
-                const isScrolledTo = Boolean(
-                  scrolledToHighlightId === highlight.id
-                );
+                const isScrolledTo = Boolean(scrolledToHighlightId === id);
 
                 return highlightTransform(
                   viewportHighlight,
@@ -398,23 +428,26 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   onDocumentReady = () => {
     const { scrollRef } = this.props;
 
-    this.viewer.currentScaleValue = "auto";
+    this.handleScaleValue();
 
     scrollRef(this.scrollTo);
   };
 
   onSelectionChange = () => {
-    const selection: Selection = window.getSelection();
+    const container = this.containerNode;
+    const selection: Selection = getWindow(container).getSelection();
+    const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
 
     if (selection.isCollapsed) {
       this.setState({ isCollapsed: true });
       return;
     }
 
-    const range = selection.getRangeAt(0);
-    console.log("content", selection);
-
-    if (!range) {
+    if (
+      !range ||
+      !container ||
+      !container.contains(range.commonAncestorContainer)
+    ) {
       return;
     }
 
@@ -442,11 +475,11 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   };
 
   onMouseDown = (event: MouseEvent) => {
-    if (!(event.target instanceof HTMLElement)) {
+    if (!isHTMLElement(event.target)) {
       return;
     }
 
-    if (event.target.closest(".PdfHighlighter__tip-container")) {
+    if (asElement(event.target).closest(".PdfHighlighter__tip-container")) {
       return;
     }
 
@@ -518,6 +551,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     );
   };
 
+  debouncedAfterSelection: () => void = debounce(this.afterSelection, 500);
+
   toggleTextSelection(flag: boolean) {
     this.viewer.viewer.classList.toggle(
       "PdfHighlighter--disable-selection",
@@ -525,13 +560,21 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     );
   }
 
+  handleScaleValue = () => {
+    if (this.viewer) {
+      this.viewer.currentScaleValue = this.props.pdfScaleValue; //"page-width";
+    }
+  };
+
+  debouncedScaleValue: () => void = debounce(this.handleScaleValue, 500);
+
   render() {
     const { onSelectionFinished, enableAreaSelection } = this.props;
 
     return (
       <Pointable onPointerDown={this.onMouseDown}>
         <div
-          ref={node => (this.containerNode = node)}
+          ref={this.attachRef}
           className="PdfHighlighter"
           onContextMenu={e => e.preventDefault()}
         >
@@ -545,8 +588,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
               }
               shouldStart={event =>
                 enableAreaSelection(event) &&
-                event.target instanceof HTMLElement &&
-                Boolean(event.target.closest(".page"))
+                isHTMLElement(event.target) &&
+                Boolean(asElement(event.target).closest(".page"))
               }
               onSelection={(startTarget, boundingRect, resetSelection) => {
                 const page = getPageFromElement(startTarget);
