@@ -7,7 +7,7 @@
     "types": "lerna exec flow-typed \"install -i dev -l ../../flow-typed\"",
     "start": "concurrently --kill-others 'npm run \"start:example\"' 'npm run \"start:react-pdf-highlighter\"'",
     "start:example": "wait-on ./packages/react-pdf-highlighter/build && lerna run start --scope=example",
-    "start:react-pdf-highlighter": "lerna run start --scope=react-pdf-highlighter",
+    "start:react-pdf-highlighter": "lerna run start --scope=@jagatmachines/react-pdf-highlighter",
     "test": "npm run flow && lerna run test",
     "build": "lerna run build",
     "clean": "lerna clean -y && lerna run clean",

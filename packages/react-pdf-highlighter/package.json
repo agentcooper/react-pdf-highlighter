@@ -1,6 +1,7 @@
 {
-  "name": "react-pdf-highlighter",
-  "version": "3.3.0",
+  "name": "@jagatmachines/react-pdf-highlighter",
+  "private": false,
+  "version": "3.3.0-alpha-01",
   "description": "Set of React components for PDF annotation",
   "main": "build/index.js",
   "scripts": {

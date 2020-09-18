@@ -12,7 +12,7 @@ import {
   Popup,
   AreaHighlight,
   setPdfWorker
-} from "react-pdf-highlighter";
+} from "@jagatmachines/react-pdf-highlighter";
 
 import testHighlights from "./test-highlights";
 
@@ -22,7 +22,7 @@ import Sidebar from "./Sidebar";
 import type {
   T_Highlight,
   T_NewHighlight
-} from "react-pdf-highlighter/src/types";
+} from "@jagatmachines/react-pdf-highlighter/src/types";
 
 import "./style/App.css";
 
