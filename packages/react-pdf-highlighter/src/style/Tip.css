@@ -16,6 +16,7 @@
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(37, 40, 43, 0.2);
   position: absolute;
+  z-index: 6;
 }
 
 .Tip__card textarea {
