@@ -88,7 +88,7 @@ class App extends Component<Props, State> {
 
   scrollToHighlightFromHash = () => {
     const highlight = this.getHighlightById(parseIdFromHash());
-
+    console.log("ssssss", highlight);
     if (highlight) {
       this.scrollViewerTo(highlight);
     }
