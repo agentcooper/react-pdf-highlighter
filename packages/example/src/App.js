@@ -61,8 +61,7 @@ class App extends Component<Props, State> {
     url: initialUrl,
     highlights: testHighlights[initialUrl]
       ? [...testHighlights[initialUrl]]
-      : [],
-    isRightClicked: false
+      : []
   };
 
   state: State;
@@ -135,7 +134,7 @@ class App extends Component<Props, State> {
 
   render() {
     const { url, highlights } = this.state;
-    console.log("oioioi", this.state);
+
     return (
       <div className="App" style={{ display: "flex", height: "100vh" }}>
         {/* <Sidebar
@@ -169,20 +168,18 @@ class App extends Component<Props, State> {
                 transformSelection,
                 clientPosition,
                 isRightClicked
-              ) =>
-                console.log("content", content, position) || (
-                  <ContextMenu
-                    onOpen={transformSelection}
-                    onConfirm={comment => {
-                      this.addHighlight({ content, position, comment });
-                      hideTipAndSelection();
-                    }}
-                    content={content}
-                    clientPosition={clientPosition}
-                    isRightClicked={isRightClicked}
-                  />
-                )
-              }
+              ) => (
+                <ContextMenu
+                  onOpen={transformSelection}
+                  onConfirm={comment => {
+                    this.addHighlight({ content, position, comment });
+                    hideTipAndSelection();
+                  }}
+                  content={content}
+                  clientPosition={clientPosition}
+                  isRightClicked={isRightClicked}
+                />
+              )}
               highlightTransform={(
                 highlight,
                 index,

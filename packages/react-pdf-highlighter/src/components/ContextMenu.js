@@ -35,29 +35,31 @@ class ContextMenu extends Component<Props, State> {
 
   componentWillUnmount() {
     // fix Warning: Can't perform a React state update on an unmounted component
-    // this.setState = (state, callback) => {
-    //   return;
-    // };
+    this.setState = (state, callback) => {
+      return;
+    };
     document.removeEventListener("click", e => this.handleClick(e));
     document.removeEventListener("contextmenu", e => this.handleContextMenu(e));
   }
 
   render() {
-    const { showMenu} = this.state;
+    const { showMenu } = this.state;
     const { onConfirm, onOpen, clientPosition, isRightClicked } = this.props;
-    console.log("client pos", isRightClicked);
-    // if (clientPosition.xPos || clientPosition.yPos)
-      return (
-        <Tip
-          onOpen={onOpen}
-          onConfirm={onConfirm}
-          style={{
-            top: clientPosition.xPos,
-            left: clientPosition.yPos,
+    console.log("client pos", clientPosition);
+    // if (showMenu)
+    return (
+      <Tip
+        onOpen={onOpen}
+        onConfirm={onConfirm}
+        style={
+          clientPosition && {
+            top: clientPosition.yPos,
+            left: clientPosition.xPos,
             position: "absolute"
-          }}
-        />
-      );
+          }
+        }
+      />
+    );
     // else return null;
   }
 }

@@ -152,6 +152,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
 
     document.addEventListener("selectionchange", this.onSelectionChange);
     document.addEventListener("keydown", this.handleKeyDown);
+    document.addEventListener("click", this.handleClick);
 
     document.addEventListener("pagesinit", () => {
       this.onDocumentReady();
@@ -163,6 +164,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   componentWillUnmount() {
     document.removeEventListener("selectionchange", this.onSelectionChange);
     document.removeEventListener("keydown", this.handleKeyDown);
+    document.removeEventListener("click", this.handleClick);
     document.removeEventListener("textlayerrendered", this.onTextLayerRendered);
   }
 
@@ -443,10 +445,6 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
       return;
     }
 
-    this.setState({
-      clientPosition: { xPos: event.clientX, yPos: event.clientY }
-    });
-
     if (event.target.closest(".PdfHighlighter__tip-container")) {
       return;
     }
@@ -458,6 +456,12 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     if (event.code === "Escape") {
       this.hideTipAndSelection();
     }
+  };
+
+  handleClick = event => {
+    this.setState({
+      clientPosition: { xPos: event.clientX, yPos: event.clientY }
+    });
   };
 
   afterSelection = () => {
