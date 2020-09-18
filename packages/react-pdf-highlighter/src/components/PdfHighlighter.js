@@ -57,6 +57,10 @@ type State<T_HT> = {
   clientPosition: {
     xPos: number,
     yPos: number
+  },
+  pageOffset: {
+    top: number,
+    left: number
   }
 };
 
@@ -106,7 +110,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     clientPosition: {
       xPos: 0,
       yPos: 0
-    }
+    },
+    pageOffset: { top: 0, left: 0 }
   };
 
   viewer: T_PDFJS_Viewer;
@@ -460,7 +465,13 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
 
   handleClick = event => {
     this.setState({
-      clientPosition: { xPos: event.clientX, yPos: event.clientY }
+      clientPosition: {
+        xPos: event.clientX,
+        yPos: this.state.pageOffset
+          ? event.clientY + Math.abs(this.state.pageOffset.top)
+          : event.clientY,
+        viewer: this.viewer
+      }
     });
   };
 

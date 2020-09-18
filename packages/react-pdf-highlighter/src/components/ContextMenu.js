@@ -44,8 +44,17 @@ class ContextMenu extends Component<Props, State> {
 
   render() {
     const { showMenu } = this.state;
-    const { onConfirm, onOpen, clientPosition, isRightClicked } = this.props;
-    console.log("client pos", clientPosition);
+    const {
+      onConfirm,
+      onOpen,
+      clientPosition,
+      isRightClicked,
+      position
+    } = this.props;
+
+    const page = clientPosition.viewer.getPageView(position.pageNumber - 1).div;
+    const topOffset = Math.abs(page.getBoundingClientRect().top);
+
     // if (showMenu)
     return (
       <Tip
@@ -53,7 +62,7 @@ class ContextMenu extends Component<Props, State> {
         onConfirm={onConfirm}
         style={
           clientPosition && {
-            top: clientPosition.yPos,
+            top: clientPosition.yPos + topOffset + page.offsetTop,
             left: clientPosition.xPos,
             position: "absolute"
           }

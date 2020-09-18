@@ -176,6 +176,7 @@ class App extends Component<Props, State> {
                     hideTipAndSelection();
                   }}
                   content={content}
+                  position={position}
                   clientPosition={clientPosition}
                   isRightClicked={isRightClicked}
                 />
