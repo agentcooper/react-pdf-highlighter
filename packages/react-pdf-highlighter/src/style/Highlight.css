@@ -34,3 +34,13 @@
 .Highlight--scrolledTo .Highlight__part {
   background: #ff4141;
 }
+
+.Highlight_popup_button {
+  position: absolute;
+  right: 17px;
+  border-radius: 50%;
+  top: -10px;
+  border: 1px solid #3d464d;
+  background-color: #3d464d;
+  color: white;
+}
