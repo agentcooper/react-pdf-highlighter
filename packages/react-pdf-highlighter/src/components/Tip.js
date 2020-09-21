@@ -3,8 +3,6 @@
 import React, { Component } from "react";
 
 import "../style/Tip.css";
-import "../style/ContextMenu.css";
-import ContextMenu from "./ContextMenu";
 
 type State = {
   compact: boolean,
