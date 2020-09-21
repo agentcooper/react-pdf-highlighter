@@ -355,7 +355,11 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     );
   };
 
-  renderTipAtPosition(position: T_Position, inner: ?React$Element<*>) {
+  renderTipAtPosition(
+    position: T_Position,
+    inner: ?React$Element<*>,
+    showAbsoluteContainer: boolean
+  ) {
     const { boundingRect, pageNumber } = position;
 
     const page = {
@@ -380,6 +384,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
           bottom: boundingRect.top + page.node.offsetTop + boundingRect.height
         }}
         children={inner}
+        showAbsoluteContainer={showAbsoluteContainer}
       />,
       tipNode
     );
@@ -492,7 +497,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     }
   };
 
-  handleClick = event => {
+  handleClick = (event: MouseEvent) => {
     this.setState({
       clientPosition: {
         xPos: event.clientX,
@@ -547,7 +552,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
             () => this.renderHighlights()
           ),
         clientPosition
-      )
+      ),
+      true
     );
   };
 

@@ -16,6 +16,10 @@
   /* position: absolute; */
 }
 
+.PdfHighlighter__tip-container_absolute {
+  position: absolute;
+}
+
 .PdfHighlighter--disable-selection {
   user-select: none;
   pointer-events: none;

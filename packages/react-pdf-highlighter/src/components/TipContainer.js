@@ -13,7 +13,8 @@ type Props = {
   children: ?React$Element<*>,
   style: { top: number, left: number, bottom: number },
   scrollTop: number,
-  pageBoundingRect: T_LTWH
+  pageBoundingRect: T_LTWH,
+  showAbsoluteContainer: boolean
 };
 
 const clamp = (value, left, right) => Math.min(Math.max(value, left), right);
@@ -50,7 +51,13 @@ class TipContainer extends Component<Props, State> {
   };
 
   render() {
-    const { children, style, scrollTop, pageBoundingRect } = this.props;
+    const {
+      children,
+      style,
+      scrollTop,
+      pageBoundingRect,
+      showAbsoluteContainer
+    } = this.props;
 
     const { height, width } = this.state;
 
@@ -87,7 +94,9 @@ class TipContainer extends Component<Props, State> {
 
     return (
       <div
-        className="PdfHighlighter__tip-container"
+        className={`PdfHighlighter__tip-container ${
+          showAbsoluteContainer ? "" : "PdfHighlighter__tip-container_absolute"
+        }`}
         style={{
           visibility: isStyleCalculationInProgress ? "hidden" : "visible",
           top,
