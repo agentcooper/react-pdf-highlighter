@@ -51,7 +51,6 @@ class ContextMenu extends Component<Props, State> {
       clientPosition.viewer &&
       clientPosition.viewer.getPageView(position.pageNumber - 1).div;
     const topOffset = page && Math.abs(page.getBoundingClientRect().top);
-    console.log("page", page);
 
     // if (showMenu)
     return (

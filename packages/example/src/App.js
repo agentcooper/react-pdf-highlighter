@@ -88,7 +88,7 @@ class App extends Component<Props, State> {
 
   scrollToHighlightFromHash = () => {
     const highlight = this.getHighlightById(parseIdFromHash());
-    console.log("ssssss", highlight);
+
     if (highlight) {
       this.scrollViewerTo(highlight);
     }
@@ -109,13 +109,15 @@ class App extends Component<Props, State> {
   }
 
   addHighlight(highlight: T_NewHighlight) {
-    const { highlights } = this.state;
-
     console.log("Saving highlight", highlight);
 
-    this.setState({
-      highlights: [{ ...highlight, id: getNextId() }, ...highlights]
-    });
+    this.setState(state => ({
+      ...state,
+      highlights: [
+        ...state.highlights,
+        { ...highlight, id: getNextId() + Math.random() }
+      ]
+    }));
   }
 
   updateHighlight(highlightId: string, position: Object, content: Object) {
@@ -175,12 +177,19 @@ class App extends Component<Props, State> {
                 content,
                 hideTipAndSelection,
                 transformSelection,
-                clientPosition
+                clientPosition,
+                highlightArray
               ) => (
                 <ContextMenu
                   onOpen={transformSelection}
                   onConfirm={comment => {
-                    this.addHighlight({ content, position, comment });
+                    if (highlightArray.length) {
+                      highlightArray.map(highlight =>
+                        this.addHighlight({ ...highlight, comment })
+                      );
+                    } else {
+                      this.addHighlight({ content, position, comment });
+                    }
                     hideTipAndSelection();
                   }}
                   content={content}

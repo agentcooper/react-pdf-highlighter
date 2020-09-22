@@ -113,7 +113,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     clientPosition: {
       xPos: 0,
       yPos: 0
-    }
+    },
+    rangeArray: []
   };
 
   eventBus: T_EventBus = new EventBus();
@@ -456,6 +457,19 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
       return;
     }
 
+    //to save highlight in more than one page
+    if (selection.rangeCount) {
+      let tempRangeArray = [];
+      for (let i = 0; i < selection.rangeCount; i = i + 2) {
+        const thisRange = selection.getRangeAt(i);
+        tempRangeArray.push(thisRange);
+      }
+      this.setState(state => ({
+        ...state,
+        rangeArray: tempRangeArray
+      }));
+    }
+
     this.setState({
       isCollapsed: false,
       range
@@ -507,6 +521,52 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     });
   };
 
+  getHighlightArray = () => {
+    const { rangeArray, isCollapsed } = this.state;
+    const tempHighlightArray = [];
+
+    if (!rangeArray.length || isCollapsed) {
+      return;
+    }
+
+    rangeArray.length &&
+      rangeArray.map(range => {
+        const page = getPageFromRange(range);
+
+        if (!page) {
+          return;
+        }
+
+        const rects = getClientRects(range, page.node);
+
+        if (rects.length === 0) {
+          return;
+        }
+
+        const boundingRect = getBoundingRect(rects);
+
+        const viewportPosition = {
+          boundingRect,
+          rects,
+          pageNumber: page.number
+        };
+        const content = {
+          text: range.toString()
+        };
+
+        const scaledPosition = this.viewportPositionToScaled(viewportPosition);
+
+        const tempHighlight = {
+          position: scaledPosition,
+          content
+        };
+
+        tempHighlightArray.push(tempHighlight);
+      });
+
+    return tempHighlightArray;
+  };
+
   afterSelection = () => {
     const { onSelectionFinished } = this.props;
 
@@ -517,7 +577,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     }
 
     const page = getPageFromRange(range);
-    console.log("page", page);
+
     if (!page) {
       return;
     }
@@ -531,12 +591,13 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     const boundingRect = getBoundingRect(rects);
 
     const viewportPosition = { boundingRect, rects, pageNumber: page.number };
-
     const content = {
       text: range.toString()
     };
 
     const scaledPosition = this.viewportPositionToScaled(viewportPosition);
+
+    const highlightArray = this.getHighlightArray();
 
     this.renderTipAtPosition(
       viewportPosition,
@@ -551,7 +612,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
             },
             () => this.renderHighlights()
           ),
-        clientPosition
+        clientPosition,
+        highlightArray
       ),
       true
     );
@@ -576,6 +638,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
 
   render() {
     const { onSelectionFinished, enableAreaSelection } = this.props;
+    const { highlightsArray } = this.state;
 
     return (
       <Pointable onPointerDown={this.onMouseDown}>
@@ -639,7 +702,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
                         () => {
                           resetSelection();
                           this.renderHighlights();
-                        }
+                        },
+                        highlightsArray
                       )
                   )
                 );
