@@ -58,7 +58,7 @@ class ContextMenu extends Component<Props, State> {
         onOpen={onOpen}
         onConfirm={onConfirm}
         style={
-          clientPosition && {
+          clientPosition && topOffset && {
             top: clientPosition.yPos + topOffset + (page && page.offsetTop),
             left: clientPosition.xPos,
             position: "absolute"
