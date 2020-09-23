@@ -44,7 +44,7 @@ const resetHash = () => {
 };
 
 const HighlightPopup = ({ comment }) =>
-  comment.text ? (
+  comment && comment.text ? (
     <div className="Highlight__popup">
       {comment.emoji} {comment.text}
     </div>
@@ -182,7 +182,8 @@ class App extends Component<Props, State> {
                 <ContextMenu
                   onOpen={transformSelection}
                   onConfirm={comment => {
-                    if (highlightArray.length) {
+                    comment = comment || "";
+                    if (highlightArray && highlightArray.length) {
                       highlightArray.map(highlight =>
                         this.addHighlight({ ...highlight, comment })
                       );
