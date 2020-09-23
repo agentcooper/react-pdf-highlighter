@@ -17,7 +17,6 @@ import {
 import testHighlights from "./test-highlights";
 
 import Spinner from "./Spinner";
-import Sidebar from "./Sidebar";
 
 import type {
   T_Highlight,

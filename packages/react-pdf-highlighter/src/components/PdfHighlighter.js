@@ -45,9 +45,11 @@ import type {
 type T_ViewportHighlight<T_HT> = { position: T_Position } & T_HT;
 
 type State<T_HT> = {
-  ghostHighlight: ?{
-    position: T_ScaledPosition
-  },
+  ghostHighlight: ?[
+    {
+      position: T_ScaledPosition
+    }
+  ],
   isCollapsed: boolean,
   range: ?Range,
   tip: ?{
@@ -104,7 +106,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   };
 
   state: State<T_HT> = {
-    ghostHighlight: null,
+    ghostHighlight: [null],
     isCollapsed: true,
     range: null,
     scrolledToHighlightId: EMPTY_ID,
@@ -220,7 +222,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   ): { [pageNumber: string]: Array<T_HT> } {
     const { ghostHighlight } = this.state;
 
-    return [...highlights, ghostHighlight]
+    return [...highlights, ...ghostHighlight]
       .filter(Boolean)
       .reduce((res, highlight) => {
         const { pageNumber } = highlight.position;
@@ -239,7 +241,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
       isAreaSelectionInProgress
     } = this.state;
 
-    const highlightInProgress = !isCollapsed || ghostHighlight;
+    const highlightInProgress =
+      !isCollapsed || (ghostHighlight.length && ghostHighlight.length !== 1);
 
     if (highlightInProgress || isAreaSelectionInProgress) {
       return;
@@ -351,7 +354,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
 
     ReactDom.unmountComponentAtNode(tipNode);
 
-    this.setState({ ghostHighlight: null, tip: null }, () =>
+    this.setState({ ghostHighlight: [null], tip: null }, () =>
       this.renderHighlights()
     );
   };
@@ -608,7 +611,9 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
         () =>
           this.setState(
             {
-              ghostHighlight: { position: scaledPosition }
+              ghostHighlight: highlightArray
+                ? [...highlightArray, { position: scaledPosition }]
+                : [{ position: scaledPosition }]
             },
             () => this.renderHighlights()
           ),
@@ -694,10 +699,12 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
                     () =>
                       this.setState(
                         {
-                          ghostHighlight: {
-                            position: scaledPosition,
-                            content: { image }
-                          }
+                          ghostHighlight: [
+                            {
+                              position: scaledPosition,
+                              content: { image }
+                            }
+                          ]
                         },
                         () => {
                           resetSelection();
