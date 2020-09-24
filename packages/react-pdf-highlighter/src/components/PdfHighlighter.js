@@ -515,10 +515,32 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   };
 
   handleClick = (event: MouseEvent) => {
+    let obj = document.getElementsByClassName("PdfHighlighter")[0];
+    let obj_left = 0;
+    let obj_top = 0;
+    let xpos;
+    let ypos;
+    while (obj.offsetParent) {
+      obj_left += obj.offsetLeft;
+      obj_top += obj.offsetTop;
+      obj = obj.offsetParent;
+    }
+    if (event) {
+      //FireFox
+      xpos = event.pageX;
+      ypos = event.pageY;
+    } else {
+      //IE
+      xpos = window.event.x + document.body.scrollLeft - 2;
+      ypos = window.event.y + document.body.scrollTop - 2;
+    }
+    xpos -= obj_left;
+    ypos -= obj_top;
+
     this.setState({
       clientPosition: {
-        xPos: event.clientX,
-        yPos: event.clientY,
+        xPos: xpos,
+        yPos: ypos,
         viewer: this.viewer
       }
     });
