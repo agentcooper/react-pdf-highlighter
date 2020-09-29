@@ -27,6 +27,7 @@ import {
 
 import TipContainer from "./TipContainer";
 import MouseSelection from "./MouseSelection";
+import ToolBar from "./ToolBar";
 
 import { scaledToViewport, viewportToScaled } from "../lib/coordinates";
 
@@ -61,7 +62,8 @@ type State<T_HT> = {
   clientPosition: {
     xPos: number,
     yPos: number
-  }
+  },
+  areaHighlightEnable: boolean
 };
 
 type Props<T_HT> = {
@@ -116,7 +118,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
       xPos: 0,
       yPos: 0
     },
-    rangeArray: []
+    rangeArray: [],
+    areaHighlightEnable: false
   };
 
   eventBus: T_EventBus = new EventBus();
@@ -663,84 +666,97 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
 
   debouncedScaleValue: () => void = debounce(this.handleScaleValue, 500);
 
+  toggleAreaHighlight = areaHighlightEnable => {
+    this.setState({
+      areaHighlightEnable
+    });
+  };
+
   render() {
     const { onSelectionFinished, enableAreaSelection } = this.props;
-    const { highlightsArray } = this.state;
+    const { highlightsArray, areaHighlightEnable } = this.state;
 
     return (
-      <Pointable onPointerDown={this.onMouseDown}>
-        <div
-          ref={this.attachRef}
-          className="PdfHighlighter"
-          onContextMenu={e => e.preventDefault()}
-        >
-          <div className="pdfViewer" />
-          {typeof enableAreaSelection === "function" ? (
-            <MouseSelection
-              onDragStart={() => this.toggleTextSelection(true)}
-              onDragEnd={() => this.toggleTextSelection(false)}
-              onChange={isVisible =>
-                this.setState({ isAreaSelectionInProgress: isVisible })
-              }
-              shouldStart={event =>
-                enableAreaSelection(event) &&
-                isHTMLElement(event.target) &&
-                Boolean(asElement(event.target).closest(".page"))
-              }
-              onSelection={(startTarget, boundingRect, resetSelection) => {
-                const page = getPageFromElement(startTarget);
-
-                if (!page) {
-                  return;
+      <React.Fragment>
+        <ToolBar
+          areaHighlightEnable={areaHighlightEnable}
+          toggleAreaHighlight={this.toggleAreaHighlight}
+        />
+        <Pointable onPointerDown={this.onMouseDown}>
+          <div
+            ref={this.attachRef}
+            className="PdfHighlighter"
+            onContextMenu={e => e.preventDefault()}
+          >
+            <div className="pdfViewer" />
+            {typeof enableAreaSelection === "function" ? (
+              <MouseSelection
+                onDragStart={() => this.toggleTextSelection(true)}
+                onDragEnd={() => this.toggleTextSelection(false)}
+                onChange={isVisible =>
+                  this.setState({ isAreaSelectionInProgress: isVisible })
                 }
+                shouldStart={event =>
+                  (enableAreaSelection(event) ||
+                    this.state.areaHighlightEnable) &&
+                  isHTMLElement(event.target) &&
+                  Boolean(asElement(event.target).closest(".page"))
+                }
+                onSelection={(startTarget, boundingRect, resetSelection) => {
+                  const page = getPageFromElement(startTarget);
 
-                const pageBoundingRect = {
-                  ...boundingRect,
-                  top: boundingRect.top - page.node.offsetTop,
-                  left: boundingRect.left - page.node.offsetLeft
-                };
+                  if (!page) {
+                    return;
+                  }
 
-                const viewportPosition = {
-                  boundingRect: pageBoundingRect,
-                  rects: [],
-                  pageNumber: page.number
-                };
+                  const pageBoundingRect = {
+                    ...boundingRect,
+                    top: boundingRect.top - page.node.offsetTop,
+                    left: boundingRect.left - page.node.offsetLeft
+                  };
 
-                const scaledPosition = this.viewportPositionToScaled(
-                  viewportPosition
-                );
+                  const viewportPosition = {
+                    boundingRect: pageBoundingRect,
+                    rects: [],
+                    pageNumber: page.number
+                  };
 
-                const image = this.screenshot(pageBoundingRect, page.number);
+                  const scaledPosition = this.viewportPositionToScaled(
+                    viewportPosition
+                  );
 
-                this.renderTipAtPosition(
-                  viewportPosition,
-                  onSelectionFinished(
-                    scaledPosition,
-                    { image },
-                    () => this.hideTipAndSelection(),
-                    () =>
-                      this.setState(
-                        {
-                          ghostHighlight: [
-                            {
-                              position: scaledPosition,
-                              content: { image }
-                            }
-                          ]
-                        },
-                        () => {
-                          resetSelection();
-                          this.renderHighlights();
-                        },
-                        highlightsArray
-                      )
-                  )
-                );
-              }}
-            />
-          ) : null}
-        </div>
-      </Pointable>
+                  const image = this.screenshot(pageBoundingRect, page.number);
+
+                  this.renderTipAtPosition(
+                    viewportPosition,
+                    onSelectionFinished(
+                      scaledPosition,
+                      { image },
+                      () => this.hideTipAndSelection(),
+                      () =>
+                        this.setState(
+                          {
+                            ghostHighlight: [
+                              {
+                                position: scaledPosition,
+                                content: { image }
+                              }
+                            ]
+                          },
+                          () => {
+                            resetSelection();
+                            this.renderHighlights();
+                          },
+                          highlightsArray
+                        )
+                    )
+                  );
+                }}
+              />
+            ) : null}
+          </div>
+        </Pointable>
+      </React.Fragment>
     );
   }
 }

@@ -61,10 +61,10 @@ const initialUrl = searchParams.get("url") || PRIMARY_PDF_URL;
 class App extends Component<Props, State> {
   state = {
     url: initialUrl,
-    // highlights: testHighlights[initialUrl]
-    //   ? [...testHighlights[initialUrl]]
-    //   : []
-    highlights: []
+    highlights: testHighlights[initialUrl]
+      ? [...testHighlights[initialUrl]]
+      : []
+    // highlights: []
   };
 
   state: State;
