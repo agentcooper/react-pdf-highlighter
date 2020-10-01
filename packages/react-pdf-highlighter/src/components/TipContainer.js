@@ -94,9 +94,10 @@ class TipContainer extends Component<Props, State> {
 
     return (
       <div
-        className={`PdfHighlighter__tip-container ${
+        /* className={`PdfHighlighter__tip-container ${
           showAbsoluteContainer ? "" : "PdfHighlighter__tip-container_absolute"
-        }`}
+        }`} */
+        className="PdfHighlighter__tip-container"
         style={{
           visibility: isStyleCalculationInProgress ? "hidden" : "visible",
           top,

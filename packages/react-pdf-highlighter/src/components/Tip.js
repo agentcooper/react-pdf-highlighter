@@ -47,7 +47,7 @@ class Tip extends Component<Props, State> {
                 compact: false
               });
             }}
-            style={style}
+            /* style={style} */
           >
             Add highlight
           </div>
@@ -58,7 +58,7 @@ class Tip extends Component<Props, State> {
               event.preventDefault();
               onConfirm({ text, emoji });
             }}
-            style={style}
+            /* style={style} */
           >
             <div>
               <textarea

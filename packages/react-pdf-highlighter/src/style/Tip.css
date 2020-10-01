@@ -5,7 +5,6 @@
   color: white;
   padding: 5px 10px;
   border-radius: 3px;
-  z-index: 6;
 }
 
 .Tip__card {
@@ -15,8 +14,6 @@
   border: 1px solid #e8e8e8;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(37, 40, 43, 0.2);
-  position: absolute;
-  z-index: 6;
 }
 
 .Tip__card textarea {

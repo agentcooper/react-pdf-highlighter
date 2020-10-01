@@ -7,7 +7,8 @@ import PDFWorker from "worker-loader!pdfjs-dist/lib/pdf.worker";
 import {
   PdfLoader,
   PdfHighlighter,
-  ContextMenu,
+  /* ContextMenu, */
+  Tip,
   Highlight,
   Popup,
   AreaHighlight,
@@ -181,7 +182,7 @@ class App extends Component<Props, State> {
                   clientPosition,
                   highlightArray
                 ) => (
-                  <ContextMenu
+                  <Tip
                     onOpen={transformSelection}
                     onConfirm={comment => {
                       comment = comment || "";
@@ -194,9 +195,6 @@ class App extends Component<Props, State> {
                       }
                       hideTipAndSelection();
                     }}
-                    content={content}
-                    position={position}
-                    clientPosition={clientPosition}
                   />
                 )}
                 highlightTransform={(
