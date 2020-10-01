@@ -40,7 +40,8 @@ import type {
   T_EventBus,
   T_PDFJS_Viewer,
   T_PDFJS_Document,
-  T_PDFJS_LinkService
+  T_PDFJS_LinkService,
+  T_ToolBarItem
 } from "../types";
 
 type T_ViewportHighlight<T_HT> = { position: T_Position } & T_HT;
@@ -94,7 +95,8 @@ type Props<T_HT> = {
       yPos: number
     }
   ) => ?React$Element<*>,
-  enableAreaSelection: (event: MouseEvent) => boolean
+  enableAreaSelection: (event: MouseEvent) => boolean,
+  showToolBar: T_ToolBarItem
 };
 
 const EMPTY_ID = "empty-id";
@@ -673,15 +675,25 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   };
 
   render() {
-    const { onSelectionFinished, enableAreaSelection } = this.props;
+    const {
+      onSelectionFinished,
+      enableAreaSelection,
+      showToolBar
+    } = this.props;
     const { highlightsArray, areaHighlightEnable } = this.state;
 
     return (
       <React.Fragment>
-        <ToolBar
-          areaHighlightEnable={areaHighlightEnable}
-          toggleAreaHighlight={this.toggleAreaHighlight}
-        />
+        {showToolBar && showToolBar.length ? (
+          <ToolBar
+            areaHighlightEnable={areaHighlightEnable}
+            toggleAreaHighlight={this.toggleAreaHighlight}
+            showToolBar={showToolBar}
+          />
+        ) : (
+          ""
+        )}
+
         <Pointable onPointerDown={this.onMouseDown}>
           <div
             ref={this.attachRef}

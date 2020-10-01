@@ -25,6 +25,11 @@ import type {
   T_NewHighlight
 } from "@jagatmachines/react-pdf-highlighter/src/types";
 
+import {
+  highlighterBox,
+  areaHighlighterBox
+} from "@jagatmachines/react-pdf-highlighter/src/constant";
+
 import "./style/App.css";
 
 setPdfWorker(PDFWorker);
@@ -168,6 +173,7 @@ class App extends Component<Props, State> {
                 pdfDocument={pdfDocument}
                 enableAreaSelection={event => event.altKey}
                 onScrollChange={resetHash}
+                showToolBar={[highlighterBox, areaHighlighterBox]}
                 // pdfScaleValue="page-width"
                 scrollRef={scrollTo => {
                   this.scrollViewerTo = scrollTo;

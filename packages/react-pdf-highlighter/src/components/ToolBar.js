@@ -4,9 +4,13 @@ import React, { Component } from "react";
 
 import "../style/ToolBar.css";
 
+import type { T_ToolBarItem } from "../types";
+import { highlighterBox, areaHighlighterBox } from "../constant";
+
 type Props = {
   areaHighlightEnable: boolean,
-  toggleAreaHighlight: () => void
+  toggleAreaHighlight: () => void,
+  showToolBar: T_ToolBarItem
 };
 
 class ToolBar extends Component<Props> {
@@ -15,7 +19,11 @@ class ToolBar extends Component<Props> {
   }
 
   render() {
-    const { areaHighlightEnable, toggleAreaHighlight } = this.props;
+    const {
+      areaHighlightEnable,
+      toggleAreaHighlight,
+      showToolBar
+    } = this.props;
 
     return (
       <div className="toolbar">
@@ -30,29 +38,41 @@ class ToolBar extends Component<Props> {
 
         <div className="spacer"></div> */}
 
-        <button
-          className={`rectangle ${areaHighlightEnable ? "active" : ""}`}
-          type="button"
-          title="Rectangle"
-          data-tooltype="area"
-          onClick={() => {
-            toggleAreaHighlight(true);
-          }}
-        >
-          &nbsp;
-        </button>
-        <div className="spacer"></div>
-        <button
-          className={`highlight ${!areaHighlightEnable ? "active" : ""}`}
-          type="button"
-          title="Highlight"
-          data-tooltype="highlight"
-          onClick={() => {
-            toggleAreaHighlight(false);
-          }}
-        >
-          &nbsp;
-        </button>
+        {showToolBar.includes(areaHighlighterBox) ? (
+          <React.Fragment>
+            <button
+              className={`rectangle ${areaHighlightEnable ? "active" : ""}`}
+              type="button"
+              title="Rectangle"
+              data-tooltype="area"
+              onClick={() => {
+                toggleAreaHighlight(true);
+              }}
+            >
+              &nbsp;
+            </button>
+            <div className="spacer"></div>
+          </React.Fragment>
+        ) : (
+          ""
+        )}
+
+        {showToolBar.includes(highlighterBox) ? (
+          <button
+            className={`highlight ${!areaHighlightEnable ? "active" : ""}`}
+            type="button"
+            title="Highlight"
+            data-tooltype="highlight"
+            onClick={() => {
+              toggleAreaHighlight(false);
+            }}
+          >
+            &nbsp;
+          </button>
+        ) : (
+          ""
+        )}
+
         {/* <button
           className="strikeout active"
           type="button"

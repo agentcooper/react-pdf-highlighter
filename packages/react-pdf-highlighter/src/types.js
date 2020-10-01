@@ -1,5 +1,7 @@
 // @flow
 
+import { highlighterBox, areaHighlighterBox } from "./constant";
+
 export type T_LTWH = {
   left: number,
   top: number,
@@ -112,3 +114,5 @@ export type T_PDFJS = {
   getDocument: (url: string) => Promise<T_PDFJS_Document>,
   disableWorker: boolean
 };
+
+export type T_ToolBarItem = [highlighterBox, areaHighlighterBox];
