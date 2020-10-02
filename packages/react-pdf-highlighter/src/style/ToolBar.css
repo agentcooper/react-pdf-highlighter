@@ -110,3 +110,38 @@
 .pen-color {
   display: inline-block;
 }
+/* tooltip */
+/* .tooltip{
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+} */
+.tooltip__text{
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 140%;
+  left: 50%;
+  margin-left: -15px;
+  font-size: 14px;
+  text-shadow: none;
+  border-radius: 2px
+} 
+.tooltip .tooltip__text::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 10%;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+.tooltip:hover .tooltip__text{
+  visibility: visible;
+} 

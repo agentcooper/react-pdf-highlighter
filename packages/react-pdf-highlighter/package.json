@@ -6,8 +6,8 @@
   "main": "build/index.js",
   "scripts": {
     "start": "npm run watch",
-    "build": "NODE_ENV=production babel src -d build --copy-files",
-    "watch": "NODE_ENV=development babel --watch src -d build --copy-files",
+    "build": " babel src -d build --copy-files",
+    "watch": " babel --watch src -d build --copy-files",
     "copy-flow": "flow-copy-source src build",
     "clean": "rm -rf build",
     "prepublishOnly": "npm run build && npm run copy-flow"
