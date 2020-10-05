@@ -19,7 +19,7 @@
     "worker-loader": "^2.0.0"
   },
   "scripts": {
-    "start": " react-scripts start",
+    "start": "GENERATE_SOURCEMAP=false react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "BROWSER=none jest --maxWorkers=1 -c jest.config.js"
   },
