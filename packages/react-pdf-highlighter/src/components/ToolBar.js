@@ -41,7 +41,9 @@ class ToolBar extends Component<Props> {
         {showToolBar.includes(areaHighlighterBox) ? (
           <React.Fragment>
             <button
-              className={`rectangle tooltip ${areaHighlightEnable ? "active" : ""}`}
+              className={`rectangle tooltip ${
+                areaHighlightEnable ? "active" : ""
+              }`}
               type="button"
               data-tooltype="area"
               onClick={() => {
@@ -49,7 +51,6 @@ class ToolBar extends Component<Props> {
               }}
             >
               <span className="tooltip__text">Image Highlighter</span>
-              &nbsp;
             </button>
             <div className="spacer"></div>
           </React.Fragment>
@@ -59,7 +60,9 @@ class ToolBar extends Component<Props> {
 
         {showToolBar.includes(highlighterBox) ? (
           <button
-            className={`highlight tooltip ${!areaHighlightEnable ? "active" : ""}`}
+            className={`highlight tooltip ${
+              !areaHighlightEnable ? "active" : ""
+            }`}
             type="button"
             data-tooltype="highlight"
             onClick={() => {
@@ -67,7 +70,6 @@ class ToolBar extends Component<Props> {
             }}
           >
             <span className="tooltip__text">Text Highlighter</span>
-            &nbsp;
           </button>
         ) : (
           ""
