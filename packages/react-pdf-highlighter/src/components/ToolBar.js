@@ -49,13 +49,12 @@ class ToolBar extends Component<Props> {
               }}
             >
               <span className="tooltip__text">Image Highlighter</span>
-              &nbsp;
             </button>
             <div className="spacer"></div>
           </React.Fragment>
         ) : (
-          ""
-        )}
+            ""
+          )}
 
         {showToolBar.includes(highlighterBox) ? (
           <button
@@ -67,11 +66,10 @@ class ToolBar extends Component<Props> {
             }}
           >
             <span className="tooltip__text">Text Highlighter</span>
-            &nbsp;
           </button>
         ) : (
-          ""
-        )}
+            ""
+          )}
 
         {/* <button
           className="strikeout active"
