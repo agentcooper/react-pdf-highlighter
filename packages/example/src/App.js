@@ -3,6 +3,8 @@
 
 import React, { Component } from "react";
 import PDFWorker from "worker-loader!pdfjs-dist/lib/pdf.worker";
+import PRIMARY_PDF_URL from "./assets/1604.02480.pdf";
+import SECONDARY_PDF_URL from "./assets/1708.08021.pdf";
 
 import {
   PdfLoader,
@@ -57,8 +59,11 @@ const HighlightPopup = ({ comment }) =>
     </div>
   ) : null;
 
-const PRIMARY_PDF_URL = "https://arxiv.org/pdf/1604.02480.pdf";
-const SECONDARY_PDF_URL = "https://arxiv.org/pdf/1708.08021.pdf";
+/* const PRIMARY_PDF_URL = "https://arxiv.org/pdf/1604.02480.pdf";
+  const SECONDARY_PDF_URL = "https://arxiv.org/pdf/1708.08021.pdf"; */
+
+/* const PRIMARY_PDF_URL = "/1604.02480.pdf";
+const SECONDARY_PDF_URL = "/1708.08021.pdf"; */
 
 const searchParams = new URLSearchParams(document.location.search);
 
