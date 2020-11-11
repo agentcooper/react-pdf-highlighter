@@ -110,7 +110,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   };
 
   state: State<T_HT> = {
-    ghostHighlight: [null],
+    ghostHighlight: [],
     isCollapsed: true,
     range: null,
     scrolledToHighlightId: EMPTY_ID,
@@ -247,7 +247,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     } = this.state;
 
     const highlightInProgress =
-      !isCollapsed || (ghostHighlight.length && ghostHighlight.length !== 1);
+      !isCollapsed || ghostHighlight.length;
 
     if (highlightInProgress || isAreaSelectionInProgress) {
       return;
@@ -359,7 +359,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
 
     ReactDom.unmountComponentAtNode(tipNode);
 
-    this.setState({ ghostHighlight: [null], tip: null }, () =>
+    this.setState({ ghostHighlight: [], tip: null }, () =>
       this.renderHighlights()
     );
   };
