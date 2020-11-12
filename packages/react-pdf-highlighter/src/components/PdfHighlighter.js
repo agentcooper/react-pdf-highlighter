@@ -246,8 +246,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
       isAreaSelectionInProgress
     } = this.state;
 
-    const highlightInProgress =
-      !isCollapsed || ghostHighlight.length;
+    const highlightInProgress = !isCollapsed || ghostHighlight.length;
 
     if (highlightInProgress || isAreaSelectionInProgress) {
       return;
@@ -758,8 +757,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
                           () => {
                             resetSelection();
                             this.renderHighlights();
-                          },
-                          highlightsArray
+                          }
                         )
                     )
                   );
