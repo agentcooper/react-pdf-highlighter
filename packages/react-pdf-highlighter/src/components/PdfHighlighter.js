@@ -96,7 +96,11 @@ type Props<T_HT> = {
     }
   ) => ?React$Element<*>,
   enableAreaSelection: (event: MouseEvent) => boolean,
-  showToolBar: T_ToolBarItem
+  showToolBar: T_ToolBarItem,
+  updateRotate: (rotatePages: (delta: string) => void, delta: string) => void,
+  initialHighlight?: boolean,
+  rotatePdf?: number,
+  saveRotation?: (delta: number) => void
 };
 
 const EMPTY_ID = "empty-id";
@@ -200,6 +204,12 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     this.linkService.setDocument(pdfDocument);
     this.linkService.setViewer(this.viewer);
     this.viewer.setDocument(pdfDocument);
+
+    if (this.props.rotatePdf) {
+      this.viewer.pagesPromise.then(() => {
+        this.rotatePages(this.props.rotatePdf);
+      });
+    }
 
     // debug
     window.PdfViewer = this;
@@ -338,7 +348,9 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
 
                     return viewportToScaled(rect, viewport);
                   },
-                  boundingRect => this.screenshot(boundingRect, pageNumber),
+                  boundingRect => {
+                    // this.screenshot(boundingRect, pageNumber);
+                  },
                   isScrolledTo
                 );
               }
@@ -673,13 +685,30 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     });
   };
 
+  rotatePages = delta => {
+    const { pdfDocument } = this.props;
+    if (!pdfDocument) {
+      return;
+    }
+    const newRotation = (this.viewer.pagesRotation + 360 + delta) % 360;
+    this.viewer.pagesRotation = newRotation;
+    // Note that the thumbnail viewer is updated, and rendering is triggered,
+    // in the 'rotationchanging' event handler.
+  };
+
+  saveRotation = () => {
+    this.props.saveRotation(this.viewer.pagesRotation);
+  };
+
   render() {
     const {
       onSelectionFinished,
       enableAreaSelection,
-      showToolBar
+      showToolBar,
+      updateRotate,
+      initialHighlight
     } = this.props;
-    const { highlightsArray, areaHighlightEnable } = this.state;
+    const { areaHighlightEnable } = this.state;
 
     return (
       <React.Fragment>
@@ -688,6 +717,9 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
             areaHighlightEnable={areaHighlightEnable}
             toggleAreaHighlight={this.toggleAreaHighlight}
             showToolBar={showToolBar}
+            initialHighlight={initialHighlight}
+            rotatePages={delta => updateRotate(this.rotatePages, delta)}
+            saveRotation={this.saveRotation}
           />
         ) : (
           ""
@@ -736,13 +768,15 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
                     viewportPosition
                   );
 
-                  const image = this.screenshot(pageBoundingRect, page.number);
+                  /* const image = this.screenshot(pageBoundingRect, page.number); */
 
                   this.renderTipAtPosition(
                     viewportPosition,
                     onSelectionFinished(
                       scaledPosition,
-                      { image },
+                      {
+                        /* image */
+                      },
                       () => this.hideTipAndSelection(),
                       () =>
                         this.setState(
@@ -750,7 +784,9 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
                             ghostHighlight: [
                               {
                                 position: scaledPosition,
-                                content: { image }
+                                content: {
+                                  /* image */
+                                }
                               }
                             ]
                           },

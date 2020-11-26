@@ -116,7 +116,7 @@
   display: inline-block;
   border-bottom: 1px dotted black;
 } */
-.tooltip__text{
+.tooltip__text {
   visibility: hidden;
   width: 120px;
   background-color: black;
@@ -131,8 +131,8 @@
   margin-left: -15px;
   font-size: 14px;
   text-shadow: none;
-  border-radius: 2px
-} 
+  border-radius: 2px;
+}
 .tooltip .tooltip__text::after {
   content: "";
   position: absolute;
@@ -142,6 +142,10 @@
   border-style: solid;
   border-color: transparent transparent black transparent;
 }
-.tooltip:hover .tooltip__text{
+.tooltip:hover .tooltip__text {
   visibility: visible;
-} 
+}
+
+.toolbar-static-banner {
+  color: black;
+}
