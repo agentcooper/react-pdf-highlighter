@@ -1,5 +1,5 @@
 const testHighlights = {
-  "https://arxiv.org/pdf/1708.08021.pdf": [
+  "https://arxiv.org/pdf/1604.02480.pdf": [
     {
       content: {
         text: " Type Checking for JavaScript"
@@ -189,7 +189,7 @@ const testHighlights = {
       id: "46570518065661615"
     }
   ],
-  "https://arxiv.org/pdf/1604.02480.pdf": [
+  "https://arxiv.org/pdf/1708.08021.pdf": [
     {
       content: {
         text: "SSA"

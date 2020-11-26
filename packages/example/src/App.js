@@ -3,8 +3,8 @@
 
 import React, { Component } from "react";
 import PDFWorker from "worker-loader!pdfjs-dist/lib/pdf.worker";
-import PRIMARY_PDF_URL from "./assets/1604.02480.pdf";
-import SECONDARY_PDF_URL from "./assets/1708.08021.pdf";
+/* import PRIMARY_PDF_URL from "./assets/1604.02480.pdf";
+import SECONDARY_PDF_URL from "./assets/1708.08021.pdf"; */
 
 import {
   PdfLoader,
@@ -29,7 +29,8 @@ import type {
 
 import {
   highlighterBox,
-  areaHighlighterBox
+  areaHighlighterBox,
+  rotationBox
 } from "@jagatmachines/react-pdf-highlighter/src/constant";
 
 import "./style/App.css";
@@ -59,8 +60,8 @@ const HighlightPopup = ({ comment }) =>
     </div>
   ) : null;
 
-/* const PRIMARY_PDF_URL = "https://arxiv.org/pdf/1604.02480.pdf";
-  const SECONDARY_PDF_URL = "https://arxiv.org/pdf/1708.08021.pdf"; */
+const PRIMARY_PDF_URL = "https://arxiv.org/pdf/1708.08021.pdf";
+const SECONDARY_PDF_URL = "https://arxiv.org/pdf/1604.02480.pdf";
 
 /* const PRIMARY_PDF_URL = "/1604.02480.pdf";
 const SECONDARY_PDF_URL = "/1708.08021.pdf"; */
@@ -114,6 +115,10 @@ class App extends Component<Props, State> {
     );
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("hashchange", this.scrollToHighlightFromHash);
+  }
+
   getHighlightById(id: string) {
     const { highlights } = this.state;
 
@@ -155,6 +160,27 @@ class App extends Component<Props, State> {
     });
   }
 
+  updateRotate = (rotatePages: (delta: string) => void, delta: string) => {
+    const { highlights } = this.state;
+
+    if (highlights && highlights.length) {
+      if (window.confirm("Your annotation might get disorted")) {
+        this.setState(
+          {
+            highlights: []
+          },
+          () => {
+            rotatePages(delta);
+          }
+        );
+      }
+    } else {
+      rotatePages(delta);
+    }
+  };
+
+  saveRotation = (delta: number) => {};
+
   render() {
     const { url, highlights } = this.state;
 
@@ -178,7 +204,11 @@ class App extends Component<Props, State> {
                 pdfDocument={pdfDocument}
                 enableAreaSelection={event => event.altKey}
                 onScrollChange={resetHash}
-                showToolBar={[highlighterBox, areaHighlighterBox]}
+                showToolBar={[highlighterBox, areaHighlighterBox, rotationBox]}
+                updateRotate={this.updateRotate}
+                initialHighlight={true}
+                rotatePdf={0}
+                saveRotation={this.saveRotation}
                 // pdfScaleValue="page-width"
                 scrollRef={scrollTo => {
                   this.scrollViewerTo = scrollTo;
