@@ -98,7 +98,8 @@ type Props<T_HT> = {
   enableAreaSelection: (event: MouseEvent) => boolean,
   showToolBar: T_ToolBarItem,
   updateRotate: (rotatePages: (delta: string) => void, delta: string) => void,
-  initialHighlight?: boolean,
+  showRotationWarning?: boolean,
+  showRotationWarningFunc?: () => void,
   rotatePdf?: number,
   saveRotation?: (delta: number) => void
 };
@@ -706,7 +707,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
       enableAreaSelection,
       showToolBar,
       updateRotate,
-      initialHighlight
+      showRotationWarning,
+      showRotationWarningFunc
     } = this.props;
     const { areaHighlightEnable } = this.state;
 
@@ -717,7 +719,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
             areaHighlightEnable={areaHighlightEnable}
             toggleAreaHighlight={this.toggleAreaHighlight}
             showToolBar={showToolBar}
-            initialHighlight={initialHighlight}
+            showRotationWarning={showRotationWarning}
+            showRotationWarningFunc={showRotationWarningFunc}
             rotatePages={delta => updateRotate(this.rotatePages, delta)}
             saveRotation={this.saveRotation}
           />
