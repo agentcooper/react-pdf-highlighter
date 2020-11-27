@@ -87,21 +87,6 @@ class ToolBar extends Component<Props> {
           )}
           </div>
           <div className="rotation">
-            <Dropdown>
-              <Dropdown.Toggle>
-                <div className="warning">
-                <svg viewBox="0 0 28 28" width="24" height="24" >
-                <g> <path class="st0" d="M23.7,19.2l-4.9-8.5l-4.9-8.5c-0.8-1.5-2.9-1.5-3.8,0l-4.9,8.5l-4.9,8.5c-0.8,1.5,0.2,3.3,1.9,3.3l9.8,0l9.8,0
-                    C23.5,22.4,24.5,20.6,23.7,19.2z M12,19c-0.6,0-1-0.4-1-1c0-0.6,0.4-1,1-1s1,0.4,1,1C13,18.6,12.6,19,12,19z M13,15
-                    c0,0.6-0.4,1-1,1s-1-0.4-1-1V8c0-0.6,0.4-1,1-1s1,0.4,1,1V15z" fill="#FFAB6C"/></g>
-                </svg>
-              </div>
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu className="message">
-                  <p>Please correct document orientation before annotation. Changing document orientation after annotation will lead to loss of the previous annotation</p>
-              </Dropdown.Menu>
-            </Dropdown>
           {showToolBar.includes(rotationBox) ? (
             <React.Fragment>
               <button
@@ -131,6 +116,21 @@ class ToolBar extends Component<Props> {
           ) : (
             ""
           )}
+            <Dropdown>
+              <Dropdown.Toggle>
+                <div className="warning">
+                <svg viewBox="0 0 28 28" width="24" height="24" >
+                <g> <path class="st0" d="M23.7,19.2l-4.9-8.5l-4.9-8.5c-0.8-1.5-2.9-1.5-3.8,0l-4.9,8.5l-4.9,8.5c-0.8,1.5,0.2,3.3,1.9,3.3l9.8,0l9.8,0
+                    C23.5,22.4,24.5,20.6,23.7,19.2z M12,19c-0.6,0-1-0.4-1-1c0-0.6,0.4-1,1-1s1,0.4,1,1C13,18.6,12.6,19,12,19z M13,15
+                    c0,0.6-0.4,1-1,1s-1-0.4-1-1V8c0-0.6,0.4-1,1-1s1,0.4,1,1V15z" fill="#FFAB6C"/></g>
+                </svg>
+              </div>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu className="message">
+                  <p>Please correct document orientation before annotation. Changing document orientation after annotation will lead to loss of the previous annotation</p>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
           {/* <a
           href="javascript://"
