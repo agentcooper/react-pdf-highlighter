@@ -185,7 +185,7 @@ class App extends Component<Props, State> {
     const { url, highlights } = this.state;
 
     return (
-      <div className="App" style={{ display: "flex", height: "100vh" }}>
+      <div className="App" style={{ display: "flex", height: "100vh", overflowY:"hidden"}}>
         <Sidebar
           highlights={highlights}
           resetHighlights={this.resetHighlights}

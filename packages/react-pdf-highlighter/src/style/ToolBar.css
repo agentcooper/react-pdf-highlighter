@@ -8,6 +8,42 @@
   -webkit-box-shadow: inset 0px 1px 1px 0px rgba(255, 255, 255, 1);
   -moz-box-shadow: inset 0px 1px 1px 0px rgba(255, 255, 255, 1);
   box-shadow: inset 0px 1px 1px 0px rgba(255, 255, 255, 1);
+  display: flex;
+  justify-content: space-between;
+}
+.toolbar .highlighter button{
+  position:relative;
+  top:-6px;
+}
+.toolbar .rotation{
+    display: flex;
+    align-items: center;
+}
+.toolbar .rotation .save{
+  background: #217eff;
+  color: white;
+  margin-left: 18px;
+  text-shadow: none;
+  padding: 1px 16px;
+}
+.toolbar .rotation .warning{
+  display: inline;
+  position: relative;
+  top:3px;
+  left:4px; 
+  cursor: pointer;
+  margin-right: 5px;
+} 
+.message.dropdown-menu.show{
+  width: 500px;
+  background-color: #ffffff;
+  padding: 10px 20px;
+  text-shadow: none;
+  color: #707070;
+  box-shadow: 1px 2px 10px #d8d8d8;
+  z-index: 100;
+  border-radius: 5px;
+  font-size: 14px;
 }
 .toolbar .spacer {
   display: inline-block;
@@ -148,4 +184,7 @@
 
 .toolbar-static-banner {
   color: black;
+}
+.pb-4{
+  padding-bottom:5px;
 }
