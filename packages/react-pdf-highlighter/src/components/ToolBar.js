@@ -104,26 +104,6 @@ class ToolBar extends Component<Props> {
                   </span>
                 </button>
 
-<<<<<<< HEAD
-              <button
-                className="rotate-ccw"
-                type="button"
-                onClick={() => {
-                  rotatePages(90);
-                  // toggleAreaHighlight(false);
-                }}
-              >
-                ⟳<span className="tooltip__text">Rotate Clockwise</span>
-              </button>
-              <button  className="save" onClick={saveRotation}>Save Rotation</button>
-            </React.Fragment>
-            
-          ) : (
-            ""
-          )}
-            <Dropdown>
-              <Dropdown.Toggle className="warn">
-=======
                 <button
                   className="rotate-ccw"
                   type="button"
@@ -145,8 +125,7 @@ class ToolBar extends Component<Props> {
               show={showRotationWarning}
               onClick={showRotationWarningFunc}
             >
-              <Dropdown.Toggle>
->>>>>>> 2f764ee52441f0aa02da0287948250cea187ac20
+              <Dropdown.Toggle className="warn">
                 <div className="warning">
                   <svg viewBox="0 0 28 28" width="24" height="24">
                     <g>
