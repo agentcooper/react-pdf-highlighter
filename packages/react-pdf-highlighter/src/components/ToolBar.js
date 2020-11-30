@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 
 import "../style/ToolBar.css";
-import {Dropdown, DropdownButton} from 'react-bootstrap';
+import { Dropdown } from "react-bootstrap";
 
 import type { T_ToolBarItem } from "../types";
 import { highlighterBox, areaHighlighterBox, rotationBox } from "../constant";
@@ -13,13 +13,14 @@ type Props = {
   toggleAreaHighlight: () => void,
   showToolBar: T_ToolBarItem,
   rotatePages: (delta: number) => void,
-  saveRotation?: (delta: number) => void
+  saveRotation?: (delta: number) => void,
+  showRotationWarning?: boolean,
+  showRotationWarningFunc?: () => void
 };
 class ToolBar extends Component<Props> {
   constructor(props: Props) {
     super(props);
   }
-  
 
   render() {
     const {
@@ -27,7 +28,8 @@ class ToolBar extends Component<Props> {
       toggleAreaHighlight,
       showToolBar,
       rotatePages,
-      initialHighlight,
+      showRotationWarning,
+      showRotationWarningFunc,
       saveRotation
     } = this.props;
 
@@ -45,61 +47,64 @@ class ToolBar extends Component<Props> {
 
         <div className="spacer"></div> */}
           <div className="highlighter">
-          {showToolBar.includes(areaHighlighterBox) ? (
-            <React.Fragment>
-              <button
-                className={`rectangle tooltip ${
-                  areaHighlightEnable ? "active" : ""
-                }`}
-                type="button"
-                data-tooltype="area"
-                onClick={() => {
-                  toggleAreaHighlight(true);
-                }}
-              >
-                <span className="tooltip__text">Image Highlighter</span>
-              </button>
-              <div className="spacer"></div>
-            </React.Fragment>
-          ) : (
-            ""
-          )}
+            {showToolBar.includes(areaHighlighterBox) ? (
+              <React.Fragment>
+                <button
+                  className={`rectangle tooltip ${
+                    areaHighlightEnable ? "active" : ""
+                  }`}
+                  type="button"
+                  data-tooltype="area"
+                  onClick={() => {
+                    toggleAreaHighlight(true);
+                  }}
+                >
+                  <span className="tooltip__text">Image Highlighter</span>
+                </button>
+                <div className="spacer"></div>
+              </React.Fragment>
+            ) : (
+              ""
+            )}
 
-          {showToolBar.includes(highlighterBox) ? (
-            <React.Fragment>
-              <button
-                className={`highlight tooltip ${
-                  !areaHighlightEnable ? "active" : ""
-                }`}
-                type="button"
-                data-tooltype="highlight"
-                onClick={() => {
-                  toggleAreaHighlight(false);
-                }}
-              >
-                <span className="tooltip__text">Text Highlighter</span>
-              </button>
-              <div className="spacer"></div>
-            </React.Fragment>
-            
-          ) : (
-            ""
-          )}
+            {showToolBar.includes(highlighterBox) ? (
+              <React.Fragment>
+                <button
+                  className={`highlight tooltip ${
+                    !areaHighlightEnable ? "active" : ""
+                  }`}
+                  type="button"
+                  data-tooltype="highlight"
+                  onClick={() => {
+                    toggleAreaHighlight(false);
+                  }}
+                >
+                  <span className="tooltip__text">Text Highlighter</span>
+                </button>
+                <div className="spacer"></div>
+              </React.Fragment>
+            ) : (
+              ""
+            )}
           </div>
           <div className="rotation">
-          {showToolBar.includes(rotationBox) ? (
-            <React.Fragment>
-              <button
-                className="rotate-ccw "
-                type="button"
-                onClick={() => {
-                  rotatePages(-90);
-                  // toggleAreaHighlight(false);
-                }}
-              >
-                ⟲<span className="tooltip__text">Rotate Counter Clockwise</span>
-              </button>
+            {showToolBar.includes(rotationBox) ? (
+              <React.Fragment>
+                <button
+                  className="rotate-ccw "
+                  type="button"
+                  onClick={() => {
+                    rotatePages(-90);
+                    // toggleAreaHighlight(false);
+                  }}
+                >
+                  ⟲
+                  <span className="tooltip__text">
+                    Rotate Counter Clockwise
+                  </span>
+                </button>
 
+<<<<<<< HEAD
               <button
                 className="rotate-ccw"
                 type="button"
@@ -118,17 +123,51 @@ class ToolBar extends Component<Props> {
           )}
             <Dropdown>
               <Dropdown.Toggle className="warn">
+=======
+                <button
+                  className="rotate-ccw"
+                  type="button"
+                  onClick={() => {
+                    rotatePages(90);
+                    // toggleAreaHighlight(false);
+                  }}
+                >
+                  ⟳<span className="tooltip__text">Rotate Clockwise</span>
+                </button>
+                <button className="save" onClick={saveRotation}>
+                  Save Rotation
+                </button>
+              </React.Fragment>
+            ) : (
+              ""
+            )}
+            <Dropdown
+              show={showRotationWarning}
+              onClick={showRotationWarningFunc}
+            >
+              <Dropdown.Toggle>
+>>>>>>> 2f764ee52441f0aa02da0287948250cea187ac20
                 <div className="warning">
-                <svg viewBox="0 0 28 28" width="24" height="24" >
-                <g> <path class="st0" d="M23.7,19.2l-4.9-8.5l-4.9-8.5c-0.8-1.5-2.9-1.5-3.8,0l-4.9,8.5l-4.9,8.5c-0.8,1.5,0.2,3.3,1.9,3.3l9.8,0l9.8,0
+                  <svg viewBox="0 0 28 28" width="24" height="24">
+                    <g>
+                      <path
+                        className="st0"
+                        d="M23.7,19.2l-4.9-8.5l-4.9-8.5c-0.8-1.5-2.9-1.5-3.8,0l-4.9,8.5l-4.9,8.5c-0.8,1.5,0.2,3.3,1.9,3.3l9.8,0l9.8,0
                     C23.5,22.4,24.5,20.6,23.7,19.2z M12,19c-0.6,0-1-0.4-1-1c0-0.6,0.4-1,1-1s1,0.4,1,1C13,18.6,12.6,19,12,19z M13,15
-                    c0,0.6-0.4,1-1,1s-1-0.4-1-1V8c0-0.6,0.4-1,1-1s1,0.4,1,1V15z" fill="#FFAB6C"/></g>
-                </svg>
-              </div>
+                    c0,0.6-0.4,1-1,1s-1-0.4-1-1V8c0-0.6,0.4-1,1-1s1,0.4,1,1V15z"
+                        fill="#FFAB6C"
+                      />
+                    </g>
+                  </svg>
+                </div>
               </Dropdown.Toggle>
 
               <Dropdown.Menu className="message">
-                  <p>Please correct document orientation before annotation. Changing document orientation after annotation will lead to loss of the previous annotation</p>
+                <p>
+                  Please correct document orientation before annotation.
+                  Changing document orientation after annotation will lead to
+                  loss of the previous annotation
+                </p>
               </Dropdown.Menu>
             </Dropdown>
           </div>

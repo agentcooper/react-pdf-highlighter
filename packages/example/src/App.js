@@ -41,7 +41,8 @@ type Props = {};
 
 type State = {
   url: string,
-  highlights: Array<T_Highlight>
+  highlights: Array<T_Highlight>,
+  showRotationWarning: boolean
 };
 
 const getNextId = () => String(Math.random()).slice(2);
@@ -73,6 +74,7 @@ const initialUrl = searchParams.get("url") || PRIMARY_PDF_URL;
 class App extends Component<Props, State> {
   state = {
     url: initialUrl,
+    showRotationWarning: true,
     highlights: testHighlights[initialUrl]
       ? [...testHighlights[initialUrl]]
       : []
@@ -179,13 +181,21 @@ class App extends Component<Props, State> {
     }
   };
 
-  saveRotation = (delta: number) => {};
+  saveRotation = (delta: number) => {
+    debugger;
+  };
+
+  showRotationWarningFunc = () =>
+    this.setState({ showRotationWarning: !this.state.showRotationWarning });
 
   render() {
-    const { url, highlights } = this.state;
+    const { url, highlights, showRotationWarning } = this.state;
 
     return (
-      <div className="App" style={{ display: "flex", height: "100vh", overflowY:"hidden"}}>
+      <div
+        className="App"
+        style={{ display: "flex", height: "100vh", overflowY: "hidden" }}
+      >
         <Sidebar
           highlights={highlights}
           resetHighlights={this.resetHighlights}
@@ -206,7 +216,8 @@ class App extends Component<Props, State> {
                 onScrollChange={resetHash}
                 showToolBar={[highlighterBox, areaHighlighterBox, rotationBox]}
                 updateRotate={this.updateRotate}
-                initialHighlight={true}
+                showRotationWarning={showRotationWarning}
+                showRotationWarningFunc={this.showRotationWarningFunc}
                 rotatePdf={0}
                 saveRotation={this.saveRotation}
                 // pdfScaleValue="page-width"
