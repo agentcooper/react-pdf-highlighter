@@ -10,10 +10,10 @@
   box-shadow: inset 0px 1px 1px 0px rgba(255, 255, 255, 1);
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .toolbar .highlighter button{
   position:relative;
-  top:-1px;
 }
 .toolbar .rotation{
     display: flex;
