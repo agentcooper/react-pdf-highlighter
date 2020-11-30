@@ -117,7 +117,7 @@ class ToolBar extends Component<Props> {
             ""
           )}
             <Dropdown>
-              <Dropdown.Toggle>
+              <Dropdown.Toggle className="warn">
                 <div className="warning">
                 <svg viewBox="0 0 28 28" width="24" height="24" >
                 <g> <path class="st0" d="M23.7,19.2l-4.9-8.5l-4.9-8.5c-0.8-1.5-2.9-1.5-3.8,0l-4.9,8.5l-4.9,8.5c-0.8,1.5,0.2,3.3,1.9,3.3l9.8,0l9.8,0

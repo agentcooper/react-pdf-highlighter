@@ -13,18 +13,34 @@
 }
 .toolbar .highlighter button{
   position:relative;
-  top:-6px;
+  top:-1px;
 }
 .toolbar .rotation{
     display: flex;
     align-items: center;
 }
 .toolbar .rotation .save{
-  background: #217eff;
+  background: #4fa284;
   color: white;
   margin: 0px 15px;
   text-shadow: none;
   padding: 1px 16px;
+}
+.toolbar .rotation .dropdown button.dropdown-toggle{
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 50%;
+  border:none;
+}
+.toolbar .rotation .show.dropdown button.dropdown-toggle{
+background:#fff;
+  border:none;
+}
+.toolbar .rotation .dropdown button.dropdown-toggle:after{
+display: none;
+}
+.message.dropdown-menu.show{
+  border:none;
 }
 .toolbar .rotation .warning{
   display: inline;
