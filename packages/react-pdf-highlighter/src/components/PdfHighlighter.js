@@ -103,8 +103,7 @@ type Props<T_HT> = {
   rotatePdf?: number,
   saveRotation?: (delta: number) => void,
   rotationModalConfirmation?: (
-    rotatePages: (delta: number) => void,
-    delta: number
+    rotatePages: (delta: number) => void
   ) => React$Element<*>
 };
 
@@ -704,10 +703,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   saveRotation = () => this.props.saveRotation(this.viewer.pagesRotation);
 
   rotationModalConfirmation = () =>
-    this.props.rotationModalConfirmation(
-      this.rotatePages,
-      this.viewer.pagesRotation
-    );
+    this.props.rotationModalConfirmation(this.rotatePages);
 
   render() {
     const {
