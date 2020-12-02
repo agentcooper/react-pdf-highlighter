@@ -23,7 +23,6 @@
 .toolbar .rotation .save{
   background: #4fa284;
   color: white;
-  margin-left:15px;
   text-shadow: none;
   padding: 1px 16px;
 }
@@ -49,7 +48,6 @@ display: none;
   top:1px;
   left:2px; 
   cursor: pointer;
-  margin-right: 5px;
 } 
 .message.dropdown-menu.show{
   width: 500px;
