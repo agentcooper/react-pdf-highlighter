@@ -143,9 +143,9 @@ class ToolBar extends Component<Props> {
 
               <Dropdown.Menu className="message">
                 <p>
-                  Please correct document orientation before annotation.
-                  Changing document orientation after annotation will lead to
-                  loss of the previous annotation
+                  Please correct document orientation before annotation and
+                  press Save Rotation button. Changing document orientation
+                  after annotation will lead to loss of the previous annotation
                 </p>
               </Dropdown.Menu>
             </Dropdown>
