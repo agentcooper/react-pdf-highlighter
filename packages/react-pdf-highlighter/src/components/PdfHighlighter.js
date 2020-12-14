@@ -54,6 +54,8 @@ type State<T_HT> = {
     highlight: T_ViewportHighlight<T_HT>,
     callback: (highlight: T_ViewportHighlight<T_HT>) => React$Element<*>
   },
+  tipPosition: T_Position | null,
+  tipChildren: ?React$Element<*> | null,
   isAreaSelectionInProgress: boolean,
   scrolledToHighlightId: string
 };
@@ -101,7 +103,9 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     range: null,
     scrolledToHighlightId: EMPTY_ID,
     isAreaSelectionInProgress: false,
-    tip: null
+    tip: null,
+    tipPosition: null,
+    tipChildren: null
   };
 
   eventBus: T_EventBus = new EventBus();
@@ -228,7 +232,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
       return;
     }
 
-    this.renderTipAtPosition(highlight.position, content);
+    this.setTip(highlight.position, content);
   }
 
   scaledPositionToViewport({
@@ -327,47 +331,47 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   }
 
   hideTipAndSelection = () => {
-    const tipNode = findOrCreateContainerLayer(
-      this.viewer.viewer,
-      "PdfHighlighter__tip-layer"
-    );
-
-    ReactDom.unmountComponentAtNode(tipNode);
+    this.setState({
+      tipPosition: null,
+      tipChildren: null
+    });
 
     this.setState({ ghostHighlight: null, tip: null }, () =>
       this.renderHighlights()
     );
   };
 
-  renderTipAtPosition(position: T_Position, inner: ?React$Element<*>) {
-    const { boundingRect, pageNumber } = position;
+  setTip(position: T_Position, inner: ?React$Element<*>) {
+    this.setState({
+      tipPosition: position,
+      tipChildren: inner
+    });
+  }
 
+  renderTip = () => {
+    const { tipPosition, tipChildren } = this.state;
+    if (!tipPosition) return null;
+
+    const { boundingRect, pageNumber } = tipPosition;
     const page = {
       node: this.viewer.getPageView(pageNumber - 1).div
     };
 
-    const pageBoundingRect = page.node.getBoundingClientRect();
-
-    const tipNode = findOrCreateContainerLayer(
-      this.viewer.viewer,
-      "PdfHighlighter__tip-layer"
-    );
-
-    ReactDom.render(
+    return (
       <TipContainer
         scrollTop={this.viewer.container.scrollTop}
-        pageBoundingRect={pageBoundingRect}
+        pageBoundingRect={page.node.getBoundingClientRect()}
         style={{
           left:
             page.node.offsetLeft + boundingRect.left + boundingRect.width / 2,
           top: boundingRect.top + page.node.offsetTop,
           bottom: boundingRect.top + page.node.offsetTop + boundingRect.height
         }}
-        children={inner}
-      />,
-      tipNode
+      >
+        {tipChildren}
+      </TipContainer>
     );
-  }
+  };
 
   onTextLayerRendered = () => {
     this.renderHighlights();
@@ -506,7 +510,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     };
     const scaledPosition = this.viewportPositionToScaled(viewportPosition);
 
-    this.renderTipAtPosition(
+    this.setTip(
       viewportPosition,
       onSelectionFinished(
         scaledPosition,
@@ -551,6 +555,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
           onContextMenu={e => e.preventDefault()}
         >
           <div className="pdfViewer" />
+          {this.renderTip()}
           {typeof enableAreaSelection === "function" ? (
             <MouseSelection
               onDragStart={() => this.toggleTextSelection(true)}
@@ -588,7 +593,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
 
                 const image = this.screenshot(pageBoundingRect, page.number);
 
-                this.renderTipAtPosition(
+                this.setTip(
                   viewportPosition,
                   onSelectionFinished(
                     scaledPosition,
