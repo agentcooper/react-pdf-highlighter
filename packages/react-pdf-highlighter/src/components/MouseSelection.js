@@ -82,19 +82,21 @@ class MouseSelection extends Component<Props, State> {
 
     let containerBoundingRect = null;
 
-    const containerCoords = (pageX, pageY) => {
-      console.log("X coords: " + pageX + ", Y coords: " + pageY);
-
+    const containerCoords = (pageX: number, pageY: number) => {
       if (!containerBoundingRect) {
         containerBoundingRect = container.getBoundingClientRect();
       }
 
       return {
         x: pageX - containerBoundingRect.left + container.scrollLeft,
-        y: pageY - containerBoundingRect.top + container.scrollTop - window.scrollY
+        y:
+          pageY -
+          containerBoundingRect.top +
+          container.scrollTop -
+          window.scrollY
       };
     };
-    
+
     container.addEventListener("mousemove", (event: MouseEvent) => {
       const { start, locked } = this.state;
 
