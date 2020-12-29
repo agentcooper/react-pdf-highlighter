@@ -34,8 +34,13 @@ class Tip extends Component<Props, State> {
 
   render() {
     const { onConfirm, onOpen } = this.props;
+    let { emojiOptions, popupPlaceholder, buttonName } = this.props;
     const { compact, text, emoji } = this.state;
-
+    emojiOptions = emojiOptions
+      ? emojiOptions
+      : ["💩", "😱", "😍", "🔥", "😳", "⚠️"];
+    popupPlaceholder = popupPlaceholder ? popupPlaceholder : "Your comment";
+    buttonName = buttonName ? buttonName : "Save";
     return (
       <div className="Tip">
         {compact ? (
@@ -59,7 +64,7 @@ class Tip extends Component<Props, State> {
             <div>
               <textarea
                 width="100%"
-                placeholder="Your comment"
+                placeholder={popupPlaceholder}
                 autoFocus
                 value={text}
                 onChange={event => this.setState({ text: event.target.value })}
@@ -70,7 +75,7 @@ class Tip extends Component<Props, State> {
                 }}
               />
               <div>
-                {["💩", "😱", "😍", "🔥", "😳", "⚠️"].map(_emoji => (
+                {emojiOptions.map(_emoji => (
                   <label key={_emoji}>
                     <input
                       checked={emoji === _emoji}
@@ -87,7 +92,7 @@ class Tip extends Component<Props, State> {
               </div>
             </div>
             <div>
-              <input type="submit" value="Save" />
+              <input type="submit" value={buttonName} />
             </div>
           </form>
         )}
