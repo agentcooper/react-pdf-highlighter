@@ -34,7 +34,8 @@ class MouseSelection extends Component<Props, State> {
   state: State = {
     locked: false,
     start: null,
-    end: null
+    end: null,
+    startTarget: null
   };
 
   root: ?HTMLElement;
@@ -56,6 +57,117 @@ class MouseSelection extends Component<Props, State> {
     };
   }
 
+  getContainer = () => asElement(this.root.parentElement);
+
+  getContainerCoords = (
+    pageX: number,
+    pageY: number,
+    container?: HTMLElement
+  ) => {
+    const containerElem = container || this.getContainer();
+    let containerBoundingRect = null;
+
+    if (!containerBoundingRect) {
+      containerBoundingRect = containerElem.getBoundingClientRect();
+    }
+
+    return {
+      x: pageX - containerBoundingRect.left + containerElem.scrollLeft,
+      y: pageY - containerBoundingRect.top + containerElem.scrollTop
+    };
+  };
+
+  onMouseMove = (event: MouseEvent) => {
+    const { start, locked } = this.state;
+
+    if (!start || locked) {
+      return;
+    }
+
+    this.setState({
+      ...this.state,
+      end: this.getContainerCoords(event.pageX, event.pageY)
+    });
+  };
+
+  onMouseUp = (event: MouseEvent) => {
+    const { onSelection, onDragEnd } = this.props;
+    // emulate listen once
+    event.currentTarget.removeEventListener("mouseup", this.onMouseUp);
+
+    const { start } = this.state;
+
+    if (!start) {
+      return;
+    }
+
+    const container = this.getContainer();
+    const end = this.getContainerCoords(event.pageX, event.pageY, container);
+
+    const boundingRect = this.getBoundingRect(start, end);
+
+    if (
+      !isHTMLElement(event.target) ||
+      !container.contains(asElement(event.target)) ||
+      !this.shouldRender(boundingRect)
+    ) {
+      this.reset();
+      return;
+    }
+
+    this.setState(
+      {
+        end,
+        locked: true
+      },
+      () => {
+        const { start, end } = this.state;
+
+        if (!start || !end) {
+          return;
+        }
+
+        if (isHTMLElement(event.target)) {
+          onSelection(this.state.startTarget, boundingRect, this.reset);
+
+          onDragEnd();
+          this.setState({
+            startTarget: null
+          });
+        }
+      }
+    );
+  };
+
+  onMouseDown = (event: MouseEvent) => {
+    const { onDragStart, shouldStart } = this.props;
+    if (!shouldStart(event)) {
+      this.reset();
+      return;
+    }
+
+    const startTarget = asElement(event.target);
+    if (!isHTMLElement(startTarget)) {
+      return;
+    }
+
+    const container = this.getContainer();
+
+    onDragStart();
+
+    this.setState({
+      start: this.getContainerCoords(event.pageX, event.pageY, container),
+      end: null,
+      locked: false,
+      startTarget
+    });
+
+    const { ownerDocument: doc } = container;
+    if (doc.body) {
+      doc.body.addEventListener("mouseup", this.onMouseUp);
+    }
+  };
+
   componentDidUpdate() {
     const { onChange } = this.props;
     const { start, end } = this.state;
@@ -72,108 +184,29 @@ class MouseSelection extends Component<Props, State> {
 
     const that = this;
 
-    const { onSelection, onDragStart, onDragEnd, shouldStart } = this.props;
-
     const container = asElement(this.root.parentElement);
 
     if (!isHTMLElement(container)) {
       return;
     }
 
-    let containerBoundingRect = null;
+    container.addEventListener("mousemove", this.onMouseMove);
+    container.addEventListener("mousedown", this.onMouseDown);
+  }
 
-    const containerCoords = (pageX: number, pageY: number) => {
-      if (!containerBoundingRect) {
-        containerBoundingRect = container.getBoundingClientRect();
-      }
+  componentWillUnmount() {
+    console.log("Mouse selection will unmount, remove event listeners");
+    const container = asElement(this.root.parentElement);
+    if (!container) return;
 
-      return {
-        x: pageX - containerBoundingRect.left + container.scrollLeft,
-        y: pageY - containerBoundingRect.top + container.scrollTop
-      };
-    };
+    container.removeEventListener("mousemove", this.onMouseMove);
+    container.removeEventListener("mousedown", this.onMouseDown);
 
-    container.addEventListener("mousemove", (event: MouseEvent) => {
-      const { start, locked } = this.state;
-
-      if (!start || locked) {
-        return;
-      }
-
-      that.setState({
-        ...this.state,
-        end: containerCoords(event.pageX, event.pageY)
-      });
-    });
-
-    container.addEventListener("mousedown", (event: MouseEvent) => {
-      if (!shouldStart(event)) {
-        this.reset();
-        return;
-      }
-
-      const startTarget = asElement(event.target);
-      if (!isHTMLElement(startTarget)) {
-        return;
-      }
-
-      onDragStart();
-
-      this.setState({
-        start: containerCoords(event.pageX, event.pageY),
-        end: null,
-        locked: false
-      });
-
-      const onMouseUp = (event: MouseEvent): void => {
-        // emulate listen once
-        event.currentTarget.removeEventListener("mouseup", onMouseUp);
-
-        const { start } = this.state;
-
-        if (!start) {
-          return;
-        }
-
-        const end = containerCoords(event.pageX, event.pageY);
-
-        const boundingRect = that.getBoundingRect(start, end);
-
-        if (
-          !isHTMLElement(event.target) ||
-          !container.contains(asElement(event.target)) ||
-          !that.shouldRender(boundingRect)
-        ) {
-          that.reset();
-          return;
-        }
-
-        that.setState(
-          {
-            end,
-            locked: true
-          },
-          () => {
-            const { start, end } = that.state;
-
-            if (!start || !end) {
-              return;
-            }
-
-            if (isHTMLElement(event.target)) {
-              onSelection(startTarget, boundingRect, that.reset);
-
-              onDragEnd();
-            }
-          }
-        );
-      };
-
-      const { ownerDocument: doc } = container;
-      if (doc.body) {
-        doc.body.addEventListener("mouseup", onMouseUp);
-      }
-    });
+    if (container.ownerDocument.body)
+      container.ownerDocument.body.removeEventListener(
+        "mouseup",
+        this.onMouseUp
+      );
   }
 
   shouldRender(boundingRect: T_LTWH) {
