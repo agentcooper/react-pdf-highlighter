@@ -15,7 +15,8 @@ type Coords = {
 type State = {
   locked: boolean,
   start: ?Coords,
-  end: ?Coords
+  end: ?Coords,
+  startTarget: HTMLElement | null
 };
 
 type Props = {
@@ -57,7 +58,7 @@ class MouseSelection extends Component<Props, State> {
     };
   }
 
-  getContainer = () => asElement(this.root.parentElement);
+  getContainer = () => (this.root ? asElement(this.root.parentElement) : null);
 
   getContainerCoords = (
     pageX: number,
@@ -65,6 +66,7 @@ class MouseSelection extends Component<Props, State> {
     container?: HTMLElement
   ) => {
     const containerElem = container || this.getContainer();
+    if (!containerElem) throw new Error("Container not found");
     let containerBoundingRect = null;
 
     if (!containerBoundingRect) {
@@ -102,6 +104,7 @@ class MouseSelection extends Component<Props, State> {
     }
 
     const container = this.getContainer();
+    if (!container) throw new Error("Container not found");
     const end = this.getContainerCoords(event.pageX, event.pageY, container);
 
     const boundingRect = this.getBoundingRect(start, end);
@@ -127,7 +130,7 @@ class MouseSelection extends Component<Props, State> {
           return;
         }
 
-        if (isHTMLElement(event.target)) {
+        if (isHTMLElement(event.target) && this.state.startTarget) {
           onSelection(this.state.startTarget, boundingRect, this.reset);
 
           onDragEnd();
@@ -152,6 +155,7 @@ class MouseSelection extends Component<Props, State> {
     }
 
     const container = this.getContainer();
+    if (!container) throw new Error("Container not found");
 
     onDragStart();
 
@@ -195,8 +199,7 @@ class MouseSelection extends Component<Props, State> {
   }
 
   componentWillUnmount() {
-    console.log("Mouse selection will unmount, remove event listeners");
-    const container = asElement(this.root.parentElement);
+    const container = this.root ? asElement(this.root.parentElement) : null;
     if (!container) return;
 
     container.removeEventListener("mousemove", this.onMouseMove);
