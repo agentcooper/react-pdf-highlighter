@@ -10,12 +10,13 @@ import type { T_ViewportHighlight, T_LTWH } from "../types";
 
 type Props = {|
   highlight: T_ViewportHighlight,
-  onChange: (rect: T_LTWH) => void
+  onChange: (rect: T_LTWH) => void,
+  onChangeStart?: () => void
 |};
 
 class AreaHighlight extends Component<Props> {
   render() {
-    const { highlight, onChange, ...otherProps } = this.props;
+    const { highlight, onChange, onChangeStart, ...otherProps } = this.props;
 
     return (
       <Rnd
@@ -51,6 +52,8 @@ class AreaHighlight extends Component<Props> {
           event.stopPropagation();
           event.preventDefault();
         }}
+        onResizeStart={onChangeStart ? () => onChangeStart() : undefined}
+        onDragStart={onChangeStart ? () => onChangeStart() : undefined}
         {...otherProps}
       />
     );
