@@ -8,28 +8,28 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-pdf-highlighter/09ae11965f8e0847ac32.worker.js.LICENSE.txt"
   },
   {
-    "revision": "c78cf64fa4b139c9a1bc21849f67cd55",
+    "revision": "a9380289e603036ccdace225c703a9f9",
     "url": "/react-pdf-highlighter/index.html"
   },
   {
-    "revision": "a0858afebed3ad0fdf0e",
+    "revision": "a26324d15f54a9ee8f19",
     "url": "/react-pdf-highlighter/static/css/2.dd69bd5b.chunk.css"
   },
   {
-    "revision": "293d8b6e9c137316490a",
-    "url": "/react-pdf-highlighter/static/css/main.dd07f0b7.chunk.css"
+    "revision": "4ba39dc83c989cf9be4c",
+    "url": "/react-pdf-highlighter/static/css/main.83abed8d.chunk.css"
   },
   {
-    "revision": "a0858afebed3ad0fdf0e",
-    "url": "/react-pdf-highlighter/static/js/2.747286d3.chunk.js"
+    "revision": "a26324d15f54a9ee8f19",
+    "url": "/react-pdf-highlighter/static/js/2.728ad88f.chunk.js"
   },
   {
-    "revision": "b8e8ac08803af9f50f2545aeddab3ac2",
-    "url": "/react-pdf-highlighter/static/js/2.747286d3.chunk.js.LICENSE.txt"
+    "revision": "e8a82a07f32485cd8e61b87f0895c4a1",
+    "url": "/react-pdf-highlighter/static/js/2.728ad88f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "293d8b6e9c137316490a",
-    "url": "/react-pdf-highlighter/static/js/main.4c1287b5.chunk.js"
+    "revision": "4ba39dc83c989cf9be4c",
+    "url": "/react-pdf-highlighter/static/js/main.b30cc389.chunk.js"
   },
   {
     "revision": "cfb29810439615ba25a0",
