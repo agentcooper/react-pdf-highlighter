@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-pdf-highlighter/09ae11965f8e0847ac32.worker.js.LICENSE.txt"
   },
   {
-    "revision": "a9380289e603036ccdace225c703a9f9",
+    "revision": "d96c0988adf1921cdeb1fd9478815ac1",
     "url": "/react-pdf-highlighter/index.html"
   },
   {
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-pdf-highlighter/static/css/2.dd69bd5b.chunk.css"
   },
   {
-    "revision": "4ba39dc83c989cf9be4c",
+    "revision": "a6826305db50d8532150",
     "url": "/react-pdf-highlighter/static/css/main.83abed8d.chunk.css"
   },
   {
@@ -28,8 +28,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-pdf-highlighter/static/js/2.728ad88f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4ba39dc83c989cf9be4c",
-    "url": "/react-pdf-highlighter/static/js/main.b30cc389.chunk.js"
+    "revision": "a6826305db50d8532150",
+    "url": "/react-pdf-highlighter/static/js/main.d34bad50.chunk.js"
   },
   {
     "revision": "cfb29810439615ba25a0",
