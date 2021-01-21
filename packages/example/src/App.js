@@ -219,6 +219,15 @@ class App extends Component<Props, State> {
                 showRotationWarning={showRotationWarning}
                 showRotationWarningFunc={this.showRotationWarningFunc}
                 rotatePdf={0}
+                rotationModalConfirmation={rotatePages => (
+                  <button
+                    onClick={() => {
+                      rotatePages(90);
+                    }}
+                  >
+                    Hello world
+                  </button>
+                )}
                 saveRotation={this.saveRotation}
                 // pdfScaleValue="page-width"
                 scrollRef={scrollTo => {
@@ -282,15 +291,18 @@ class App extends Component<Props, State> {
                   );
 
                   return (
-                    <Popup
-                      popupContent={<HighlightPopup {...highlight} />}
-                      onMouseOver={popupContent =>
-                        setTip(highlight, highlight => popupContent)
-                      }
-                      onMouseOut={hideTip}
-                      key={index}
-                      children={component}
-                    />
+                    <React.Fragment>
+                      <div>Hello world</div>
+                      <Popup
+                        popupContent={<HighlightPopup {...highlight} />}
+                        onMouseOver={popupContent =>
+                          setTip(highlight, highlight => popupContent)
+                        }
+                        onMouseOut={hideTip}
+                        key={index}
+                        children={component}
+                      />
+                    </React.Fragment>
                   );
                 }}
                 highlights={highlights}

@@ -101,7 +101,10 @@ type Props<T_HT> = {
   showRotationWarning?: boolean,
   showRotationWarningFunc?: () => void,
   rotatePdf?: number,
-  saveRotation?: (delta: number) => void
+  saveRotation?: (delta: number) => void,
+  rotationModalConfirmation?: (
+    rotatePages: (delta: number) => void
+  ) => React$Element<*>
 };
 
 const EMPTY_ID = "empty-id";
@@ -697,9 +700,10 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     // in the 'rotationchanging' event handler.
   };
 
-  saveRotation = () => {
-    this.props.saveRotation(this.viewer.pagesRotation);
-  };
+  saveRotation = () => this.props.saveRotation(this.viewer.pagesRotation);
+
+  rotationModalConfirmation = () =>
+    this.props.rotationModalConfirmation(this.rotatePages);
 
   render() {
     const {
@@ -708,7 +712,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
       showToolBar,
       updateRotate,
       showRotationWarning,
-      showRotationWarningFunc
+      showRotationWarningFunc,
+      rotationModalConfirmation
     } = this.props;
     const { areaHighlightEnable } = this.state;
 
@@ -771,14 +776,14 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
                     viewportPosition
                   );
 
-                  /* const image = this.screenshot(pageBoundingRect, page.number); */
+                  const image = this.screenshot(pageBoundingRect, page.number);
 
                   this.renderTipAtPosition(
                     viewportPosition,
                     onSelectionFinished(
                       scaledPosition,
                       {
-                        /* image */
+                        image
                       },
                       () => this.hideTipAndSelection(),
                       () =>
@@ -788,7 +793,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
                               {
                                 position: scaledPosition,
                                 content: {
-                                  /* image */
+                                  image
                                 }
                               }
                             ]
@@ -805,6 +810,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
             ) : null}
           </div>
         </Pointable>
+
+        {rotationModalConfirmation ? this.rotationModalConfirmation() : ""}
       </React.Fragment>
     );
   }
