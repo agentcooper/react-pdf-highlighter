@@ -110,7 +110,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
 
   eventBus: T_EventBus = new EventBus();
   linkService: T_PDFJS_LinkService = new PDFLinkService({
-    eventBus: this.eventBus
+    eventBus: this.eventBus,
+    externalLinkTarget: 2
   });
   viewer: T_PDFJS_Viewer;
 
