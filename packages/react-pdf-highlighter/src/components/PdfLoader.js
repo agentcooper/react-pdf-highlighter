@@ -30,7 +30,9 @@ type Props = {
   beforeLoad: React$Element<*>,
   errorMessage?: React$Element<*>,
   children: (pdfDocument: T_PDFJS_Document) => React$Element<*>,
-  onError?: (error: Error) => void
+  onError?: (error: Error) => void,
+  cMapUrl?: string,
+  cMapPacked?: boolean
 };
 
 type State = {
@@ -75,7 +77,7 @@ class PdfLoader extends Component<Props, State> {
 
   load() {
     const { ownerDocument = document } = this.documentRef.current || {};
-    const { url } = this.props;
+    const { url, cMapUrl, cMapPacked } = this.props;
     const { pdfDocument: discardedDocument } = this.state;
     this.setState({ pdfDocument: null, error: null });
 
@@ -84,9 +86,11 @@ class PdfLoader extends Component<Props, State> {
       .then(
         () =>
           url &&
-          getDocument({ url, ownerDocument }).promise.then(pdfDocument => {
-            this.setState({ pdfDocument });
-          })
+          getDocument({ url, ownerDocument, cMapUrl, cMapPacked }).promise.then(
+            pdfDocument => {
+              this.setState({ pdfDocument });
+            }
+          )
       )
       .catch(e => this.componentDidCatch(e));
   }
