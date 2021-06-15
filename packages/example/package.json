@@ -15,7 +15,7 @@
     "flow-typed": "^3.2.1",
     "jest-puppeteer": "^4.4.0",
     "puppeteer": "^5.2.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "4.0.3",
     "worker-loader": "^2.0.0"
   },
   "scripts": {
@@ -27,16 +27,9 @@
     "extends": "react-app"
   },
   "homepage": "https://agentcooper.github.io/react-pdf-highlighter",
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }
