@@ -206,6 +206,7 @@ class App extends Component<Props, State> {
                     />
                   ) : (
                     <AreaHighlight
+                      isScrolledTo={isScrolledTo}
                       highlight={highlight}
                       onChange={boundingRect => {
                         this.updateHighlight(
