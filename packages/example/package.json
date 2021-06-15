@@ -13,10 +13,10 @@
     "@testing-library/user-event": "^12.0.17",
     "flow-bin": "^0.130.0",
     "flow-typed": "^3.2.1",
-    "jest-puppeteer": "^4.4.0",
-    "puppeteer": "^5.2.1",
+    "jest-puppeteer": "5.0.4",
+    "puppeteer": "9.1.1",
     "react-scripts": "4.0.3",
-    "worker-loader": "^2.0.0"
+    "worker-loader": "3.0.8"
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false react-scripts start",
