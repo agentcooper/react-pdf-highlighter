@@ -75,9 +75,7 @@ export type T_EventBus = {
 export type T_PDFJS_Viewer = {
   container: HTMLDivElement,
   viewer: HTMLDivElement,
-  getPageView: (
-    page: number
-  ) => {
+  getPageView: (page: number) => {
     textLayer: { textLayerDiv: HTMLDivElement },
     viewport: T_VIEWPORT,
     div: HTMLDivElement,

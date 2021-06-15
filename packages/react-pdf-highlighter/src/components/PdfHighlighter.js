@@ -203,9 +203,9 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
     );
   }
 
-  groupHighlightsByPage(
-    highlights: Array<T_HT>
-  ): { [pageNumber: string]: Array<T_HT> } {
+  groupHighlightsByPage(highlights: Array<T_HT>): {
+    [pageNumber: string]: Array<T_HT>
+  } {
     const { ghostHighlight } = this.state;
 
     return [...highlights, ghostHighlight]
@@ -221,11 +221,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
   }
 
   showTip(highlight: T_ViewportHighlight<T_HT>, content: React$Element<*>) {
-    const {
-      isCollapsed,
-      ghostHighlight,
-      isAreaSelectionInProgress
-    } = this.state;
+    const { isCollapsed, ghostHighlight, isAreaSelectionInProgress } =
+      this.state;
 
     const highlightInProgress = !isCollapsed || ghostHighlight;
 
@@ -314,8 +311,9 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
                   },
                   this.hideTipAndSelection,
                   rect => {
-                    const viewport = this.viewer.getPageView(pageNumber - 1)
-                      .viewport;
+                    const viewport = this.viewer.getPageView(
+                      pageNumber - 1
+                    ).viewport;
 
                     return viewportToScaled(rect, viewport);
                   },
@@ -588,9 +586,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends PureComponent<
                   pageNumber: page.number
                 };
 
-                const scaledPosition = this.viewportPositionToScaled(
-                  viewportPosition
-                );
+                const scaledPosition =
+                  this.viewportPositionToScaled(viewportPosition);
 
                 const image = this.screenshot(pageBoundingRect, page.number);
 
