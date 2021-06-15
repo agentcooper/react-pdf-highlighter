@@ -86,11 +86,14 @@ class PdfLoader extends Component<Props, State> {
       .then(
         () =>
           url &&
-          getDocument({ url, ownerDocument, cMapUrl, cMapPacked }).promise.then(
-            pdfDocument => {
-              this.setState({ pdfDocument });
-            }
-          )
+          getDocument({
+            ...this.props,
+            ownerDocument,
+            cMapUrl,
+            cMapPacked
+          }).promise.then(pdfDocument => {
+            this.setState({ pdfDocument });
+          })
       )
       .catch(e => this.componentDidCatch(e));
   }
