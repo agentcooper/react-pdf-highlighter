@@ -1,11 +1,11 @@
 {
   "name": "example",
-  "version": "3.4.0",
+  "version": "4.0.0",
   "private": true,
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-pdf-highlighter": "^3.4.0"
+    "react-pdf-highlighter": "^4.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.2",
