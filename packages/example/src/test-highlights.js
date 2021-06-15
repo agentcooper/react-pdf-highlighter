@@ -64,8 +64,7 @@ const testHighlights = {
     },
     {
       content: {
-        text:
-          "This fuels a fast edit-refresh cycle, whichpromises an immersive coding experience that is quite appealing to creative developers."
+        text: "This fuels a fast edit-refresh cycle, whichpromises an immersive coding experience that is quite appealing to creative developers."
       },
       position: {
         boundingRect: {
@@ -127,8 +126,7 @@ const testHighlights = {
     },
     {
       content: {
-        text:
-          "We consider a minimal subset of JavaScript that includes functions, mutable variables, primitivevalues and records"
+        text: "We consider a minimal subset of JavaScript that includes functions, mutable variables, primitivevalues and records"
       },
       position: {
         boundingRect: {
