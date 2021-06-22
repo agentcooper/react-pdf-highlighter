@@ -14,12 +14,11 @@
   "dependencies": {
     "lodash.debounce": "^4.0.8",
     "pdfjs-dist": "2.8.335",
-    "react-pointable": "^1.1.1",
     "react-rnd": "^10.1.10"
   },
   "peerDependencies": {
-    "react": ">=0.14",
-    "react-dom": ">=0.14"
+    "react": ">=0.16.4",
+    "react-dom": ">=0.16.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.5",
