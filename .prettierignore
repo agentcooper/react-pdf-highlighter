@@ -1,4 +1,5 @@
 package.json
 package-lock.json
-build
-flow-typed
+dist
+dist-example
+node_modules
