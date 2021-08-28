@@ -18,7 +18,7 @@
   "module": "./dist/esm/index.js",
   "scripts": {
     "dev": "(cd ./example && vite)",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:copy-styles",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:copy-styles && npm run build:example",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir ./dist/cjs",
     "build:copy-styles": "cp -r ./src/style ./dist/esm; cp -r ./src/style ./dist/cjs",
