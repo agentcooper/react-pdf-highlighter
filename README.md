@@ -8,7 +8,7 @@
 data format is independent of the viewport, making it suitable for saving on the
 server.
 
-### Example (Create React App)
+### Example
 
 For online example check https://agentcooper.github.io/react-pdf-highlighter/.
 
@@ -22,12 +22,14 @@ npm start
 While docs are in progress, feel free to check the source annotated with TypeScript
 type signatures.
 
+Create React App example is available in [`./create-react-app-example`](https://github.com/agentcooper/react-pdf-highlighter/tree/master/create-react-app-example). Make sure to run `npm install` there as well.
+
 ### Installation
 
 `npm install react-pdf-highlighter`
 
 See
-[`packages/example/src/App.js`](https://github.com/agentcooper/react-pdf-highlighter/blob/master/packages/example/src/App.js)
+[`src/example/App.tsx`](https://github.com/agentcooper/react-pdf-highlighter/blob/master/src/example/App.tsx)
 for React component API example.
 
 ### Prior art
@@ -69,50 +71,3 @@ Please check the [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTT
 
 Works in Google Chrome, Safari 10+, Firefox 52+. Not tested in Internet
 Explorer.
-
-### Contributing
-
-To publish a new version:
-
-```
-npx lerna version
-
-cd ./packages/react-pdf-highlighter
-npm publish
-```
-
-# PDF.js worker thread
-
-The default worker is an inline "fake" worker. To improve performance, either add the worker-loader (preferred) to your webpack config or use the inline loader syntax.
-
-#### Webpack config example snippet
-
-> Use this if have your own config
-
-```js
-{
-  ...
-  module: {
-    rules: [
-      {
-        test: /\.worker\.js$/,
-        use: 'worker-loader',
-      },
-      ...
-    ]
-  }
-}
-```
-
-#### Inline Webpack-loader syntax
-
-> Use in Create React App projects
-
-```js
-import PDFWorker from "worker-loader!pdfjs-dist/lib/pdf.worker";
-
-import {setPdfWorker} from 'react-pdf-highlighter';
-
-setPdfWorker(PDFWorker);
-...
-```
