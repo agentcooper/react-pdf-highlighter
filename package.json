@@ -26,7 +26,7 @@
     "start": "npm run dev",
     "dev": "vite",
     "build": "npm run clean && tsc && vite build && npm run build:types && npm run build:example",
-    "test": "BROWSER=none jest --maxWorkers=1 -c jest.config.js",
+    "test": "npm run format:check && BROWSER=none jest --maxWorkers=1 -c jest.config.js",
     "build:types": "tsc --project tsconfig.types.json",
     "build:example": "vite build --config vite.config.example.ts",
     "format": "prettier --write './**/*.{js,ts,tsx}'",
