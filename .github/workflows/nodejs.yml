@@ -26,11 +26,6 @@ jobs:
         run: |
           npm ci
           npm run format:check
-
-          unset CI # https://github.com/facebook/create-react-app/issues/1947#issuecomment-304072915
-          npm run build --if-present
-          CI=true
-
           npm test
         env:
           CI: true
@@ -40,4 +35,4 @@ jobs:
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./packages/example/build
+          PUBLISH_DIR: ./dist-example

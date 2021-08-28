@@ -19,7 +19,7 @@ npm install
 npm start
 ```
 
-While docs are in progress, feel free to check the source annotated with Flow
+While docs are in progress, feel free to check the source annotated with TypeScript
 type signatures.
 
 ### Installation

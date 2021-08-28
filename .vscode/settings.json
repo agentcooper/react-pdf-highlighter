@@ -1,14 +1,6 @@
 {
-  "javascript.validate.enable": false,
-  "flow.useNPMPackagedFlow": true,
   "editor.formatOnSave": true,
-  "cSpell.words": [
-    "LTWH",
-    "Pointable",
-    "pagesinit",
-    "textlayerrendered"
-  ],
-  "[javascript]": {
+  "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
