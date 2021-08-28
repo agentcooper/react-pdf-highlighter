@@ -18,7 +18,7 @@
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "eject": "react-scripts eject",
     "postinstall": "npm run sync-source-files",
-    "sync-source-files": "rsync --recursive --ignore-existing --verbose ../src/example/* ./src"
+    "sync-source-files": "rsync --recursive --ignore-existing --verbose ../example/src/* ./src"
   },
   "eslintConfig": {
     "extends": [

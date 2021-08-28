@@ -13,22 +13,17 @@
   "files": [
     "dist"
   ],
-  "types": "./dist/index.d.ts",
-  "main": "./dist/react-pdf-highlighter.umd.js",
-  "module": "./dist/react-pdf-highlighter.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/react-pdf-highlighter.es.js",
-      "require": "./dist/react-pdf-highlighter.umd.js"
-    }
-  },
+  "types": "./dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "scripts": {
-    "start": "npm run dev",
-    "dev": "vite",
-    "build": "npm run clean && tsc && vite build && npm run build:types && npm run build:example",
+    "dev": "(cd ./example && vite)",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:copy-styles",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir ./dist/cjs",
+    "build:copy-styles": "cp -r ./src/style ./dist/esm; cp -r ./src/style ./dist/cjs",
+    "build:example": "(cd ./example && vite build)",
     "test": "npm run format:check && BROWSER=none jest --maxWorkers=1 -c jest.config.js",
-    "build:types": "tsc --project tsconfig.types.json",
-    "build:example": "vite build --config vite.config.example.ts",
     "format": "prettier --write './**/*.{js,ts,tsx}'",
     "format:check": "prettier --check './**/*.{js,ts,tsx}'",
     "clean": "rm -rf dist"
@@ -37,25 +32,14 @@
     "react": ">=16.4.0",
     "react-dom": ">=16.4.0"
   },
-  "devDependencies": {
-    "@vitejs/plugin-react-refresh": "^1.3.1",
-    "jest": "^27.1.0",
-    "jest-puppeteer": "^5.0.4",
-    "prettier": "^2.3.2",
-    "puppeteer": "^9.1.1",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
-    "typescript": "4.4.2",
-    "vite": "^2.5.1"
-  },
   "dependencies": {
     "@types/lodash.debounce": "^4.0.6",
     "@types/pdfjs-dist": "^2.7.4",
     "@types/react": "^16.4.0",
     "@types/react-dom": "^16.4.0",
     "lodash.debounce": "^4.0.8",
-    "react-rnd": "^10.1.10",
-    "pdfjs-dist": "2.8.335"
+    "pdfjs-dist": "2.8.335",
+    "react-rnd": "^10.1.10"
   },
   "repository": {
     "type": "git",
@@ -63,5 +47,14 @@
   },
   "bugs": {
     "url": "https://github.com/agentcooper/react-pdf-highlighter/issues"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react-refresh": "^1.3.1",
+    "jest": "^27.1.0",
+    "jest-puppeteer": "^5.0.4",
+    "prettier": "^2.3.2",
+    "puppeteer": "^9.1.1",
+    "typescript": "4.4.2",
+    "vite": "^2.5.1"
   }
 }
