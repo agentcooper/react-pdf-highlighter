@@ -29,7 +29,7 @@ Create React App example is available in [`./create-react-app-example`](https://
 `npm install react-pdf-highlighter`
 
 See
-[`src/example/App.tsx`](https://github.com/agentcooper/react-pdf-highlighter/blob/master/src/example/App.tsx)
+[`./example/src/App.tsx`](https://github.com/agentcooper/react-pdf-highlighter/blob/master/example/src/App.tsx)
 for React component API example.
 
 ### Prior art
