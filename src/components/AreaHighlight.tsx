@@ -4,13 +4,13 @@ import { Rnd } from "react-rnd";
 
 import "../style/AreaHighlight.css";
 
-import type { T_LTWH, T_ViewportHighlight } from "../types";
+import type { LTWH, ViewportHighlight } from "../types";
 
-type Props = {
-  highlight: T_ViewportHighlight;
-  onChange: (rect: T_LTWH) => void;
+interface Props {
+  highlight: ViewportHighlight;
+  onChange: (rect: LTWH) => void;
   isScrolledTo: boolean;
-};
+}
 
 export class AreaHighlight extends Component<Props> {
   render() {

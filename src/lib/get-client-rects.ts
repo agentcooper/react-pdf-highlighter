@@ -1,4 +1,4 @@
-import type { T_LTWH } from "../types.js";
+import type { LTWH } from "../types.js";
 
 import optimizeClientRects from "./optimize-client-rects";
 
@@ -6,7 +6,7 @@ const getClientRects = (
   range: Range,
   containerEl: HTMLElement,
   shouldOptimize: boolean = true
-): Array<T_LTWH> => {
+): Array<LTWH> => {
   let clientRects = Array.from(range.getClientRects());
 
   const offset = containerEl.getBoundingClientRect();

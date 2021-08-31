@@ -2,17 +2,17 @@ import React, { Component } from "react";
 
 import "../style/Tip.css";
 
-type State = {
+interface State {
   compact: boolean;
   text: string;
   emoji: string;
-};
+}
 
-type Props = {
+interface Props {
   onConfirm: (comment: { text: string; emoji: string }) => void;
   onOpen: () => void;
   onUpdate?: () => void;
-};
+}
 
 export class Tip extends Component<Props, State> {
   state: State = {

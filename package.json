@@ -23,7 +23,7 @@
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir ./dist/cjs",
     "build:copy-styles": "cp -r ./src/style ./dist/esm; cp -r ./src/style ./dist/cjs",
-    "build:example": "(cd ./example && vite build)",
+    "build:example": "(cd ./example && tsc && vite build)",
     "test": "npm run format:check && BROWSER=none jest --maxWorkers=1 -c jest.config.js",
     "format": "prettier --write './**/*.{js,ts,tsx}'",
     "format:check": "prettier --check './**/*.{js,ts,tsx}'",

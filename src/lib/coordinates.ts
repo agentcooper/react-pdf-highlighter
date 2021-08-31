@@ -4,14 +4,17 @@
 // for clarity reasons I decided not to store actual (0, 1) coordinates, but
 // provide width and height, so user can compute ratio himself if needed
 
-import type { T_LTWH, T_Scaled, T_VIEWPORT } from "../types";
+import type { LTWH, Scaled, Viewport } from "../types";
 
-type WIDTH_HEIGHT = { width: number; height: number };
+interface WIDTH_HEIGHT {
+  width: number;
+  height: number;
+}
 
 export const viewportToScaled = (
-  rect: T_LTWH,
+  rect: LTWH,
   { width, height }: WIDTH_HEIGHT
-): T_Scaled => {
+): Scaled => {
   return {
     x1: rect.left,
     y1: rect.top,
@@ -24,7 +27,7 @@ export const viewportToScaled = (
   };
 };
 
-const pdfToViewport = (pdf: T_Scaled, viewport: T_VIEWPORT): T_LTWH => {
+const pdfToViewport = (pdf: Scaled, viewport: Viewport): LTWH => {
   const [x1, y1, x2, y2] = viewport.convertToViewportRectangle([
     pdf.x1,
     pdf.y1,
@@ -42,10 +45,10 @@ const pdfToViewport = (pdf: T_Scaled, viewport: T_VIEWPORT): T_LTWH => {
 };
 
 export const scaledToViewport = (
-  scaled: T_Scaled,
-  viewport: T_VIEWPORT,
+  scaled: Scaled,
+  viewport: Viewport,
   usePdfCoordinates: boolean = false
-): T_LTWH => {
+): LTWH => {
   const { width, height } = viewport;
 
   if (usePdfCoordinates) {

@@ -1,11 +1,13 @@
-export type T_LTWH = {
+import type { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
+
+export interface LTWH {
   left: number;
   top: number;
   width: number;
   height: number;
-};
+}
 
-export type T_Scaled = {
+export interface Scaled {
   x1: number;
   y1: number;
 
@@ -14,97 +16,81 @@ export type T_Scaled = {
 
   width: number;
   height: number;
-};
+}
 
-export type T_Position = {
-  boundingRect: T_LTWH;
-  rects: Array<T_LTWH>;
+export interface Position {
+  boundingRect: LTWH;
+  rects: Array<LTWH>;
   pageNumber: number;
-};
+}
 
-export type T_ScaledPosition = {
-  boundingRect: T_Scaled;
-  rects: Array<T_Scaled>;
+export interface ScaledPosition {
+  boundingRect: Scaled;
+  rects: Array<Scaled>;
   pageNumber: number;
   usePdfCoordinates?: boolean;
-};
+}
 
-export type T_Content = {
+export interface Content {
   text?: string;
   image?: string;
-};
+}
 
-export type T_HighlightContent = {
-  content: T_Content;
-};
+export interface HighlightContent {
+  content: Content;
+}
 
-export type T_Comment = {
+export interface Comment {
   text: string;
   emoji: string;
-};
-export type T_HighlightComment = {
-  comment: T_Comment;
-};
+}
 
-export type T_NewHighlight = {
-  position: T_ScaledPosition;
-} & T_HighlightContent &
-  T_HighlightComment;
+export interface HighlightComment {
+  comment: Comment;
+}
 
-export type T_Highlight = { id: string } & T_NewHighlight;
+export interface NewHighlight extends HighlightContent, HighlightComment {
+  position: ScaledPosition;
+}
 
-export type T_ViewportHighlight = {
-  position: T_Position;
-} & T_HighlightContent &
-  T_HighlightComment;
+export interface IHighlight extends NewHighlight {
+  id: string;
+}
 
-export type T_VIEWPORT = {
+export interface ViewportHighlight extends HighlightContent, HighlightComment {
+  position: Position;
+}
+
+export interface Viewport {
   convertToPdfPoint: (x: number, y: number) => Array<number>;
   convertToViewportRectangle: (pdfRectangle: Array<number>) => Array<number>;
   width: number;
   height: number;
-};
+}
 
-export type T_EventBus = {
+export interface T_EventBus {
   on: (eventName: string, callback: () => void) => void;
   off: (eventName: string, callback: () => void) => void;
-};
+}
 
-export type T_PDFJS_Viewer = {
+export interface T_PDFJS_Viewer {
   container: HTMLDivElement;
   viewer: HTMLDivElement;
   getPageView: (page: number) => {
     textLayer: { textLayerDiv: HTMLDivElement };
-    viewport: T_VIEWPORT;
+    viewport: Viewport;
     div: HTMLDivElement;
     canvas: HTMLCanvasElement;
   };
-  setDocument: (document: T_PDFJS_Document) => Promise<void>;
+  setDocument: (document: PDFDocumentProxy) => Promise<void>;
   scrollPageIntoView: (options: {
     pageNumber: number;
     destArray: Array<any>;
   }) => void;
   currentScaleValue: string;
-};
+}
 
-export type T_PDFJS_Document = {
-  destroy: () => void;
-  numPages: number;
-};
-
-export type T_PDFJS_LinkService = {
+export interface T_PDFJS_LinkService {
   setDocument: (document: Object) => void;
   setViewer: (viewer: T_PDFJS_Viewer) => void;
-};
-
-export type T_PDFJS = {
-  TextLayerBuilder: {
-    prototype: {
-      _bindMouse: () => void;
-    };
-  };
-  PDFViewer: (options: Object) => T_PDFJS_Viewer;
-  PDFLinkService: () => T_PDFJS_LinkService;
-  getDocument: (url: string) => Promise<T_PDFJS_Document>;
-  disableWorker: boolean;
-};
+}

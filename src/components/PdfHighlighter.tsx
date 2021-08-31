@@ -33,22 +33,22 @@ import MouseSelection from "./MouseSelection";
 import { scaledToViewport, viewportToScaled } from "../lib/coordinates";
 
 import type {
-  T_Position,
-  T_ScaledPosition,
-  T_Highlight,
-  T_Scaled,
-  T_LTWH,
+  Position,
+  ScaledPosition,
+  IHighlight,
+  Scaled,
+  LTWH,
   T_EventBus,
   T_PDFJS_Viewer,
-  T_PDFJS_Document,
   T_PDFJS_LinkService,
 } from "../types";
+import type { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
 
-type T_ViewportHighlight<T_HT> = { position: T_Position } & T_HT;
+type T_ViewportHighlight<T_HT> = { position: Position } & T_HT;
 
-type State<T_HT> = {
+interface State<T_HT> {
   ghostHighlight: {
-    position: T_ScaledPosition;
+    position: ScaledPosition;
     content?: { text?: string; image?: string };
   } | null;
   isCollapsed: boolean;
@@ -57,13 +57,13 @@ type State<T_HT> = {
     highlight: T_ViewportHighlight<T_HT>;
     callback: (highlight: T_ViewportHighlight<T_HT>) => JSX.Element;
   } | null;
-  tipPosition: T_Position | null;
+  tipPosition: Position | null;
   tipChildren: JSX.Element | null;
   isAreaSelectionInProgress: boolean;
   scrolledToHighlightId: string;
-};
+}
 
-type Props<T_HT> = {
+interface Props<T_HT> {
   highlightTransform: (
     highlight: T_ViewportHighlight<T_HT>,
     index: number,
@@ -72,27 +72,27 @@ type Props<T_HT> = {
       callback: (highlight: T_ViewportHighlight<T_HT>) => JSX.Element
     ) => void,
     hideTip: () => void,
-    viewportToScaled: (rect: T_LTWH) => T_Scaled,
-    screenshot: (position: T_LTWH) => string,
+    viewportToScaled: (rect: LTWH) => Scaled,
+    screenshot: (position: LTWH) => string,
     isScrolledTo: boolean
   ) => JSX.Element;
   highlights: Array<T_HT>;
   onScrollChange: () => void;
-  scrollRef: (scrollTo: (highlight: T_Highlight) => void) => void;
-  pdfDocument: T_PDFJS_Document;
+  scrollRef: (scrollTo: (highlight: IHighlight) => void) => void;
+  pdfDocument: PDFDocumentProxy;
   pdfScaleValue: string;
   onSelectionFinished: (
-    position: T_ScaledPosition,
+    position: ScaledPosition,
     content: { text?: string; image?: string },
     hideTipAndSelection: () => void,
     transformSelection: () => void
   ) => JSX.Element | null;
   enableAreaSelection: (event: MouseEvent) => boolean;
-};
+}
 
 const EMPTY_ID = "empty-id";
 
-export class PdfHighlighter<T_HT extends T_Highlight> extends PureComponent<
+export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
   Props<T_HT>,
   State<T_HT>
 > {
@@ -246,7 +246,7 @@ export class PdfHighlighter<T_HT extends T_Highlight> extends PureComponent<
     boundingRect,
     rects,
     usePdfCoordinates,
-  }: T_ScaledPosition): T_Position {
+  }: ScaledPosition): Position {
     const viewport = this.viewer.getPageView(pageNumber - 1).viewport;
 
     return {
@@ -262,7 +262,7 @@ export class PdfHighlighter<T_HT extends T_Highlight> extends PureComponent<
     pageNumber,
     boundingRect,
     rects,
-  }: T_Position): T_ScaledPosition {
+  }: Position): ScaledPosition {
     const viewport = this.viewer.getPageView(pageNumber - 1).viewport;
 
     return {
@@ -272,7 +272,7 @@ export class PdfHighlighter<T_HT extends T_Highlight> extends PureComponent<
     };
   }
 
-  screenshot(position: T_LTWH, pageNumber: number) {
+  screenshot(position: LTWH, pageNumber: number) {
     const canvas = this.viewer.getPageView(pageNumber - 1).canvas;
 
     return getAreaAsPng(canvas, position);
@@ -349,7 +349,7 @@ export class PdfHighlighter<T_HT extends T_Highlight> extends PureComponent<
     );
   };
 
-  setTip(position: T_Position, inner: JSX.Element | null) {
+  setTip(position: Position, inner: JSX.Element | null) {
     this.setState({
       tipPosition: position,
       tipChildren: inner,
@@ -385,7 +385,7 @@ export class PdfHighlighter<T_HT extends T_Highlight> extends PureComponent<
     this.renderHighlights();
   };
 
-  scrollTo = (highlight: T_Highlight) => {
+  scrollTo = (highlight: IHighlight) => {
     const { pageNumber, boundingRect, usePdfCoordinates } = highlight.position;
 
     this.viewer.container.removeEventListener("scroll", this.onScroll);

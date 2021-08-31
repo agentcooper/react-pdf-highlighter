@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 
-import type { T_LTWH } from "../types";
+import type { LTWH } from "../types";
 
-type State = {
+interface State {
   height: number;
   width: number;
-};
+}
 
-type Props = {
+interface Props {
   children: JSX.Element | null;
   style: { top: number; left: number; bottom: number };
   scrollTop: number;
-  pageBoundingRect: T_LTWH;
-};
+  pageBoundingRect: LTWH;
+}
 
 const clamp = (value: number, left: number, right: number) =>
   Math.min(Math.max(value, left), right);

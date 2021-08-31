@@ -1,6 +1,6 @@
-import type { T_LTWH } from "../types.js";
+import type { LTWH } from "../types.js";
 
-const sort = (rects: Array<T_LTWH>) =>
+const sort = (rects: Array<LTWH>) =>
   rects.sort((A, B) => {
     const top = A.top - B.top;
 
@@ -11,31 +11,31 @@ const sort = (rects: Array<T_LTWH>) =>
     return top;
   });
 
-const overlaps = (A: T_LTWH, B: T_LTWH) =>
+const overlaps = (A: LTWH, B: LTWH) =>
   A.left <= B.left && B.left <= A.left + A.width;
 
-const sameLine = (A: T_LTWH, B: T_LTWH, yMargin = 5) =>
+const sameLine = (A: LTWH, B: LTWH, yMargin = 5) =>
   Math.abs(A.top - B.top) < yMargin && Math.abs(A.height - B.height) < yMargin;
 
-const inside = (A: T_LTWH, B: T_LTWH) =>
+const inside = (A: LTWH, B: LTWH) =>
   A.top > B.top &&
   A.left > B.left &&
   A.top + A.height < B.top + B.height &&
   A.left + A.width < B.left + B.width;
 
-const nextTo = (A: T_LTWH, B: T_LTWH, xMargin = 10) => {
+const nextTo = (A: LTWH, B: LTWH, xMargin = 10) => {
   const Aright = A.left + A.width;
   const Bright = B.left + B.width;
 
   return A.left <= B.left && Aright <= Bright && B.left - Aright <= xMargin;
 };
 
-const extendWidth = (A: T_LTWH, B: T_LTWH) => {
+const extendWidth = (A: LTWH, B: LTWH) => {
   // extend width of A to cover B
   A.width = Math.max(B.width - A.left + B.left, A.width);
 };
 
-const optimizeClientRects = (clientRects: Array<T_LTWH>): Array<T_LTWH> => {
+const optimizeClientRects = (clientRects: Array<LTWH>): Array<LTWH> => {
   const rects = sort(clientRects);
 
   const toRemove = new Set();

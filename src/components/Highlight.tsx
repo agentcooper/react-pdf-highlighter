@@ -2,12 +2,12 @@ import React, { Component } from "react";
 
 import "../style/Highlight.css";
 
-import type { T_LTWH } from "../types.js";
+import type { LTWH } from "../types.js";
 
-type Props = {
+interface Props {
   position: {
-    boundingRect: T_LTWH;
-    rects: Array<T_LTWH>;
+    boundingRect: LTWH;
+    rects: Array<LTWH>;
   };
   onClick?: () => void;
   onMouseOver?: () => void;
@@ -17,7 +17,7 @@ type Props = {
     text: string;
   };
   isScrolledTo: boolean;
-};
+}
 
 export class Highlight extends Component<Props> {
   render() {

@@ -1,6 +1,6 @@
-import type { T_LTWH } from "../types.js";
+import type { LTWH } from "../types.js";
 
-const getBoundingRect = (clientRects: Array<T_LTWH>): T_LTWH => {
+const getBoundingRect = (clientRects: Array<LTWH>): LTWH => {
   const rects = Array.from(clientRects).map((rect) => {
     const { left, top, width, height } = rect;
 

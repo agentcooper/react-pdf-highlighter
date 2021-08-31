@@ -9,7 +9,7 @@ import {
   AreaHighlight,
 } from "./react-pdf-highlighter";
 
-import type { T_Highlight, T_NewHighlight } from "./react-pdf-highlighter";
+import type { IHighlight, NewHighlight } from "./react-pdf-highlighter";
 
 import { testHighlights as _testHighlights } from "./test-highlights";
 import { Spinner } from "./Spinner";
@@ -17,14 +17,12 @@ import { Sidebar } from "./Sidebar";
 
 import "./style/App.css";
 
-const testHighlights: Record<string, Array<T_Highlight>> = _testHighlights;
+const testHighlights: Record<string, Array<IHighlight>> = _testHighlights;
 
-type Props = {};
-
-type State = {
+interface State {
   url: string;
-  highlights: Array<T_Highlight>;
-};
+  highlights: Array<IHighlight>;
+}
 
 const getNextId = () => String(Math.random()).slice(2);
 
@@ -53,7 +51,7 @@ const searchParams = new URLSearchParams(document.location.search);
 
 const initialUrl = searchParams.get("url") || PRIMARY_PDF_URL;
 
-class App extends Component<Props, State> {
+class App extends Component<{}, State> {
   state = {
     url: initialUrl,
     highlights: testHighlights[initialUrl]
@@ -101,7 +99,7 @@ class App extends Component<Props, State> {
     return highlights.find((highlight) => highlight.id === id);
   }
 
-  addHighlight(highlight: T_NewHighlight) {
+  addHighlight(highlight: NewHighlight) {
     const { highlights } = this.state;
 
     console.log("Saving highlight", highlight);

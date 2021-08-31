@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
-type Props = {
+interface Props {
   onMoveAway: () => void;
   paddingX: number;
   paddingY: number;
   children: JSX.Element;
-};
+}
 
 class MouseMonitor extends Component<Props> {
   container: HTMLDivElement | null = null;

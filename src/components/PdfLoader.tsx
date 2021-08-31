@@ -1,25 +1,25 @@
 import React, { Component } from "react";
 
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf";
-import type { T_PDFJS_Document } from "../types";
+import type { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
 
-type Props = {
+interface Props {
   /** See `GlobalWorkerOptionsType`. */
   workerSrc: string;
 
   url: string;
   beforeLoad: JSX.Element;
   errorMessage?: JSX.Element;
-  children: (pdfDocument: T_PDFJS_Document) => JSX.Element;
+  children: (pdfDocument: PDFDocumentProxy) => JSX.Element;
   onError?: (error: Error) => void;
   cMapUrl?: string;
   cMapPacked?: boolean;
-};
+}
 
-type State = {
-  pdfDocument: T_PDFJS_Document | null;
+interface State {
+  pdfDocument: PDFDocumentProxy | null;
   error: Error | null;
-};
+}
 
 export class PdfLoader extends Component<Props, State> {
   state: State = {

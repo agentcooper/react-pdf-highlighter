@@ -1,15 +1,13 @@
 import React from "react";
+import type { IHighlight } from "./react-pdf-highlighter";
 
-import type { T_Highlight } from "./react-pdf-highlighter";
-type T_ManuscriptHighlight = T_Highlight;
-
-type Props = {
-  highlights: Array<T_ManuscriptHighlight>;
+interface Props {
+  highlights: Array<IHighlight>;
   resetHighlights: () => void;
   toggleDocument: () => void;
-};
+}
 
-const updateHash = (highlight: T_Highlight) => {
+const updateHash = (highlight: IHighlight) => {
   document.location.hash = `highlight-${highlight.id}`;
 };
 
