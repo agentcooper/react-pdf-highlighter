@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 
+import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf";
 import type { T_PDFJS_Document } from "../types";
 
-import { getDocument } from "pdfjs-dist/legacy/build/pdf";
-
 type Props = {
+  /** See `GlobalWorkerOptionsType`. */
+  workerSrc: string;
+
   url: string;
   beforeLoad: JSX.Element;
   errorMessage?: JSX.Element;
@@ -23,6 +25,10 @@ export class PdfLoader extends Component<Props, State> {
   state: State = {
     pdfDocument: null,
     error: null,
+  };
+
+  static defaultProps = {
+    workerSrc: "https://unpkg.com/pdfjs-dist@2.8.335/build/pdf.worker.min.js",
   };
 
   documentRef = React.createRef<HTMLElement>();
@@ -56,9 +62,13 @@ export class PdfLoader extends Component<Props, State> {
 
   load() {
     const { ownerDocument = document } = this.documentRef.current || {};
-    const { url, cMapUrl, cMapPacked } = this.props;
+    const { url, cMapUrl, cMapPacked, workerSrc } = this.props;
     const { pdfDocument: discardedDocument } = this.state;
     this.setState({ pdfDocument: null, error: null });
+
+    if (typeof workerSrc === "string") {
+      GlobalWorkerOptions.workerSrc = workerSrc;
+    }
 
     Promise.resolve()
       .then(() => discardedDocument && discardedDocument.destroy())

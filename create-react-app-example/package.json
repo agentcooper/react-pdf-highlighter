@@ -18,7 +18,8 @@
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "eject": "react-scripts eject",
     "postinstall": "npm run sync-source-files",
-    "sync-source-files": "rsync --recursive --ignore-existing --verbose ../example/src/* ./src"
+    "clean": "rm -rf ./src/{style,index.tsx,App.tsx,Sidebar.tsx,Spinner.tsx,test-highlights.ts}",
+    "sync-source-files": "npm run clean && rsync --recursive --ignore-existing --verbose ../example/src/* ./src"
   },
   "eslintConfig": {
     "extends": [
