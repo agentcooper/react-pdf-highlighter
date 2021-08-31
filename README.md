@@ -19,8 +19,6 @@ npm install
 npm start
 ```
 
-Don't forget to setup the PDF.js worker, see [`./example/src/index.tsx`](https://github.com/agentcooper/react-pdf-highlighter/blob/master/example/src/index.tsx).
-
 Create React App example is available in [`./create-react-app-example`](https://github.com/agentcooper/react-pdf-highlighter/tree/master/create-react-app-example). Make sure to run `npm install` there as well.
 
 ### Installation
