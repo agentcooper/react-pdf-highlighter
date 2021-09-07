@@ -2,11 +2,13 @@
   position: absolute;
 }
 
-.Highlight__emoji {
+.Highlight__category {
   position: absolute;
-  color: black;
+  color: rgb(0, 0, 0);
   opacity: 1;
-  font-size: 28px;
+  font-size: 14px;
+  background-color: #babbbd;
+  z-index: 9;
 }
 
 .Highlight__parts {
@@ -23,7 +25,7 @@
 .Highlight__popup {
   background-color: #3d464d;
   border: 1px solid rgba(255, 255, 255, 0.25);
-  color: white;
+  color: rgb(255, 255, 255);
   padding: 0.5rem 1rem;
   border-radius: 3px;
   max-width: 300px;

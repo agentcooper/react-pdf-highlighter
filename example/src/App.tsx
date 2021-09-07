@@ -36,11 +36,11 @@ const resetHash = () => {
 const HighlightPopup = ({
   comment,
 }: {
-  comment: { text: string; emoji: string };
+  comment: { text: string; category: string };
 }) =>
   comment.text ? (
     <div className="Highlight__popup">
-      {comment.emoji} {comment.text}
+      {comment.category} {comment.text}
     </div>
   ) : null;
 

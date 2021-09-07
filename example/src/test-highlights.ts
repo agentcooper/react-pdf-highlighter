@@ -27,7 +27,7 @@ export const testHighlights = {
       },
       comment: {
         text: "Flow or TypeScript?",
-        emoji: "🔥",
+        category: "Premise",
       },
       id: "8245652131754351",
     },
@@ -58,7 +58,7 @@ export const testHighlights = {
       },
       comment: {
         text: "impressive",
-        emoji: "",
+        category: "",
       },
       id: "812807243318874",
     },
@@ -97,7 +97,7 @@ export const testHighlights = {
       },
       comment: {
         text: "immersive coding experience!",
-        emoji: "",
+        category: "",
       },
       id: "2599712881412761",
     },
@@ -120,7 +120,7 @@ export const testHighlights = {
       },
       comment: {
         text: "lisp!",
-        emoji: "😱",
+        category: "Target",
       },
       id: "9120567402727258",
     },
@@ -159,7 +159,7 @@ export const testHighlights = {
       },
       comment: {
         text: "",
-        emoji: "",
+        category: "",
       },
       id: "32839601376722394",
     },
@@ -182,7 +182,7 @@ export const testHighlights = {
       },
       comment: {
         text: "",
-        emoji: "",
+        category: "",
       },
       id: "46570518065661615",
     },
@@ -215,7 +215,7 @@ export const testHighlights = {
       },
       comment: {
         text: "Static Single Assignment",
-        emoji: "😎",
+        category: "Assumption",
       },
       id: "29668244118038056",
     },

@@ -5,11 +5,11 @@ import "../style/Tip.css";
 interface State {
   compact: boolean;
   text: string;
-  emoji: string;
+  category: string;
 }
 
 interface Props {
-  onConfirm: (comment: { text: string; emoji: string }) => void;
+  onConfirm: (comment: { text: string; category: string }) => void;
   onOpen: () => void;
   onUpdate?: () => void;
 }
@@ -18,7 +18,7 @@ export class Tip extends Component<Props, State> {
   state: State = {
     compact: true,
     text: "",
-    emoji: "",
+    category: "",
   };
 
   // for TipContainer
@@ -32,7 +32,7 @@ export class Tip extends Component<Props, State> {
 
   render() {
     const { onConfirm, onOpen } = this.props;
-    const { compact, text, emoji } = this.state;
+    const { compact, text, category: category } = this.state;
 
     return (
       <div className="Tip">
@@ -51,7 +51,7 @@ export class Tip extends Component<Props, State> {
             className="Tip__card"
             onSubmit={(event) => {
               event.preventDefault();
-              onConfirm({ text, emoji });
+              onConfirm({ text, category: category });
             }}
           >
             <div>
@@ -69,18 +69,18 @@ export class Tip extends Component<Props, State> {
                 }}
               />
               <div>
-                {["💩", "😱", "😍", "🔥", "😳", "⚠️"].map((_emoji) => (
-                  <label key={_emoji}>
+                {["Premise", "Assumption", "Target"].map((_category) => (
+                  <label key={_category}>
                     <input
-                      checked={emoji === _emoji}
+                      checked={category === _category}
                       type="radio"
-                      name="emoji"
-                      value={_emoji}
+                      name="category"
+                      value={_category}
                       onChange={(event) =>
-                        this.setState({ emoji: event.target.value })
+                        this.setState({ category: event.target.value })
                       }
                     />
-                    {_emoji}
+                    {_category}
                   </label>
                 ))}
               </div>
