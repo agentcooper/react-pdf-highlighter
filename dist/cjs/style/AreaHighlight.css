@@ -1,0 +1,17 @@
+.AreaHighlight {
+  border: 1px solid #333;
+  background-color: rgba(252, 232, 151, 1.0);
+  opacity: 1;
+  mix-blend-mode: multiply;
+}
+
+.AreaHighlight__part {
+  cursor: pointer;
+  position: absolute;
+  background: rgba(255, 226, 143, 1);
+  transition: background 0.3s;
+}
+
+.AreaHighlight--scrolledTo .AreaHighlight__part {
+  background: #ff4141;
+}

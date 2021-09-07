@@ -1,0 +1,15 @@
+.MouseSelection {
+  position: absolute;
+  border: 1px dashed #333;
+  background: rgba(252, 232, 151, 1);
+  mix-blend-mode: multiply;
+}
+/* Internet Explorer support method */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .MouseSelection {opacity: 0.5 }
+}
+
+/* Microsoft Edge Browser 12+ (All) - @supports method */
+@supports (-ms-ime-align:auto) {
+  .MouseSelection {opacity: 0.5 }
+}
