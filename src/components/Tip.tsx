@@ -69,7 +69,7 @@ export class Tip extends Component<Props, State> {
                 }}
               />
               <div>
-                {["Premise", "Assumption", "Target"].map((_category) => (
+                {["Assumption", "Premise", "Target"].map((_category) => (
                   <label key={_category}>
                     <input
                       checked={category === _category}
