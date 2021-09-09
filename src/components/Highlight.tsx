@@ -32,15 +32,13 @@ export class Highlight extends Component<Props> {
 
     const { rects, boundingRect } = position;
 
-    const { category } = comment;
-
     return (
       <div
         className={`Highlight ${
           isScrolledTo
             ? "Highlight--scrolledTo"
-            : category
-            ? `Highlight--${category}`
+            : comment.category
+            ? `Highlight--${comment.category}`
             : ""
         }`}
       >

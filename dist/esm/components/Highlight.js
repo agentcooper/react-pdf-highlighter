@@ -4,11 +4,10 @@ export class Highlight extends Component {
     render() {
         const { position, onClick, onMouseOver, onMouseOut, comment, isScrolledTo, } = this.props;
         const { rects, boundingRect } = position;
-        const { category } = comment;
         return (React.createElement("div", { className: `Highlight ${isScrolledTo
                 ? "Highlight--scrolledTo"
-                : category
-                    ? `Highlight--${category}`
+                : comment.category
+                    ? `Highlight--${comment.category}`
                     : ""}` },
             comment ? (React.createElement("div", { className: "Highlight__category", style: {
                     left: 0,
