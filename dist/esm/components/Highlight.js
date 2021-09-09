@@ -6,7 +6,7 @@ export class Highlight extends Component {
         const { rects, boundingRect } = position;
         return (React.createElement("div", { className: `Highlight ${isScrolledTo
                 ? "Highlight--scrolledTo"
-                : comment.category
+                : comment && comment.category
                     ? `Highlight--${comment.category}`
                     : ""}` },
             comment ? (React.createElement("div", { className: "Highlight__category", style: {

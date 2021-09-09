@@ -28,7 +28,7 @@ class Highlight extends react_1.Component {
         const { rects, boundingRect } = position;
         return (react_1.default.createElement("div", { className: `Highlight ${isScrolledTo
                 ? "Highlight--scrolledTo"
-                : comment.category
+                : comment && comment.category
                     ? `Highlight--${comment.category}`
                     : ""}` },
             comment ? (react_1.default.createElement("div", { className: "Highlight__category", style: {

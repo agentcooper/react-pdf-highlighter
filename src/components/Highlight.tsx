@@ -37,7 +37,7 @@ export class Highlight extends Component<Props> {
         className={`Highlight ${
           isScrolledTo
             ? "Highlight--scrolledTo"
-            : comment.category
+            : comment && comment.category
             ? `Highlight--${comment.category}`
             : ""
         }`}
