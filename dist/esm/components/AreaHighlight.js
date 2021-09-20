@@ -14,8 +14,12 @@ import { Rnd } from "react-rnd";
 import "../style/AreaHighlight.css";
 export class AreaHighlight extends Component {
     render() {
-        const _a = this.props, { highlight, onChange, isScrolledTo } = _a, otherProps = __rest(_a, ["highlight", "onChange", "isScrolledTo"]);
-        return (React.createElement("div", { className: `AreaHighlight ${isScrolledTo ? "AreaHighlight--scrolledTo" : ""}` },
+        const _a = this.props, { highlight, onChange, comment, isScrolledTo } = _a, otherProps = __rest(_a, ["highlight", "onChange", "comment", "isScrolledTo"]);
+        return (React.createElement("div", { className: `AreaHighlight ${isScrolledTo
+                ? "AreaHighlight--scrolledTo"
+                : comment && comment.category
+                    ? `AreaHighlight--${comment.category}`
+                    : ""}` },
             React.createElement(Rnd, Object.assign({ className: "AreaHighlight__part", onDragStop: (_, data) => {
                     const boundingRect = Object.assign(Object.assign({}, highlight.position.boundingRect), { top: data.y, left: data.x });
                     onChange(boundingRect);

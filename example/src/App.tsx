@@ -206,6 +206,7 @@ class App extends Component<{}, State> {
                           { image: screenshot(boundingRect) }
                         );
                       }}
+                      comment={highlight.comment}
                     />
                   );
 

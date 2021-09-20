@@ -1,17 +1,38 @@
 .AreaHighlight {
   border: 1px solid #333;
-  background-color: rgba(252, 232, 151, 1.0);
+  background-color: rgba(252, 232, 151, 1);
   opacity: 1;
   mix-blend-mode: multiply;
+}
+
+.AreaHighlight__category {
+  position: absolute;
+  color: rgb(0, 0, 0);
+  opacity: 1;
+  font-size: 14px;
+  background-color: #babbbd;
+  z-index: 9;
 }
 
 .AreaHighlight__part {
   cursor: pointer;
   position: absolute;
-  background: rgba(255, 226, 143, 1);
+  background: #ddcc77;
   transition: background 0.3s;
 }
 
 .AreaHighlight--scrolledTo .AreaHighlight__part {
-  background: #ff4141;
+  background: #a45998;
+}
+
+.AreaHighlight--Premise .AreaHighlight__part {
+  background: #95c7e0;
+}
+
+.AreaHighlight--Assumption .AreaHighlight__part {
+  background: #609b91;
+}
+
+.AreaHighlight--Target .AreaHighlight__part {
+  background: #ce7e8b;
 }
