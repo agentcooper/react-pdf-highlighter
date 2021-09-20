@@ -3,7 +3,9 @@
   "version": "5.1.0",
   "description": "A modification of react-pdf-highlighter that categorizes highlights",
   "author": "Antti Hiltunen ",
-  "contributors": ["Artem Tyurin <artem.tyurin@gmail.com>"],
+  "contributors": [
+    "Artem Tyurin <artem.tyurin@gmail.com>"
+  ],
   "license": "MIT",
   "keywords": [
     "pdf",
@@ -41,8 +43,8 @@
     "@types/react-dom": "^16.4.0",
     "lodash.debounce": "^4.0.8",
     "pdfjs-dist": "2.8.335",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": ">=16.4.0",
+    "react-dom": ">=16.4.0",
     "react-rnd": "^10.1.10",
     "worker-loader": "^3.0.8"
   },

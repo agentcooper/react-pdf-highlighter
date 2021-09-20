@@ -4,22 +4,31 @@ import { Rnd } from "react-rnd";
 
 import "../style/AreaHighlight.css";
 
-import type { LTWH, ViewportHighlight } from "../types";
+import type { LTWH, ViewportHighlight } from "../types.js";
 
 interface Props {
   highlight: ViewportHighlight;
   onChange: (rect: LTWH) => void;
+  comment: {
+    category: string;
+    text: string;
+  };
   isScrolledTo: boolean;
 }
 
 export class AreaHighlight extends Component<Props> {
   render() {
-    const { highlight, onChange, isScrolledTo, ...otherProps } = this.props;
+    const { highlight, onChange, comment, isScrolledTo, ...otherProps } =
+      this.props;
 
     return (
       <div
         className={`AreaHighlight ${
-          isScrolledTo ? "AreaHighlight--scrolledTo" : ""
+          isScrolledTo
+            ? "AreaHighlight--scrolledTo"
+            : comment && comment.category
+            ? `AreaHighlight--${comment.category}`
+            : ""
         }`}
       >
         <Rnd
