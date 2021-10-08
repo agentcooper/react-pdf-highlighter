@@ -12,6 +12,7 @@ interface Props {
   onConfirm: (comment: { text: string; category: string }) => void;
   onOpen: () => void;
   onUpdate?: () => void;
+  categoryLabels: Array<string>;
 }
 
 export class Tip extends Component<Props, State> {
@@ -31,7 +32,7 @@ export class Tip extends Component<Props, State> {
   }
 
   render() {
-    const { onConfirm, onOpen } = this.props;
+    const { onConfirm, onOpen, categoryLabels } = this.props;
     const { compact, text, category: category } = this.state;
 
     return (
@@ -69,7 +70,7 @@ export class Tip extends Component<Props, State> {
                 }}
               />
               <div>
-                {["Assumption", "Premise", "Target"].map((_category) => (
+                {categoryLabels.map((_category) => (
                   <label key={_category}>
                     <input
                       checked={category === _category}

@@ -22,6 +22,7 @@ const testHighlights: Record<string, Array<IHighlight>> = _testHighlights;
 interface State {
   url: string;
   highlights: Array<IHighlight>;
+  categoryLabels: Array<string>;
 }
 
 const getNextId = () => String(Math.random()).slice(2);
@@ -57,6 +58,13 @@ class App extends Component<{}, State> {
     highlights: testHighlights[initialUrl]
       ? [...testHighlights[initialUrl]]
       : [],
+    categoryLabels: ["Assumption", "Premise", "Target"],
+  };
+
+  editCategoryLabels = () => {
+    this.setState({
+      categoryLabels: ["Crap", "Fuck", "Shit"],
+    });
   };
 
   resetHighlights = () => {
@@ -141,6 +149,7 @@ class App extends Component<{}, State> {
           highlights={highlights}
           resetHighlights={this.resetHighlights}
           toggleDocument={this.toggleDocument}
+          editCategoryLabels={this.editCategoryLabels}
         />
         <div
           style={{
@@ -174,6 +183,7 @@ class App extends Component<{}, State> {
 
                       hideTipAndSelection();
                     }}
+                    categoryLabels={this.state.categoryLabels}
                   />
                 )}
                 highlightTransform={(
