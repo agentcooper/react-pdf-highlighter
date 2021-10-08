@@ -39,7 +39,7 @@ class Tip extends react_1.Component {
         }
     }
     render() {
-        const { onConfirm, onOpen } = this.props;
+        const { onConfirm, onOpen, categoryLabels } = this.props;
         const { compact, text, category: category } = this.state;
         return (react_1.default.createElement("div", { className: "Tip" }, compact ? (react_1.default.createElement("div", { className: "Tip__compact", onClick: () => {
                 onOpen();
@@ -54,7 +54,7 @@ class Tip extends react_1.Component {
                             node.focus();
                         }
                     } }),
-                react_1.default.createElement("div", null, ["Assumption", "Premise", "Target"].map((_category) => (react_1.default.createElement("label", { key: _category },
+                react_1.default.createElement("div", null, categoryLabels.map((_category) => (react_1.default.createElement("label", { key: _category },
                     react_1.default.createElement("input", { checked: category === _category, type: "radio", name: "category", value: _category, onChange: (event) => this.setState({ category: event.target.value }) }),
                     _category))))),
             react_1.default.createElement("div", null,

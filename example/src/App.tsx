@@ -149,7 +149,6 @@ class App extends Component<{}, State> {
           highlights={highlights}
           resetHighlights={this.resetHighlights}
           toggleDocument={this.toggleDocument}
-          editCategoryLabels={this.editCategoryLabels}
         />
         <div
           style={{

@@ -1,21 +1,10 @@
 import React from "react";
 import type { IHighlight } from "./react-pdf-highlighter";
-import {
-  DropdownButton,
-  Dropdown,
-  Navbar,
-  Nav,
-  NavDropdown,
-  Button,
-  Form,
-  FormControl,
-} from "react-bootstrap";
 
 interface Props {
   highlights: Array<IHighlight>;
   resetHighlights: () => void;
   toggleDocument: () => void;
-  editCategoryLabels: () => void;
 }
 
 const updateHash = (highlight: IHighlight) => {
@@ -26,7 +15,6 @@ export function Sidebar({
   highlights,
   toggleDocument,
   resetHighlights,
-  editCategoryLabels,
 }: Props) {
   return (
     <div className="sidebar" style={{ width: "25vw" }}>
@@ -45,15 +33,6 @@ export function Sidebar({
             drag.
           </small>
         </p>
-        <div>
-          <DropdownButton id="dropdown-item-button" title="Modify Categories">
-            <Dropdown.Item as="button" onClick={editCategoryLabels}>
-              Add
-            </Dropdown.Item>
-            <Dropdown.Item as="button">Edit</Dropdown.Item>
-            <Dropdown.Item as="button">Delete</Dropdown.Item>
-          </DropdownButton>
-        </div>
       </div>
 
       <ul className="sidebar__highlights">

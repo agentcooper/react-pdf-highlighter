@@ -12,6 +12,7 @@ interface Props {
     }) => void;
     onOpen: () => void;
     onUpdate?: () => void;
+    categoryLabels: Array<string>;
 }
 export declare class Tip extends Component<Props, State> {
     state: State;
