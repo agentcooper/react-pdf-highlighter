@@ -185,8 +185,73 @@ export class PdfHighlighter extends PureComponent {
             }
             const boundingRect = getBoundingRect(rects);
             const viewportPosition = { boundingRect, rects, pageNumber: page.number };
+            function rangeToStringWithSpaces(range) {
+                const ancestor = range.commonAncestorContainer;
+                let array = [];
+                /* If range has only one text node, then the startContainer
+                will be the ancestor for the range. Treewalker works only on
+                nodes under the root node. Extra empty space is added in order to
+                streamline the string processing below.*/
+                if (ancestor.nodeType === 3) {
+                    array.push(`${range.startContainer.textContent} `);
+                }
+                else {
+                    let node, 
+                    /* A TreeWalker to find only textnodes whose parent is <span>
+                    so that we don't have to traverse all the nodes under ancestor. */
+                    walk = document.createTreeWalker(ancestor, NodeFilter.SHOW_TEXT, {
+                        acceptNode: function (node2) {
+                            const parent = node2.parentNode;
+                            if ((parent === null || parent === void 0 ? void 0 : parent.nodeName) === "SPAN") {
+                                return NodeFilter.FILTER_ACCEPT;
+                            }
+                            else
+                                return NodeFilter.FILTER_REJECT;
+                        },
+                    });
+                    /* We need a way to recognize where the textnodes within the range start.
+                    But what if the startContainer is not within the nodes filtered by
+                    TreeWalker? Then the textnodes in range must start immediately
+                    at the beginning. Thus, isInRange must be set "true" at the outset.  */
+                    let isInRange = range.startContainer.nodeType !== 3 ? true : false;
+                    while ((node = walk.nextNode())) {
+                        if (node === range.startContainer) {
+                            isInRange = true;
+                        }
+                        if (isInRange && node.nodeType === 3) {
+                            array.push(`${node.textContent} `);
+                        }
+                        if (node === range.endContainer) {
+                            break;
+                        }
+                    }
+                }
+                /*These conditionals deal with the possibilities that
+                that the start and end containers are not textnodes
+                which would throw off the offset. Also, .length would not exist
+                for endContainer. */
+                const stringWithSpaces = array.join("");
+                if (range.startContainer.nodeType !== 3 &&
+                    range.endContainer.nodeType !== 3) {
+                    return stringWithSpaces.trim();
+                }
+                else if (range.startContainer.nodeType !== 3) {
+                    const slicedString = stringWithSpaces.slice(0, stringWithSpaces.length -
+                        (range.endContainer.length - range.endOffset));
+                    return slicedString;
+                }
+                else if (range.endContainer.nodeType !== 3) {
+                    const slicedString = stringWithSpaces.slice(range.startOffset);
+                    return slicedString.trim();
+                }
+                else {
+                    const slicedString = stringWithSpaces.slice(range.startOffset, stringWithSpaces.length -
+                        (range.endContainer.length - range.endOffset + 1));
+                    return slicedString.trim();
+                }
+            }
             const content = {
-                text: range.toString(),
+                text: rangeToStringWithSpaces(range),
             };
             const scaledPosition = this.viewportPositionToScaled(viewportPosition);
             this.setTip(viewportPosition, onSelectionFinished(scaledPosition, content, () => this.hideTipAndSelection(), () => this.setState({
