@@ -36,15 +36,17 @@ export class Highlight extends Component<Props> {
 
     const style = (rect: {}, labels: { label: string; color: string }[]) => {
       let color = "#ddcc77";
-
-      for (let item of labels) {
-        if (comment.category == item.label) {
-          color = item.color;
+      if (comment) {
+        for (let item of labels) {
+          if (comment.category === item.label) {
+            color = item.color;
+          }
         }
       }
 
       return { ...rect, background: color };
     };
+
     /* : comment && comment.category
             ? `Highlight--${comment.category}` */
     return (

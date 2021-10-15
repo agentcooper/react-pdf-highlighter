@@ -18,7 +18,7 @@
 .Highlight__part {
   cursor: pointer;
   position: absolute;
-  background: #ddcc77;
+  /* background: #ddcc77; */
   transition: background 0.3s;
 }
 
