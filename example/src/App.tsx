@@ -22,7 +22,7 @@ const testHighlights: Record<string, Array<IHighlight>> = _testHighlights;
 interface State {
   url: string;
   highlights: Array<IHighlight>;
-  categoryLabels: Array<string>;
+  categoryLabels: Array<{ label: string; color: string }>;
 }
 
 const getNextId = () => String(Math.random()).slice(2);
@@ -58,13 +58,11 @@ class App extends Component<{}, State> {
     highlights: testHighlights[initialUrl]
       ? [...testHighlights[initialUrl]]
       : [],
-    categoryLabels: ["Assumption", "Premise", "Target"],
-  };
-
-  editCategoryLabels = () => {
-    this.setState({
-      categoryLabels: ["Crap", "Fuck", "Shit"],
-    });
+    categoryLabels: [
+      { label: "Assumption", background: "#95c7e0" },
+      { label: "Premise", backgroun: "#609b91" },
+      { label: "Target", background: "#ce7e8b" },
+    ],
   };
 
   resetHighlights = () => {
@@ -203,6 +201,7 @@ class App extends Component<{}, State> {
                       isScrolledTo={isScrolledTo}
                       position={highlight.position}
                       comment={highlight.comment}
+                      categoryLabels={this.state.categoryLabels}
                     />
                   ) : (
                     <AreaHighlight

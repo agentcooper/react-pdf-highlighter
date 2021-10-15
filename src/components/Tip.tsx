@@ -12,7 +12,7 @@ interface Props {
   onConfirm: (comment: { text: string; category: string }) => void;
   onOpen: () => void;
   onUpdate?: () => void;
-  categoryLabels: Array<string>;
+  categoryLabels: Array<{ label: string; color: string }>;
 }
 
 export class Tip extends Component<Props, State> {
@@ -71,17 +71,17 @@ export class Tip extends Component<Props, State> {
               />
               <div>
                 {categoryLabels.map((_category) => (
-                  <label key={_category}>
+                  <label key={_category.label}>
                     <input
-                      checked={category === _category}
+                      checked={category === _category.label}
                       type="radio"
                       name="category"
-                      value={_category}
+                      value={_category.label}
                       onChange={(event) =>
                         this.setState({ category: event.target.value })
                       }
                     />
-                    {_category}
+                    {_category.label}
                   </label>
                 ))}
               </div>
