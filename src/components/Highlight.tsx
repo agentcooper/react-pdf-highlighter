@@ -5,7 +5,7 @@ import "../style/Highlight.css";
 import type { LTWH } from "../types.js";
 
 interface Props {
-  categoryLabels: { label: string; color: string }[];
+  categoryLabels: Array<{ label: string; background: string }>;
   position: {
     boundingRect: LTWH;
     rects: Array<LTWH>;
@@ -34,12 +34,15 @@ export class Highlight extends Component<Props> {
 
     const { rects, boundingRect } = position;
 
-    const style = (rect: {}, labels: { label: string; color: string }[]) => {
+    const handleStyle = (
+      rect: {},
+      labels: { label: string; background: string }[]
+    ) => {
       let color = "#ddcc77";
       if (comment) {
         for (let item of labels) {
           if (comment.category === item.label) {
-            color = item.color;
+            color = item.background;
           }
         }
       }
@@ -71,7 +74,7 @@ export class Highlight extends Component<Props> {
               onMouseOut={onMouseOut}
               onClick={onClick}
               key={index}
-              style={style(rect, categoryLabels)}
+              style={handleStyle(rect, categoryLabels)}
               //style={rect}
               className={`Highlight__part`}
             />

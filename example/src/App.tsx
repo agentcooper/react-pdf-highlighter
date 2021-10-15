@@ -22,7 +22,7 @@ const testHighlights: Record<string, Array<IHighlight>> = _testHighlights;
 interface State {
   url: string;
   highlights: Array<IHighlight>;
-  categoryLabels: Array<{ label: string; color: string }>;
+  categoryLabels: Array<{ label: string; background: string }>;
 }
 
 const getNextId = () => String(Math.random()).slice(2);
@@ -59,9 +59,9 @@ class App extends Component<{}, State> {
       ? [...testHighlights[initialUrl]]
       : [],
     categoryLabels: [
-      { label: "Assumption", color: "#95c7e0" },
-      { label: "Premise", color: "#609b91" },
-      { label: "Target", color: "#ce7e8b" },
+      { label: "Assumption", background: "#95c7e0" },
+      { label: "Premise", background: "#609b91" },
+      { label: "Target", background: "#ce7e8b" },
     ],
   };
 
@@ -215,6 +215,7 @@ class App extends Component<{}, State> {
                         );
                       }}
                       comment={highlight.comment}
+                      categoryLabels={this.state.categoryLabels}
                     />
                   );
 

@@ -36,12 +36,22 @@ const react_rnd_1 = require("react-rnd");
 require("../style/AreaHighlight.css");
 class AreaHighlight extends react_1.Component {
     render() {
-        const _a = this.props, { highlight, onChange, comment, isScrolledTo } = _a, otherProps = __rest(_a, ["highlight", "onChange", "comment", "isScrolledTo"]);
-        return (react_1.default.createElement("div", { className: `AreaHighlight ${isScrolledTo
-                ? "AreaHighlight--scrolledTo"
-                : comment && comment.category
-                    ? `AreaHighlight--${comment.category}`
-                    : ""}` },
+        const _a = this.props, { highlight, onChange, comment, isScrolledTo, categoryLabels } = _a, otherProps = __rest(_a, ["highlight", "onChange", "comment", "isScrolledTo", "categoryLabels"]);
+        const handleStyle = (labels) => {
+            let color = "#ddcc77";
+            if (comment) {
+                for (let item of labels) {
+                    if (comment.category === item.label) {
+                        color = item.background;
+                    }
+                }
+            }
+            return { background: color };
+        };
+        /*   : comment && comment.category
+        ? `AreaHighlight--${comment.category}`
+     */
+        return (react_1.default.createElement("div", { className: `AreaHighlight ${isScrolledTo ? "AreaHighlight--scrolledTo" : ""}` },
             react_1.default.createElement(react_rnd_1.Rnd, Object.assign({ className: "AreaHighlight__part", onDragStop: (_, data) => {
                     const boundingRect = Object.assign(Object.assign({}, highlight.position.boundingRect), { top: data.y, left: data.x });
                     onChange(boundingRect);
@@ -62,7 +72,7 @@ class AreaHighlight extends react_1.Component {
                 }, onClick: (event) => {
                     event.stopPropagation();
                     event.preventDefault();
-                } }, otherProps))));
+                } }, otherProps, { style: handleStyle(categoryLabels) }))));
     }
 }
 exports.AreaHighlight = AreaHighlight;

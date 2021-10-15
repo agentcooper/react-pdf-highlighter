@@ -12,7 +12,7 @@ interface Props {
   onConfirm: (comment: { text: string; category: string }) => void;
   onOpen: () => void;
   onUpdate?: () => void;
-  categoryLabels: Array<{ label: string; color: string }>;
+  categoryLabels: Array<{ label: string; background: string }>;
 }
 
 export class Tip extends Component<Props, State> {

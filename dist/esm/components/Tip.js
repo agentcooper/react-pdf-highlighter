@@ -32,9 +32,9 @@ export class Tip extends Component {
                             node.focus();
                         }
                     } }),
-                React.createElement("div", null, categoryLabels.map((_category) => (React.createElement("label", { key: _category },
-                    React.createElement("input", { checked: category === _category, type: "radio", name: "category", value: _category, onChange: (event) => this.setState({ category: event.target.value }) }),
-                    _category))))),
+                React.createElement("div", null, categoryLabels.map((_category) => (React.createElement("label", { key: _category.label },
+                    React.createElement("input", { checked: category === _category.label, type: "radio", name: "category", value: _category.label, onChange: (event) => this.setState({ category: event.target.value }) }),
+                    _category.label))))),
             React.createElement("div", null,
                 React.createElement("input", { type: "submit", value: "Save" }))))));
     }

@@ -2,6 +2,10 @@ import { Component } from "react";
 import "../style/AreaHighlight.css";
 import type { LTWH, ViewportHighlight } from "../types.js";
 interface Props {
+    categoryLabels: Array<{
+        label: string;
+        background: string;
+    }>;
     highlight: ViewportHighlight;
     onChange: (rect: LTWH) => void;
     comment: {

@@ -24,18 +24,29 @@ const react_1 = __importStar(require("react"));
 require("../style/Highlight.css");
 class Highlight extends react_1.Component {
     render() {
-        const { position, onClick, onMouseOver, onMouseOut, comment, isScrolledTo, } = this.props;
+        const { categoryLabels, position, onClick, onMouseOver, onMouseOut, comment, isScrolledTo, } = this.props;
         const { rects, boundingRect } = position;
-        return (react_1.default.createElement("div", { className: `Highlight ${isScrolledTo
-                ? "Highlight--scrolledTo"
-                : comment && comment.category
-                    ? `Highlight--${comment.category}`
-                    : ""}` },
+        const handleStyle = (rect, labels) => {
+            let color = "#ddcc77";
+            if (comment) {
+                for (let item of labels) {
+                    if (comment.category === item.label) {
+                        color = item.background;
+                    }
+                }
+            }
+            return Object.assign(Object.assign({}, rect), { background: color });
+        };
+        /* : comment && comment.category
+                ? `Highlight--${comment.category}` */
+        return (react_1.default.createElement("div", { className: `Highlight ${isScrolledTo ? "Highlight--scrolledTo" : ""}` },
             comment ? (react_1.default.createElement("div", { className: "Highlight__category", style: {
                     left: 0,
                     top: boundingRect.top,
                 } }, comment.category)) : null,
-            react_1.default.createElement("div", { className: "Highlight__parts" }, rects.map((rect, index) => (react_1.default.createElement("div", { onMouseOver: onMouseOver, onMouseOut: onMouseOut, onClick: onClick, key: index, style: rect, className: `Highlight__part` }))))));
+            react_1.default.createElement("div", { className: "Highlight__parts" }, rects.map((rect, index) => (react_1.default.createElement("div", { onMouseOver: onMouseOver, onMouseOut: onMouseOut, onClick: onClick, key: index, style: handleStyle(rect, categoryLabels), 
+                //style={rect}
+                className: `Highlight__part` }))))));
     }
 }
 exports.Highlight = Highlight;

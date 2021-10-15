@@ -14,12 +14,22 @@ import { Rnd } from "react-rnd";
 import "../style/AreaHighlight.css";
 export class AreaHighlight extends Component {
     render() {
-        const _a = this.props, { highlight, onChange, comment, isScrolledTo } = _a, otherProps = __rest(_a, ["highlight", "onChange", "comment", "isScrolledTo"]);
-        return (React.createElement("div", { className: `AreaHighlight ${isScrolledTo
-                ? "AreaHighlight--scrolledTo"
-                : comment && comment.category
-                    ? `AreaHighlight--${comment.category}`
-                    : ""}` },
+        const _a = this.props, { highlight, onChange, comment, isScrolledTo, categoryLabels } = _a, otherProps = __rest(_a, ["highlight", "onChange", "comment", "isScrolledTo", "categoryLabels"]);
+        const handleStyle = (labels) => {
+            let color = "#ddcc77";
+            if (comment) {
+                for (let item of labels) {
+                    if (comment.category === item.label) {
+                        color = item.background;
+                    }
+                }
+            }
+            return { background: color };
+        };
+        /*   : comment && comment.category
+        ? `AreaHighlight--${comment.category}`
+     */
+        return (React.createElement("div", { className: `AreaHighlight ${isScrolledTo ? "AreaHighlight--scrolledTo" : ""}` },
             React.createElement(Rnd, Object.assign({ className: "AreaHighlight__part", onDragStop: (_, data) => {
                     const boundingRect = Object.assign(Object.assign({}, highlight.position.boundingRect), { top: data.y, left: data.x });
                     onChange(boundingRect);
@@ -40,7 +50,7 @@ export class AreaHighlight extends Component {
                 }, onClick: (event) => {
                     event.stopPropagation();
                     event.preventDefault();
-                } }, otherProps))));
+                } }, otherProps, { style: handleStyle(categoryLabels) }))));
     }
 }
 export default AreaHighlight;

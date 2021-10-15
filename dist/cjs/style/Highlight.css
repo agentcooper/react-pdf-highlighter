@@ -18,7 +18,7 @@
 .Highlight__part {
   cursor: pointer;
   position: absolute;
-  background: #ddcc77;
+  /* background: #ddcc77; */
   transition: background 0.3s;
 }
 
@@ -37,7 +37,7 @@
   background: #a45998;
 }
 
-.Highlight--Premise .Highlight__part {
+/* .Highlight--Premise .Highlight__part {
   background: #95c7e0;
 }
 
@@ -48,3 +48,4 @@
 .Highlight--Target .Highlight__part {
   background: #ce7e8b;
 }
+ */

@@ -7,6 +7,7 @@ import "../style/AreaHighlight.css";
 import type { LTWH, ViewportHighlight } from "../types.js";
 
 interface Props {
+  categoryLabels: Array<{ label: string; background: string }>;
   highlight: ViewportHighlight;
   onChange: (rect: LTWH) => void;
   comment: {
@@ -18,17 +19,35 @@ interface Props {
 
 export class AreaHighlight extends Component<Props> {
   render() {
-    const { highlight, onChange, comment, isScrolledTo, ...otherProps } =
-      this.props;
+    const {
+      highlight,
+      onChange,
+      comment,
+      isScrolledTo,
+      categoryLabels,
+      ...otherProps
+    } = this.props;
 
+    const handleStyle = (labels: { label: string; background: string }[]) => {
+      let color = "#ddcc77";
+      if (comment) {
+        for (let item of labels) {
+          if (comment.category === item.label) {
+            color = item.background;
+          }
+        }
+      }
+
+      return { background: color };
+    };
+
+    /*   : comment && comment.category
+    ? `AreaHighlight--${comment.category}`
+ */
     return (
       <div
         className={`AreaHighlight ${
-          isScrolledTo
-            ? "AreaHighlight--scrolledTo"
-            : comment && comment.category
-            ? `AreaHighlight--${comment.category}`
-            : ""
+          isScrolledTo ? "AreaHighlight--scrolledTo" : ""
         }`}
       >
         <Rnd
@@ -65,6 +84,7 @@ export class AreaHighlight extends Component<Props> {
             event.preventDefault();
           }}
           {...otherProps}
+          style={handleStyle(categoryLabels)}
         />
       </div>
     );
