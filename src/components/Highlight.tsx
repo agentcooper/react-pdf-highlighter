@@ -5,7 +5,7 @@ import "../style/Highlight.css";
 import type { LTWH } from "../types.js";
 
 interface Props {
-  categoryLabels: [{ label: string; color: string }];
+  categoryLabels: { label: string; color: string }[];
   position: {
     boundingRect: LTWH;
     rects: Array<LTWH>;
@@ -34,7 +34,7 @@ export class Highlight extends Component<Props> {
 
     const { rects, boundingRect } = position;
 
-    const style = (rect: {}, labels: [{ label: string; color: string }]) => {
+    const style = (rect: {}, labels: { label: string; color: string }[]) => {
       let color = "#ddcc77";
 
       for (let item of labels) {
@@ -45,16 +45,11 @@ export class Highlight extends Component<Props> {
 
       return { ...rect, background: color };
     };
-
+    /* : comment && comment.category
+            ? `Highlight--${comment.category}` */
     return (
       <div
-        className={`Highlight ${
-          isScrolledTo
-            ? "Highlight--scrolledTo"
-            : comment && comment.category
-            ? `Highlight--${comment.category}`
-            : ""
-        }`}
+        className={`Highlight ${isScrolledTo ? "Highlight--scrolledTo" : ""}`}
       >
         {comment ? (
           <div
@@ -75,6 +70,7 @@ export class Highlight extends Component<Props> {
               onClick={onClick}
               key={index}
               style={style(rect, categoryLabels)}
+              //style={rect}
               className={`Highlight__part`}
             />
           ))}

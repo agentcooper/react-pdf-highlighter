@@ -59,9 +59,9 @@ class App extends Component<{}, State> {
       ? [...testHighlights[initialUrl]]
       : [],
     categoryLabels: [
-      { label: "Assumption", background: "#95c7e0" },
-      { label: "Premise", backgroun: "#609b91" },
-      { label: "Target", background: "#ce7e8b" },
+      { label: "Assumption", color: "#95c7e0" },
+      { label: "Premise", color: "#609b91" },
+      { label: "Target", color: "#ce7e8b" },
     ],
   };
 
