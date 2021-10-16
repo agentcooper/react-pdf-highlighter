@@ -6,6 +6,9 @@ export class Highlight extends Component {
         const { rects, boundingRect } = position;
         const handleStyle = (rect, labels) => {
             let color = "#ddcc77";
+            if (isScrolledTo) {
+                return Object.assign(Object.assign({}, rect), { background: "" });
+            }
             if (comment) {
                 for (let item of labels) {
                     if (comment.category === item.label) {

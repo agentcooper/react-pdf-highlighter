@@ -30,6 +30,11 @@ export class AreaHighlight extends Component<Props> {
 
     const handleStyle = (labels: { label: string; background: string }[]) => {
       let color = "#ddcc77";
+
+      if (isScrolledTo) {
+        return { background: "" };
+      }
+
       if (comment) {
         for (let item of labels) {
           if (comment.category === item.label) {

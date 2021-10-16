@@ -39,6 +39,11 @@ export class Highlight extends Component<Props> {
       labels: { label: string; background: string }[]
     ) => {
       let color = "#ddcc77";
+
+      if (isScrolledTo) {
+        return { ...rect, background: "" };
+      }
+
       if (comment) {
         for (let item of labels) {
           if (comment.category === item.label) {
@@ -46,7 +51,6 @@ export class Highlight extends Component<Props> {
           }
         }
       }
-
       return { ...rect, background: color };
     };
 

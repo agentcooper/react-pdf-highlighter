@@ -17,6 +17,9 @@ export class AreaHighlight extends Component {
         const _a = this.props, { highlight, onChange, comment, isScrolledTo, categoryLabels } = _a, otherProps = __rest(_a, ["highlight", "onChange", "comment", "isScrolledTo", "categoryLabels"]);
         const handleStyle = (labels) => {
             let color = "#ddcc77";
+            if (isScrolledTo) {
+                return { background: "" };
+            }
             if (comment) {
                 for (let item of labels) {
                     if (comment.category === item.label) {
