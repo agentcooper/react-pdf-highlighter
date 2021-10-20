@@ -20,7 +20,7 @@ import getAreaAsPng from "../lib/get-area-as-png";
 
 import {
   asElement,
-  getPageFromRange,
+  getPagesFromRange,
   getPageFromElement,
   getWindow,
   findOrCreateContainerLayer,
@@ -216,16 +216,40 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
   } {
     const { ghostHighlight } = this.state;
 
-    return [...highlights, ghostHighlight]
-      .filter(Boolean)
-      .reduce((res, highlight) => {
-        const { pageNumber } = highlight!.position;
+    const allHighlights = [...highlights, ghostHighlight].filter(Boolean);
 
-        res[pageNumber] = res[pageNumber] || [];
-        res[pageNumber].push(highlight);
+    const pageNumbers = new Set<number>();
+    for (const highlight of allHighlights) {
+      pageNumbers.add(highlight!.position.pageNumber);
+      for (const rect of highlight!.position.rects) {
+        pageNumbers.add(rect.pageNumber);
+      }
+    }
 
-        return res;
-      }, {} as Record<number, any[]>);
+    const groupedHighlights = {} as Record<number, any[]>;
+
+    for (const pageNumber of pageNumbers) {
+      groupedHighlights[pageNumber] = groupedHighlights[pageNumber] || [];
+      for (const highlight of allHighlights) {
+        const pageSpecificHighlight = {
+          ...highlight,
+          position: {
+            pageNumber,
+            boundingRect: highlight!.position.boundingRect,
+            rects: [],
+            usePdfCoordinates: highlight!.position.usePdfCoordinates
+          } as ScaledPosition 
+        };
+        groupedHighlights[pageNumber].push(pageSpecificHighlight);
+        for (const rect of highlight!.position.rects) {
+          if (pageNumber === (rect.pageNumber || highlight!.position.pageNumber)) {
+            pageSpecificHighlight.position.rects.push(rect);
+          }
+        }
+      }
+    }
+
+    return groupedHighlights;
   }
 
   showTip(highlight: T_ViewportHighlight<T_HT>, content: JSX.Element) {
@@ -321,7 +345,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
                   this.hideTipAndSelection,
                   (rect) => {
                     const viewport = this.viewer.getPageView(
-                      pageNumber - 1
+                      rect.pageNumber - 1
                     ).viewport;
 
                     return viewportToScaled(rect, viewport);
@@ -363,12 +387,27 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     const { boundingRect, pageNumber } = tipPosition;
     const page = {
       node: this.viewer.getPageView(pageNumber - 1).div,
+      pageNumber,
+    };
+
+    const pageBoundingClientRect = page.node.getBoundingClientRect();
+
+    const pageBoundingRect = {
+      bottom: pageBoundingClientRect.bottom,
+      height: pageBoundingClientRect.height,
+      left: pageBoundingClientRect.left,
+      right: pageBoundingClientRect.right,
+      top: pageBoundingClientRect.top,
+      width: pageBoundingClientRect.width,
+      x: pageBoundingClientRect.x,
+      y: pageBoundingClientRect.y,
+      pageNumber: page.pageNumber,
     };
 
     return (
       <TipContainer
         scrollTop={this.viewer.container.scrollTop}
-        pageBoundingRect={page.node.getBoundingClientRect()}
+        pageBoundingRect={pageBoundingRect}
         style={{
           left:
             page.node.offsetLeft + boundingRect.left + boundingRect.width / 2,
@@ -502,13 +541,13 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
       return;
     }
 
-    const page = getPageFromRange(range);
+    const pages = getPagesFromRange(range);
 
-    if (!page) {
+    if (!pages || pages.length === 0) {
       return;
     }
 
-    const rects = getClientRects(range, page.node);
+    const rects = getClientRects(range, pages);
 
     if (rects.length === 0) {
       return;
@@ -516,7 +555,11 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
     const boundingRect = getBoundingRect(rects);
 
-    const viewportPosition = { boundingRect, rects, pageNumber: page.number };
+    const viewportPosition: Position = {
+      boundingRect,
+      rects,
+      pageNumber: pages[0].number,
+    };
 
     const content = {
       text: range.toString(),

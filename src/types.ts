@@ -5,6 +5,7 @@ export interface LTWH {
   top: number;
   width: number;
   height: number;
+  pageNumber: number;
 }
 
 export interface Scaled {
@@ -16,6 +17,8 @@ export interface Scaled {
 
   width: number;
   height: number;
+
+  pageNumber: number;
 }
 
 export interface Position {

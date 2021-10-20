@@ -2,7 +2,7 @@ import type { LTWH } from "../types.js";
 
 const sort = (rects: Array<LTWH>) =>
   rects.sort((A, B) => {
-    const top = A.top - B.top;
+    const top = A.pageNumber * A.top - B.pageNumber * B.top;
 
     if (top === 0) {
       return A.left - B.left;
@@ -12,12 +12,17 @@ const sort = (rects: Array<LTWH>) =>
   });
 
 const overlaps = (A: LTWH, B: LTWH) =>
-  A.left <= B.left && B.left <= A.left + A.width;
+  A.pageNumber === B.pageNumber &&
+  A.left <= B.left &&
+  B.left <= A.left + A.width;
 
 const sameLine = (A: LTWH, B: LTWH, yMargin = 5) =>
-  Math.abs(A.top - B.top) < yMargin && Math.abs(A.height - B.height) < yMargin;
+  A.pageNumber === B.pageNumber &&
+  Math.abs(A.top - B.top) < yMargin &&
+  Math.abs(A.height - B.height) < yMargin;
 
 const inside = (A: LTWH, B: LTWH) =>
+  A.pageNumber === B.pageNumber &&
   A.top > B.top &&
   A.left > B.left &&
   A.top + A.height < B.top + B.height &&
@@ -27,7 +32,12 @@ const nextTo = (A: LTWH, B: LTWH, xMargin = 10) => {
   const Aright = A.left + A.width;
   const Bright = B.left + B.width;
 
-  return A.left <= B.left && Aright <= Bright && B.left - Aright <= xMargin;
+  return (
+    A.pageNumber === B.pageNumber &&
+    A.left <= B.left &&
+    Aright <= Bright &&
+    B.left - Aright <= xMargin
+  );
 };
 
 const extendWidth = (A: LTWH, B: LTWH) => {

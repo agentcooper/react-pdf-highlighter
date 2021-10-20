@@ -24,6 +24,8 @@ export const viewportToScaled = (
 
     width,
     height,
+
+    pageNumber: rect.pageNumber,
   };
 };
 
@@ -41,6 +43,8 @@ const pdfToViewport = (pdf: Scaled, viewport: Viewport): LTWH => {
 
     width: x2 - x1,
     height: y1 - y2,
+
+    pageNumber: pdf.pageNumber,
   };
 };
 
@@ -70,5 +74,6 @@ export const scaledToViewport = (
     top: y1,
     width: x2 - x1,
     height: y2 - y1,
+    pageNumber: scaled.pageNumber,
   };
 };

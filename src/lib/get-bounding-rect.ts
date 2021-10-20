@@ -13,7 +13,11 @@ const getBoundingRect = (clientRects: Array<LTWH>): LTWH => {
     return { X0, X1, Y0, Y1 };
   });
 
-  const optimal = rects.reduce((res, rect) => {
+  const rectsWithSize = rects.filter(
+    (rect) => rect.X0 > 0 || rect.X1 > 0 || rect.Y0 > 0 || rect.Y1 > 0
+  );
+
+  const optimal = rectsWithSize.reduce((res, rect) => {
     return {
       X0: Math.min(res.X0, rect.X0),
       X1: Math.max(res.X1, rect.X1),
@@ -21,7 +25,7 @@ const getBoundingRect = (clientRects: Array<LTWH>): LTWH => {
       Y0: Math.min(res.Y0, rect.Y0),
       Y1: Math.max(res.Y1, rect.Y1),
     };
-  }, rects[0]);
+  }, rectsWithSize[0]);
 
   const { X0, X1, Y0, Y1 } = optimal;
 

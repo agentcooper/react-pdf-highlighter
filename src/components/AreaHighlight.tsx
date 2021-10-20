@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { Rnd } from "react-rnd";
+import { getPageFromElement } from "../lib/pdfjs-dom";
 
 import "../style/AreaHighlight.css";
 
@@ -25,7 +26,7 @@ export class AreaHighlight extends Component<Props> {
         <Rnd
           className="AreaHighlight__part"
           onDragStop={(_, data) => {
-            const boundingRect = {
+            const boundingRect: LTWH = {
               ...highlight.position.boundingRect,
               top: data.y,
               left: data.x,
@@ -33,12 +34,13 @@ export class AreaHighlight extends Component<Props> {
 
             onChange(boundingRect);
           }}
-          onResizeStop={(_, direction, ref, delta, position) => {
-            const boundingRect = {
+          onResizeStop={(_mouseEvent, _direction, ref, _delta, position) => {
+            const boundingRect: LTWH = {
               top: position.y,
               left: position.x,
               width: ref.offsetWidth,
               height: ref.offsetHeight,
+              pageNumber: getPageFromElement(ref)?.number || -1,
             };
 
             onChange(boundingRect);
