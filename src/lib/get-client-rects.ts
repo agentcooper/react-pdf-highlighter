@@ -1,5 +1,4 @@
-import type { LTWH } from "../types.js";
-import Page from "../lib/Page";
+import type { LTWHP, Page } from "../types.js";
 
 import optimizeClientRects from "./optimize-client-rects";
 
@@ -24,10 +23,10 @@ const getClientRects = (
   range: Range,
   pages: Page[],
   shouldOptimize: boolean = true
-): Array<LTWH> => {
+): Array<LTWHP> => {
   const clientRects = Array.from(range.getClientRects());
 
-  const rects: LTWH[] = [];
+  const rects: LTWHP[] = [];
 
   for (const clientRect of clientRects) {
     for (const page of pages) {
@@ -46,7 +45,7 @@ const getClientRects = (
           width: clientRect.width,
           height: clientRect.height,
           pageNumber: page.number,
-        } as LTWH;
+        } as LTWHP;
 
         rects.push(highlightedRect);
       }

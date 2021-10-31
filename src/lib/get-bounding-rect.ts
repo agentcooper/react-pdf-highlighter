@@ -1,8 +1,8 @@
-import type { LTWH } from "../types.js";
+import type { LTWHP } from "../types.js";
 
-const getBoundingRect = (clientRects: Array<LTWH>): LTWH => {
+const getBoundingRect = (clientRects: Array<LTWHP>): LTWHP => {
   const rects = Array.from(clientRects).map((rect) => {
-    const { left, top, width, height } = rect;
+    const { left, top, width, height, pageNumber } = rect;
 
     const X0 = left;
     const X1 = left + width;
@@ -10,7 +10,7 @@ const getBoundingRect = (clientRects: Array<LTWH>): LTWH => {
     const Y0 = top;
     const Y1 = top + height;
 
-    return { X0, X1, Y0, Y1 };
+    return { X0, X1, Y0, Y1, pageNumber };
   });
 
   const rectsWithSize = rects.filter(
@@ -24,16 +24,19 @@ const getBoundingRect = (clientRects: Array<LTWH>): LTWH => {
 
       Y0: Math.min(res.Y0, rect.Y0),
       Y1: Math.max(res.Y1, rect.Y1),
+
+      pageNumber: Math.min(res.pageNumber, rect.pageNumber),
     };
   }, rectsWithSize[0]);
 
-  const { X0, X1, Y0, Y1 } = optimal;
+  const { X0, X1, Y0, Y1, pageNumber } = optimal;
 
   return {
     left: X0,
     top: Y0,
     width: X1 - X0,
     height: Y1 - Y0,
+    pageNumber,
   };
 };
 

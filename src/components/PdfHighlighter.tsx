@@ -41,6 +41,7 @@ import type {
   T_EventBus,
   T_PDFJS_Viewer,
   T_PDFJS_LinkService,
+  LTWHP,
 } from "../types";
 import type { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
 
@@ -72,7 +73,7 @@ interface Props<T_HT> {
       callback: (highlight: T_ViewportHighlight<T_HT>) => JSX.Element
     ) => void,
     hideTip: () => void,
-    viewportToScaled: (rect: LTWH) => Scaled,
+    viewportToScaled: (rect: LTWHP) => Scaled,
     screenshot: (position: LTWH) => string,
     isScrolledTo: boolean
   ) => JSX.Element;
@@ -122,7 +123,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
   resizeObserver: ResizeObserver | null = null;
   containerNode?: HTMLDivElement | null = null;
-  unsubscribe = () => {};
+  unsubscribe = () => { };
 
   constructor(props: Props<T_HT>) {
     super(props);
@@ -238,7 +239,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
             boundingRect: highlight!.position.boundingRect,
             rects: [],
             usePdfCoordinates: highlight!.position.usePdfCoordinates
-          } as ScaledPosition 
+          } as ScaledPosition
         };
         groupedHighlights[pageNumber].push(pageSpecificHighlight);
         for (const rect of highlight!.position.rects) {
@@ -296,8 +297,8 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     };
   }
 
-  screenshot(position: LTWH, pageNumber: number) {
-    const canvas = this.viewer.getPageView(pageNumber - 1).canvas;
+  screenshot(position: LTWHP) {
+    const canvas = this.viewer.getPageView(position.pageNumber - 1).canvas;
 
     return getAreaAsPng(canvas, position);
   }
@@ -350,7 +351,10 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
                     return viewportToScaled(rect, viewport);
                   },
-                  (boundingRect) => this.screenshot(boundingRect, pageNumber),
+                  (boundingRect) => this.screenshot({
+                    ...boundingRect,
+                    pageNumber
+                  }),
                   isScrolledTo
                 );
               }
@@ -441,7 +445,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
         ...pageViewport.convertToPdfPoint(
           0,
           scaledToViewport(boundingRect, pageViewport, usePdfCoordinates).top -
-            scrollMargin
+          scrollMargin
         ),
         0,
       ],
@@ -635,6 +639,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
                   ...boundingRect,
                   top: boundingRect.top - page.node.offsetTop,
                   left: boundingRect.left - page.node.offsetLeft,
+                  pageNumber: page.number,
                 };
 
                 const viewportPosition = {
@@ -646,7 +651,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
                 const scaledPosition =
                   this.viewportPositionToScaled(viewportPosition);
 
-                const image = this.screenshot(pageBoundingRect, page.number);
+                const image = this.screenshot(pageBoundingRect);
 
                 this.setTip(
                   viewportPosition,

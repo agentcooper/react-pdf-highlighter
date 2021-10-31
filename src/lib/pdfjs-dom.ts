@@ -1,4 +1,4 @@
-import Page from "./Page";
+import { Page } from "../types";
 
 export const getDocument = (elm: any): Document =>
   (elm || {}).ownerDocument || document;
