@@ -1,6 +1,6 @@
 {
-  "name": "@loanbossinc/react-pdf-highlighter",
-  "version": "5.2.0",
+  "name": "react-pdf-highlighter",
+  "version": "5.1.0",
   "description": "Set of React components for PDF annotation",
   "author": "Artem Tyurin <artem.tyurin@gmail.com>",
   "license": "MIT",
@@ -17,7 +17,7 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "scripts": {
-    "start": "npm run dev",
+    "start":  "npm run dev",
     "dev": "(cd ./example && vite)",
     "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:copy-styles && npm run build:example",
     "build:esm": "tsc",
@@ -44,10 +44,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/loanbossinc/react-pdf-highlighter.git"
+    "url": "git+https://github.com/agentcooper/react-pdf-highlighter.git"
   },
   "bugs": {
-    "url": "https://github.com/loanbossinc/react-pdf-highlighter/issues"
+    "url": "https://github.com/agentcooper/react-pdf-highlighter/issues"
   },
   "devDependencies": {
     "@vitejs/plugin-react-refresh": "^1.3.1",

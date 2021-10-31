@@ -18,10 +18,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-node@v2
-        with:
-          registry-url: https://npm.pkg.github.com
-          scope: '@loanbossinc/react-pdf-highlighter'
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
