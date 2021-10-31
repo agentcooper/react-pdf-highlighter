@@ -12,6 +12,7 @@ export const testHighlights = {
           y2: 165.140625,
           width: 809.9999999999999,
           height: 1200,
+          pageNumber: 1,
         },
         rects: [
           {
@@ -21,6 +22,7 @@ export const testHighlights = {
             y2: 165.140625,
             width: 809.9999999999999,
             height: 1200,
+            pageNumber: 1,
           },
         ],
         pageNumber: 1,
@@ -43,6 +45,7 @@ export const testHighlights = {
           y2: 363.390625,
           width: 809.9999999999999,
           height: 1200,
+          pageNumber: 1,
         },
         rects: [
           {
@@ -52,6 +55,7 @@ export const testHighlights = {
             y2: 363.390625,
             width: 809.9999999999999,
             height: 1200,
+            pageNumber: 1,
           },
         ],
         pageNumber: 1,
@@ -74,6 +78,7 @@ export const testHighlights = {
           y2: 706.140625,
           width: 809.9999999999999,
           height: 1200,
+          pageNumber: 1,
         },
         rects: [
           {
@@ -83,6 +88,7 @@ export const testHighlights = {
             y2: 686.21875,
             width: 809.9999999999999,
             height: 1200,
+            pageNumber: 1,
           },
           {
             x1: 76.375,
@@ -91,6 +97,7 @@ export const testHighlights = {
             y2: 706.140625,
             width: 809.9999999999999,
             height: 1200,
+            pageNumber: 1,
           },
         ],
         pageNumber: 1,
@@ -114,6 +121,7 @@ export const testHighlights = {
           y2: 261,
           width: 809.9999999999999,
           height: 1200,
+          pageNumber: 3,
         },
         rects: [],
         pageNumber: 3,
@@ -136,6 +144,7 @@ export const testHighlights = {
           y2: 1079.234375,
           width: 809.9999999999999,
           height: 1200,
+          pageNumber: 4,
         },
         rects: [
           {
@@ -145,6 +154,7 @@ export const testHighlights = {
             y2: 1059.3125,
             width: 809.9999999999999,
             height: 1200,
+            pageNumber: 4,
           },
           {
             x1: 75.953125,
@@ -153,6 +163,7 @@ export const testHighlights = {
             y2: 1079.234375,
             width: 809.9999999999999,
             height: 1200,
+            pageNumber: 4,
           },
         ],
         pageNumber: 4,
@@ -176,6 +187,7 @@ export const testHighlights = {
           y2: 417,
           width: 809.9999999999999,
           height: 1200,
+          pageNumber: 24,
         },
         rects: [],
         pageNumber: 24,
@@ -200,6 +212,7 @@ export const testHighlights = {
           y2: 380.1875,
           width: 1019.9999999999999,
           height: 1319.9999999999998,
+          pageNumber: 1,
         },
         rects: [
           {
@@ -209,6 +222,7 @@ export const testHighlights = {
             y2: 380.1875,
             width: 1019.9999999999999,
             height: 1319.9999999999998,
+            pageNumber: 1,
           },
         ],
         pageNumber: 1,

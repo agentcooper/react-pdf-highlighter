@@ -2,12 +2,12 @@ import React, { Component } from "react";
 
 import "../style/Highlight.css";
 
-import type { LTWH } from "../types.js";
+import type { LTWHP } from "../types.js";
 
 interface Props {
   position: {
-    boundingRect: LTWH;
-    rects: Array<LTWH>;
+    boundingRect: LTWHP;
+    rects: Array<LTWHP>;
   };
   onClick?: () => void;
   onMouseOver?: () => void;
