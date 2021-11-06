@@ -21,7 +21,7 @@ export interface Scaled {
   width: number;
   height: number;
 
-  pageNumber: number;
+  pageNumber?: number;
 }
 
 export interface Position {

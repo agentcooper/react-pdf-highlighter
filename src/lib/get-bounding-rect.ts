@@ -13,11 +13,17 @@ const getBoundingRect = (clientRects: Array<LTWHP>): LTWHP => {
     return { X0, X1, Y0, Y1, pageNumber };
   });
 
-  const rectsWithSize = rects.filter(
-    (rect) => rect.X0 > 0 || rect.X1 > 0 || rect.Y0 > 0 || rect.Y1 > 0
+  let firstPageNumber = Number.MAX_SAFE_INTEGER;
+
+  rects.forEach(rect => {
+    firstPageNumber = Math.min(firstPageNumber, rect.pageNumber);
+  });
+
+  const rectsWithSizeOnFirstPage = rects.filter(
+    (rect) => (rect.X0 > 0 || rect.X1 > 0 || rect.Y0 > 0 || rect.Y1 > 0) && rect.pageNumber === firstPageNumber
   );
 
-  const optimal = rectsWithSize.reduce((res, rect) => {
+  const optimal = rectsWithSizeOnFirstPage.reduce((res, rect) => {
     return {
       X0: Math.min(res.X0, rect.X0),
       X1: Math.max(res.X1, rect.X1),
@@ -25,9 +31,9 @@ const getBoundingRect = (clientRects: Array<LTWHP>): LTWHP => {
       Y0: Math.min(res.Y0, rect.Y0),
       Y1: Math.max(res.Y1, rect.Y1),
 
-      pageNumber: Math.min(res.pageNumber, rect.pageNumber),
+      pageNumber: firstPageNumber,
     };
-  }, rectsWithSize[0]);
+  }, rectsWithSizeOnFirstPage[0]);
 
   const { X0, X1, Y0, Y1, pageNumber } = optimal;
 

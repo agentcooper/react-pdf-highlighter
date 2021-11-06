@@ -12,7 +12,6 @@ export const testHighlights = {
           y2: 165.140625,
           width: 809.9999999999999,
           height: 1200,
-          pageNumber: 1,
         },
         rects: [
           {
@@ -22,7 +21,6 @@ export const testHighlights = {
             y2: 165.140625,
             width: 809.9999999999999,
             height: 1200,
-            pageNumber: 1,
           },
         ],
         pageNumber: 1,
@@ -45,7 +43,6 @@ export const testHighlights = {
           y2: 363.390625,
           width: 809.9999999999999,
           height: 1200,
-          pageNumber: 1,
         },
         rects: [
           {
@@ -55,7 +52,6 @@ export const testHighlights = {
             y2: 363.390625,
             width: 809.9999999999999,
             height: 1200,
-            pageNumber: 1,
           },
         ],
         pageNumber: 1,

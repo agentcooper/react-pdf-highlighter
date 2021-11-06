@@ -34,6 +34,8 @@ const getClientRects = (
 
       if (
         isClientRectInsidePageRect(clientRect, pageRect) &&
+        clientRect.top >= 0 &&
+        clientRect.bottom >= 0 &&
         clientRect.width > 0 &&
         clientRect.height > 0 &&
         clientRect.width < pageRect.width &&
