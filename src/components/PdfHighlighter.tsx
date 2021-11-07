@@ -223,7 +223,9 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     for (const highlight of allHighlights) {
       pageNumbers.add(highlight!.position.pageNumber);
       for (const rect of highlight!.position.rects) {
-        pageNumbers.add(rect.pageNumber);
+        if (rect.pageNumber) {
+          pageNumbers.add(rect.pageNumber);
+        }
       }
     }
 
@@ -397,8 +399,9 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
     const { boundingRect, pageNumber } = tipPosition;
     const page = {
-      node: this.viewer.getPageView(pageNumber - 1).div,
-      pageNumber,
+      node: this.viewer.getPageView((boundingRect.pageNumber || pageNumber) - 1)
+        .div,
+      pageNumber: boundingRect.pageNumber || pageNumber,
     };
 
     const pageBoundingClientRect = page.node.getBoundingClientRect();
