@@ -8,7 +8,7 @@ export interface LTWH {
 }
 
 export interface LTWHP extends LTWH {
-  pageNumber: number;
+  pageNumber?: number;
 }
 
 export interface Scaled {

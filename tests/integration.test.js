@@ -48,10 +48,14 @@ it("should allow a selection on multiple pages", async () => {
   await highlight({ x: 30, y: 10 }, { x: 489, y: 3000 });
   const addHighlightPopup = await page.waitForSelector(".Tip__compact", {
     visible: true,
-  });  
+  });
   await addHighlightPopup.click();
-  const commentTextArea = await page.waitForSelector("div.PdfHighlighter__tip-container textarea");
+  const commentTextArea = await page.waitForSelector(
+    "div.PdfHighlighter__tip-container textarea"
+  );
   await commentTextArea.type("test");
-  const saveCommentButton = await page.waitForSelector("div.PdfHighlighter__tip-container input[type=submit]");
+  const saveCommentButton = await page.waitForSelector(
+    "div.PdfHighlighter__tip-container input[type=submit]"
+  );
   await saveCommentButton.click();
 });

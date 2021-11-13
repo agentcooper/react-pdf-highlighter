@@ -305,8 +305,8 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     };
   }
 
-  screenshot(position: LTWHP) {
-    const canvas = this.viewer.getPageView(position.pageNumber - 1).canvas;
+  screenshot(position: LTWH, pageNumber: number) {
+    const canvas = this.viewer.getPageView(pageNumber - 1).canvas;
 
     return getAreaAsPng(canvas, position);
   }
@@ -354,16 +354,12 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
                   this.hideTipAndSelection,
                   (rect) => {
                     const viewport = this.viewer.getPageView(
-                      rect.pageNumber - 1
+                      (rect.pageNumber || pageNumber) - 1
                     ).viewport;
 
                     return viewportToScaled(rect, viewport);
                   },
-                  (boundingRect) =>
-                    this.screenshot({
-                      ...boundingRect,
-                      pageNumber,
-                    }),
+                  (boundingRect) => this.screenshot(boundingRect, pageNumber),
                   isScrolledTo
                 );
               }
@@ -661,7 +657,10 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
                 const scaledPosition =
                   this.viewportPositionToScaled(viewportPosition);
 
-                const image = this.screenshot(pageBoundingRect);
+                const image = this.screenshot(
+                  pageBoundingRect,
+                  pageBoundingRect.pageNumber
+                );
 
                 this.setTip(
                   viewportPosition,
