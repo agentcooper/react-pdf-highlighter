@@ -16,7 +16,10 @@ const getBoundingRect = (clientRects: Array<LTWHP>): LTWHP => {
   let firstPageNumber = Number.MAX_SAFE_INTEGER;
 
   rects.forEach((rect) => {
-    firstPageNumber = Math.min(firstPageNumber, rect.pageNumber);
+    firstPageNumber = Math.min(
+      firstPageNumber,
+      rect.pageNumber ?? firstPageNumber
+    );
   });
 
   const rectsWithSizeOnFirstPage = rects.filter(

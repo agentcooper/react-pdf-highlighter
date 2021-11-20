@@ -2,7 +2,7 @@ import type { LTWHP } from "../types.js";
 
 const sort = (rects: Array<LTWHP>) =>
   rects.sort((A, B) => {
-    const top = A.pageNumber * A.top - B.pageNumber * B.top;
+    const top = (A.pageNumber || 0) * A.top - (B.pageNumber || 0) * B.top;
 
     if (top === 0) {
       return A.left - B.left;
