@@ -7,6 +7,10 @@ export interface LTWH {
   height: number;
 }
 
+export interface LTWHP extends LTWH {
+  pageNumber?: number;
+}
+
 export interface Scaled {
   x1: number;
   y1: number;
@@ -16,11 +20,13 @@ export interface Scaled {
 
   width: number;
   height: number;
+
+  pageNumber?: number;
 }
 
 export interface Position {
-  boundingRect: LTWH;
-  rects: Array<LTWH>;
+  boundingRect: LTWHP;
+  rects: Array<LTWHP>;
   pageNumber: number;
 }
 
@@ -93,4 +99,9 @@ export interface T_PDFJS_Viewer {
 export interface T_PDFJS_LinkService {
   setDocument: (document: Object) => void;
   setViewer: (viewer: T_PDFJS_Viewer) => void;
+}
+
+export interface Page {
+  node: HTMLElement;
+  number: number;
 }

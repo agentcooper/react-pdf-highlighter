@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import type { LTWH } from "../types";
+import type { LTWHP } from "../types";
 
 interface State {
   height: number;
@@ -11,7 +11,7 @@ interface Props {
   children: JSX.Element | null;
   style: { top: number; left: number; bottom: number };
   scrollTop: number;
-  pageBoundingRect: LTWH;
+  pageBoundingRect: LTWHP;
 }
 
 const clamp = (value: number, left: number, right: number) =>
