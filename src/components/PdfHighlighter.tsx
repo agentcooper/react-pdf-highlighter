@@ -43,7 +43,7 @@ import type {
   T_PDFJS_LinkService,
   LTWHP,
 } from "../types";
-import type { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
+import type { PDFDocumentProxy } from "pdfjs-dist/types/src/display/api";
 
 type T_ViewportHighlight<T_HT> = { position: Position } & T_HT;
 
@@ -180,11 +180,14 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     this.viewer =
       this.viewer ||
       new PDFViewer({
-        container: this.containerNode,
+        container: this.containerNode!,
         eventBus: this.eventBus,
-        enhanceTextSelection: true,
+        // enhanceTextSelection: true, // deprecated. https://github.com/mozilla/pdf.js/issues/9943#issuecomment-409369485
+        textLayerMode: 2,
         removePageBorders: true,
         linkService: this.linkService,
+        renderer: "canvas",
+        l10n: null
       });
 
     this.linkService.setDocument(pdfDocument);

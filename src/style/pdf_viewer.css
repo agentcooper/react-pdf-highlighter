@@ -4,6 +4,7 @@
   z-index: 2;
   opacity: 1;
   mix-blend-mode: multiply;
+  display: flex;
 }
 
 .annotationLayer {
