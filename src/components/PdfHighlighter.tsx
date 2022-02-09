@@ -187,7 +187,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
         removePageBorders: true,
         linkService: this.linkService,
         renderer: "canvas",
-        l10n: null
+        l10n: null,
       });
 
     this.linkService.setDocument(pdfDocument);
