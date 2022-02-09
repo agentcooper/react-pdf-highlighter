@@ -1,5 +1,3 @@
-import type { PDFDocumentProxy } from "pdfjs-dist/types/src/display/api";
-
 export interface LTWH {
   left: number;
   top: number;
@@ -72,33 +70,6 @@ export interface Viewport {
   convertToViewportRectangle: (pdfRectangle: Array<number>) => Array<number>;
   width: number;
   height: number;
-}
-
-export interface T_EventBus {
-  on: (eventName: string, callback: () => void) => void;
-  off: (eventName: string, callback: () => void) => void;
-}
-
-export interface T_PDFJS_Viewer {
-  container: HTMLDivElement;
-  viewer: HTMLDivElement;
-  getPageView: (page: number) => {
-    textLayer: { textLayerDiv: HTMLDivElement };
-    viewport: Viewport;
-    div: HTMLDivElement;
-    canvas: HTMLCanvasElement;
-  };
-  setDocument: (document: PDFDocumentProxy) => Promise<void>;
-  scrollPageIntoView: (options: {
-    pageNumber: number;
-    destArray: Array<any>;
-  }) => void;
-  currentScaleValue: string;
-}
-
-export interface T_PDFJS_LinkService {
-  setDocument: (document: Object) => void;
-  setViewer: (viewer: T_PDFJS_Viewer) => void;
 }
 
 export interface Page {

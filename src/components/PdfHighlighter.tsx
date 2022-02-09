@@ -6,7 +6,6 @@ import {
   EventBus,
   PDFViewer,
   PDFLinkService,
-  // @ts-ignore
 } from "pdfjs-dist/legacy/web/pdf_viewer";
 
 import "pdfjs-dist/web/pdf_viewer.css";
@@ -38,12 +37,9 @@ import type {
   IHighlight,
   Scaled,
   LTWH,
-  T_EventBus,
-  T_PDFJS_Viewer,
-  T_PDFJS_LinkService,
   LTWHP,
 } from "../types";
-import type { PDFDocumentProxy } from "pdfjs-dist/types/src/display/api";
+import type { PDFDocumentProxy } from "pdfjs-dist";
 
 type T_ViewportHighlight<T_HT> = { position: Position } & T_HT;
 
@@ -112,14 +108,13 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     tipChildren: null,
   };
 
-  eventBus: T_EventBus = new EventBus();
-  linkService: T_PDFJS_LinkService = new PDFLinkService({
+  eventBus = new EventBus();
+  linkService = new PDFLinkService({
     eventBus: this.eventBus,
     externalLinkTarget: 2,
   });
 
-  // @ts-ignore
-  viewer: T_PDFJS_Viewer;
+  viewer!: PDFViewer;
 
   resizeObserver: ResizeObserver | null = null;
   containerNode?: HTMLDivElement | null = null;
@@ -599,7 +594,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
   debouncedAfterSelection: () => void = debounce(this.afterSelection, 500);
 
   toggleTextSelection(flag: boolean) {
-    this.viewer.viewer.classList.toggle(
+    this.viewer.viewer!.classList.toggle(
       "PdfHighlighter--disable-selection",
       flag
     );
