@@ -7,4 +7,7 @@ export default defineConfig({
     outDir: "dist",
   },
   plugins: [reactRefresh()],
+  server: {
+    port: 3000,
+  },
 });
