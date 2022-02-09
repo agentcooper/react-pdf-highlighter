@@ -39,7 +39,7 @@
     "@types/react": "^16.4.0",
     "@types/react-dom": "^16.4.0",
     "lodash.debounce": "^4.0.8",
-    "pdfjs-dist": "2.8.335",
+    "pdfjs-dist": "2.11.338",
     "react-rnd": "^10.1.10"
   },
   "repository": {

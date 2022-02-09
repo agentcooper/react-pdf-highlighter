@@ -1,4 +1,4 @@
-import type { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
+import type { PDFDocumentProxy } from "pdfjs-dist/types/src/display/api";
 
 export interface LTWH {
   left: number;
