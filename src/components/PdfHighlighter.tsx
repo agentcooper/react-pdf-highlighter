@@ -6,7 +6,7 @@ import {
   EventBus,
   PDFViewer,
   PDFLinkService,
-  NullL10n
+  NullL10n,
 } from "pdfjs-dist/legacy/web/pdf_viewer";
 
 import "pdfjs-dist/web/pdf_viewer.css";
