@@ -11,6 +11,10 @@ const updateHash = (highlight: IHighlight) => {
   document.location.hash = `highlight-${highlight.id}`;
 };
 
+const setPagesRotation = (rotation: Number) => {
+  window.PdfViewer.viewer.pagesRotation = rotation;
+};
+
 export function Sidebar({
   highlights,
   toggleDocument,
@@ -33,6 +37,14 @@ export function Sidebar({
             drag.
           </small>
         </p>
+        <h3 style={{ marginBottom: "1rem" }}>Set PDF Rotation:</h3>
+        {
+          [0, 90, 180, 270].map((deg) => (
+            <button onClick={() => setPagesRotation(deg)}>
+              {deg}
+            </button>
+          ))
+        }
       </div>
 
       <ul className="sidebar__highlights">
