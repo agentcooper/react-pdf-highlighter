@@ -14,9 +14,8 @@ interface WIDTH_HEIGHT {
 export const viewportToScaled = (
   rect: LTWHP,
   { width, height }: WIDTH_HEIGHT,
-  pagesRotation: Number = 0,
+  pagesRotation: Number = 0
 ): Scaled => {
-
   const leftNormal = rect.left / width;
   const rightNormal = (rect.left + rect.width) / width;
   const topNormal = rect.top / height;
@@ -38,18 +37,18 @@ export const viewportToScaled = (
     case 90:
       x1 = height * topNormal;
       x2 = height * bottomNormal;
-      y1 = width - (width * rightNormal);
-      y2 = width - (width * leftNormal);
+      y1 = width - width * rightNormal;
+      y2 = width - width * leftNormal;
       break;
     case 180:
-      x1 = width - (width * rightNormal);
-      x2 = width - (width * leftNormal);
-      y1 = height - (height * bottomNormal);
-      y2 = height - (height * topNormal);
+      x1 = width - width * rightNormal;
+      x2 = width - width * leftNormal;
+      y1 = height - height * bottomNormal;
+      y2 = height - height * topNormal;
       break;
     case 270:
-      x1 = height - (height * bottomNormal);
-      x2 = height - (height * topNormal);
+      x1 = height - height * bottomNormal;
+      x2 = height - height * topNormal;
       y1 = width * leftNormal;
       y2 = width * rightNormal;
       break;
@@ -125,16 +124,16 @@ export const scaledToViewport = (
 
   switch (pagesRotation) {
     case 90:
-      scaledLeft = width - (width * bottomNormal);
+      scaledLeft = width - width * bottomNormal;
       scaledTop = height * leftNormal;
       break;
     case 180:
-      scaledLeft = width - (width * rightNormal);
-      scaledTop = height - (height * bottomNormal);
+      scaledLeft = width - width * rightNormal;
+      scaledTop = height - height * bottomNormal;
       break;
     case 270:
       scaledLeft = width * topNormal;
-      scaledTop = height - (height * rightNormal);
+      scaledTop = height - height * rightNormal;
       break;
     default:
       break;

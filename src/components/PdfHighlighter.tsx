@@ -118,7 +118,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
   resizeObserver: ResizeObserver | null = null;
   containerNode?: HTMLDivElement | null = null;
-  unsubscribe = () => { };
+  unsubscribe = () => {};
 
   constructor(props: Props<T_HT>) {
     super(props);
@@ -281,9 +281,19 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     const viewport = this.viewer.getPageView(pageNumber - 1).viewport;
 
     return {
-      boundingRect: scaledToViewport(boundingRect, viewport, usePdfCoordinates, this.viewer.pagesRotation),
+      boundingRect: scaledToViewport(
+        boundingRect,
+        viewport,
+        usePdfCoordinates,
+        this.viewer.pagesRotation
+      ),
       rects: (rects || []).map((rect) =>
-        scaledToViewport(rect, viewport, usePdfCoordinates, this.viewer.pagesRotation)
+        scaledToViewport(
+          rect,
+          viewport,
+          usePdfCoordinates,
+          this.viewer.pagesRotation
+        )
       ),
       pageNumber,
     };
@@ -297,8 +307,14 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     const viewport = this.viewer.getPageView(pageNumber - 1).viewport;
 
     return {
-      boundingRect: viewportToScaled(boundingRect, viewport, this.viewer.pagesRotation),
-      rects: (rects || []).map((rect) => viewportToScaled(rect, viewport, this.viewer.pagesRotation)),
+      boundingRect: viewportToScaled(
+        boundingRect,
+        viewport,
+        this.viewer.pagesRotation
+      ),
+      rects: (rects || []).map((rect) =>
+        viewportToScaled(rect, viewport, this.viewer.pagesRotation)
+      ),
       pageNumber,
     };
   }
@@ -449,7 +465,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
         ...pageViewport.convertToPdfPoint(
           0,
           scaledToViewport(boundingRect, pageViewport, usePdfCoordinates).top -
-          scrollMargin
+            scrollMargin
         ),
         0,
       ],

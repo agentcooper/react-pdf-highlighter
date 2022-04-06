@@ -38,13 +38,9 @@ export function Sidebar({
           </small>
         </p>
         <h3 style={{ marginBottom: "1rem" }}>Set PDF Rotation:</h3>
-        {
-          [0, 90, 180, 270].map((deg) => (
-            <button onClick={() => setPagesRotation(deg)}>
-              {deg}
-            </button>
-          ))
-        }
+        {[0, 90, 180, 270].map((deg) => (
+          <button onClick={() => setPagesRotation(deg)}>{deg}</button>
+        ))}
       </div>
 
       <ul className="sidebar__highlights">
