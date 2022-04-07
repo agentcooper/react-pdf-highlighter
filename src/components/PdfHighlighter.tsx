@@ -78,6 +78,7 @@ interface Props<T_HT> {
   scrollRef: (scrollTo: (highlight: IHighlight) => void) => void;
   pdfDocument: PDFDocumentProxy;
   pdfScaleValue: string;
+  pagesRotation: number;
   onSelectionFinished: (
     position: ScaledPosition,
     content: { text?: string; image?: string },
@@ -95,6 +96,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 > {
   static defaultProps = {
     pdfScaleValue: "auto",
+    pagesRotation: 0,
   };
 
   state: State<T_HT> = {
@@ -166,6 +168,9 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     }
     if (prevProps.highlights !== this.props.highlights) {
       this.renderHighlights(this.props);
+    }
+    if (prevProps.pagesRotation != this.props.pagesRotation) {
+      this.viewer.pagesRotation = this.props.pagesRotation;
     }
   }
 

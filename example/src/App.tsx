@@ -20,6 +20,7 @@ import "./style/App.css";
 const testHighlights: Record<string, Array<IHighlight>> = _testHighlights;
 
 interface State {
+  pagesRotation: number;
   url: string;
   highlights: Array<IHighlight>;
 }
@@ -53,6 +54,7 @@ const initialUrl = searchParams.get("url") || PRIMARY_PDF_URL;
 
 class App extends Component<{}, State> {
   state = {
+    pagesRotation: 0,
     url: initialUrl,
     highlights: testHighlights[initialUrl]
       ? [...testHighlights[initialUrl]]
@@ -132,8 +134,12 @@ class App extends Component<{}, State> {
     });
   }
 
+  setPagesRotation = (pagesRotation: number) => {
+    this.setState({ pagesRotation });
+  };
+
   render() {
-    const { url, highlights } = this.state;
+    const { url, highlights, pagesRotation } = this.state;
 
     return (
       <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -141,6 +147,7 @@ class App extends Component<{}, State> {
           highlights={highlights}
           resetHighlights={this.resetHighlights}
           toggleDocument={this.toggleDocument}
+          setPagesRotation={this.setPagesRotation}
         />
         <div
           style={{
@@ -152,6 +159,7 @@ class App extends Component<{}, State> {
           <PdfLoader url={url} beforeLoad={<Spinner />}>
             {(pdfDocument) => (
               <PdfHighlighter
+                pagesRotation={pagesRotation}
                 pdfDocument={pdfDocument}
                 enableAreaSelection={(event) => event.altKey}
                 onScrollChange={resetHash}

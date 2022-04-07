@@ -5,20 +5,18 @@ interface Props {
   highlights: Array<IHighlight>;
   resetHighlights: () => void;
   toggleDocument: () => void;
+  setPagesRotation: (pagesRotation: number) => void;
 }
 
 const updateHash = (highlight: IHighlight) => {
   document.location.hash = `highlight-${highlight.id}`;
 };
 
-const setPagesRotation = (rotation: Number) => {
-  window.PdfViewer.viewer.pagesRotation = rotation;
-};
-
 export function Sidebar({
   highlights,
   toggleDocument,
   resetHighlights,
+  setPagesRotation,
 }: Props) {
   return (
     <div className="sidebar" style={{ width: "25vw" }}>
@@ -38,8 +36,10 @@ export function Sidebar({
           </small>
         </p>
         <h3 style={{ marginBottom: "1rem" }}>Set PDF Rotation:</h3>
-        {[0, 90, 180, 270].map((deg) => (
-          <button onClick={() => setPagesRotation(deg)}>{deg}</button>
+        {[0, 90, 180, 270].map((pagesRotation) => (
+          <button onClick={() => setPagesRotation(pagesRotation)}>
+            {pagesRotation}
+          </button>
         ))}
       </div>
 
