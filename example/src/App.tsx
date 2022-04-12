@@ -20,7 +20,6 @@ import "./style/App.css";
 const testHighlights: Record<string, Array<IHighlight>> = _testHighlights;
 
 interface State {
-  pagesRotation: number;
   url: string;
   highlights: Array<IHighlight>;
   currentMatch: number;
@@ -58,7 +57,6 @@ const initialUrl = searchParams.get("url") || PRIMARY_PDF_URL;
 class App extends Component<{}, State> {
   state = {
     searchValue: "",
-    pagesRotation: 0,
     url: initialUrl,
     highlights: testHighlights[initialUrl]
       ? [...testHighlights[initialUrl]]
@@ -83,11 +81,11 @@ class App extends Component<{}, State> {
     });
   };
 
-  scrollViewerTo = (highlight: any) => {};
+  scrollViewerTo = (highlight: any) => { };
 
-  findNext = () => {};
+  findNext = () => { };
 
-  findPrev = () => {};
+  findPrev = () => { };
 
   scrollToHighlightFromHash = () => {
     const highlight = this.getHighlightById(parseIdFromHash());
@@ -134,25 +132,20 @@ class App extends Component<{}, State> {
         } = h;
         return id === highlightId
           ? {
-              id,
-              position: { ...originalPosition, ...position },
-              content: { ...originalContent, ...content },
-              ...rest,
-            }
+            id,
+            position: { ...originalPosition, ...position },
+            content: { ...originalContent, ...content },
+            ...rest,
+          }
           : h;
       }),
     });
   }
 
-  setPagesRotation = (pagesRotation: number) => {
-    this.setState({ pagesRotation });
-  };
-
   render() {
     const {
       url,
       highlights,
-      pagesRotation,
       searchValue,
       currentMatch,
       totalMatchCount,
@@ -164,7 +157,6 @@ class App extends Component<{}, State> {
           highlights={highlights}
           resetHighlights={this.resetHighlights}
           toggleDocument={this.toggleDocument}
-          setPagesRotation={this.setPagesRotation}
           setSearchValue={(searchValue) => this.setState({ searchValue })}
           currentMatch={currentMatch}
           totalMatchCount={totalMatchCount}
@@ -189,7 +181,6 @@ class App extends Component<{}, State> {
                   this.findPrev = findPrev;
                   this.findNext = findNext;
                 }}
-                pagesRotation={pagesRotation}
                 pdfDocument={pdfDocument}
                 enableAreaSelection={(event) => event.altKey}
                 onScrollChange={resetHash}

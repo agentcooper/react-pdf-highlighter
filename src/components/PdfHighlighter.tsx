@@ -80,7 +80,6 @@ interface Props<T_HT> {
   findRefs: (findPrev: () => void, findNext: () => void) => void;
   pdfDocument: PDFDocumentProxy;
   pdfScaleValue: string;
-  pagesRotation: number;
   searchValue: string;
   onSearch: (currentMatch: number, totalMatchCount: number) => void;
   onSelectionFinished: (
@@ -100,9 +99,8 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 > {
   static defaultProps = {
     pdfScaleValue: "auto",
-    pagesRotation: 0,
     searchValue: "",
-    onSearch: () => {},
+    onSearch: () => { },
   };
 
   state: State<T_HT> = {
@@ -126,7 +124,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
   resizeObserver: ResizeObserver | null = null;
   containerNode?: HTMLDivElement | null = null;
-  unsubscribe = () => {};
+  unsubscribe = () => { };
 
   constructor(props: Props<T_HT>) {
     super(props);
@@ -176,9 +174,6 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     }
     if (prevProps.highlights !== this.props.highlights) {
       this.renderHighlights(this.props);
-    }
-    if (prevProps.pagesRotation != this.props.pagesRotation) {
-      this.viewer.pagesRotation = this.props.pagesRotation;
     }
     if (prevProps.searchValue != this.props.searchValue) {
       this.viewer.findController.executeCommand("find", {
@@ -343,19 +338,9 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     const viewport = this.viewer.getPageView(pageNumber - 1).viewport;
 
     return {
-      boundingRect: scaledToViewport(
-        boundingRect,
-        viewport,
-        usePdfCoordinates,
-        this.viewer.pagesRotation
-      ),
+      boundingRect: scaledToViewport(boundingRect, viewport, usePdfCoordinates),
       rects: (rects || []).map((rect) =>
-        scaledToViewport(
-          rect,
-          viewport,
-          usePdfCoordinates,
-          this.viewer.pagesRotation
-        )
+        scaledToViewport(rect, viewport, usePdfCoordinates)
       ),
       pageNumber,
     };
@@ -369,14 +354,8 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     const viewport = this.viewer.getPageView(pageNumber - 1).viewport;
 
     return {
-      boundingRect: viewportToScaled(
-        boundingRect,
-        viewport,
-        this.viewer.pagesRotation
-      ),
-      rects: (rects || []).map((rect) =>
-        viewportToScaled(rect, viewport, this.viewer.pagesRotation)
-      ),
+      boundingRect: viewportToScaled(boundingRect, viewport),
+      rects: (rects || []).map((rect) => viewportToScaled(rect, viewport)),
       pageNumber,
     };
   }
@@ -527,7 +506,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
         ...pageViewport.convertToPdfPoint(
           0,
           scaledToViewport(boundingRect, pageViewport, usePdfCoordinates).top -
-            scrollMargin
+          scrollMargin
         ),
         0,
       ],

@@ -5,7 +5,6 @@ interface Props {
   highlights: Array<IHighlight>;
   resetHighlights: () => void;
   toggleDocument: () => void;
-  setPagesRotation: (pagesRotation: number) => void;
   setSearchValue: (searchValue: string) => void;
   currentMatch: number;
   totalMatchCount: number;
@@ -21,7 +20,6 @@ export function Sidebar({
   highlights,
   toggleDocument,
   resetHighlights,
-  setPagesRotation,
   setSearchValue,
   currentMatch,
   totalMatchCount,
@@ -45,12 +43,6 @@ export function Sidebar({
             drag.
           </small>
         </p>
-        <h3 style={{ marginBottom: "1rem" }}>Set PDF Rotation:</h3>
-        {[0, 90, 180, 270].map((pagesRotation) => (
-          <button onClick={() => setPagesRotation(pagesRotation)}>
-            {pagesRotation}
-          </button>
-        ))}
         <h3 style={{ marginBottom: "1rem" }}>Search:</h3>
         <input type="text" onChange={(e) => setSearchValue(e.target.value)} />
         <div>
