@@ -81,11 +81,11 @@ class App extends Component<{}, State> {
     });
   };
 
-  scrollViewerTo = (highlight: any) => { };
+  scrollViewerTo = (highlight: any) => {};
 
-  findNext = () => { };
+  findNext = () => {};
 
-  findPrev = () => { };
+  findPrev = () => {};
 
   scrollToHighlightFromHash = () => {
     const highlight = this.getHighlightById(parseIdFromHash());
@@ -132,24 +132,19 @@ class App extends Component<{}, State> {
         } = h;
         return id === highlightId
           ? {
-            id,
-            position: { ...originalPosition, ...position },
-            content: { ...originalContent, ...content },
-            ...rest,
-          }
+              id,
+              position: { ...originalPosition, ...position },
+              content: { ...originalContent, ...content },
+              ...rest,
+            }
           : h;
       }),
     });
   }
 
   render() {
-    const {
-      url,
-      highlights,
-      searchValue,
-      currentMatch,
-      totalMatchCount,
-    } = this.state;
+    const { url, highlights, searchValue, currentMatch, totalMatchCount } =
+      this.state;
 
     return (
       <div className="App" style={{ display: "flex", height: "100vh" }}>
