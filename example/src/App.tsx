@@ -23,6 +23,9 @@ interface State {
   pagesRotation: number;
   url: string;
   highlights: Array<IHighlight>;
+  currentMatch: number;
+  totalMatchCount: number;
+  searchValue: string;
 }
 
 const getNextId = () => String(Math.random()).slice(2);
@@ -54,11 +57,14 @@ const initialUrl = searchParams.get("url") || PRIMARY_PDF_URL;
 
 class App extends Component<{}, State> {
   state = {
+    searchValue: "",
     pagesRotation: 0,
     url: initialUrl,
     highlights: testHighlights[initialUrl]
       ? [...testHighlights[initialUrl]]
       : [],
+    currentMatch: 0,
+    totalMatchCount: 0,
   };
 
   resetHighlights = () => {
@@ -78,6 +84,10 @@ class App extends Component<{}, State> {
   };
 
   scrollViewerTo = (highlight: any) => {};
+
+  findNext = () => {};
+
+  findPrev = () => {};
 
   scrollToHighlightFromHash = () => {
     const highlight = this.getHighlightById(parseIdFromHash());
@@ -139,7 +149,14 @@ class App extends Component<{}, State> {
   };
 
   render() {
-    const { url, highlights, pagesRotation } = this.state;
+    const {
+      url,
+      highlights,
+      pagesRotation,
+      searchValue,
+      currentMatch,
+      totalMatchCount,
+    } = this.state;
 
     return (
       <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -148,6 +165,11 @@ class App extends Component<{}, State> {
           resetHighlights={this.resetHighlights}
           toggleDocument={this.toggleDocument}
           setPagesRotation={this.setPagesRotation}
+          setSearchValue={(searchValue) => this.setState({ searchValue })}
+          currentMatch={currentMatch}
+          totalMatchCount={totalMatchCount}
+          findNext={this.findNext}
+          findPrev={this.findPrev}
         />
         <div
           style={{
@@ -159,6 +181,14 @@ class App extends Component<{}, State> {
           <PdfLoader url={url} beforeLoad={<Spinner />}>
             {(pdfDocument) => (
               <PdfHighlighter
+                searchValue={searchValue}
+                onSearch={(currentMatch, totalMatchCount) => {
+                  this.setState({ currentMatch, totalMatchCount });
+                }}
+                findRefs={(findPrev, findNext) => {
+                  this.findPrev = findPrev;
+                  this.findNext = findNext;
+                }}
                 pagesRotation={pagesRotation}
                 pdfDocument={pdfDocument}
                 enableAreaSelection={(event) => event.altKey}

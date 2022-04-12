@@ -14,6 +14,17 @@
   z-index: 3;
 }
 
+.textLayer .highlight.selected {
+  opacity: 1;
+  background-color: #ef2648;
+}
+
+.textLayer .highlight {
+  opacity: 1;
+  border-radius: 0px;
+  background-color: #5a8a91;
+}
+
 html
   body
   .textLayer
@@ -23,7 +34,8 @@ html
 }
 
 .textLayer ::selection {
-  background: rgba(252, 232, 151, 1);
+  opacity: 1;
+  background: #fbc800;
   mix-blend-mode: multiply;
 }
 
