@@ -167,6 +167,9 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     if (prevProps.highlights !== this.props.highlights) {
       this.renderHighlights(this.props);
     }
+    if (prevProps.pdfScaleValue != this.props.pdfScaleValue) {
+      this.viewer.currentScaleValue = this.props.pdfScaleValue;
+    }
   }
 
   init() {
