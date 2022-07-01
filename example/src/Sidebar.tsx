@@ -22,7 +22,7 @@ export function Sidebar({
         <h2 style={{ marginBottom: "1rem" }}>react-pdf-highlighter</h2>
 
         <p style={{ fontSize: "0.7rem" }}>
-          <a href="https://github.com/agentcooper/react-pdf-highlighter">
+          <a href="https://github.com/milesangelo/react-pdf-highlighter">
             Open in GitHub
           </a>
         </p>
