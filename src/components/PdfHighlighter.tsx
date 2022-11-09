@@ -238,15 +238,6 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<Props
     this.setTip(highlight.position, content);
   }
 
-  // scaledPositionToViewport({ pageNumber, boundingRect, rects, usePdfCoordinates }: ScaledPosition): Position {
-  //   const viewport = this.viewer.getPageView(pageNumber - 1).viewport;
-  //
-  //   return {
-  //     boundingRect: scaledToViewport(boundingRect, viewport, usePdfCoordinates),
-  //     rects: (rects || []).map(rect => scaledToViewport(rect, viewport, usePdfCoordinates)),
-  //     pageNumber,
-  //   };
-  // }
 
 
   screenshot(position: LTWH, pageNumber: number) {
