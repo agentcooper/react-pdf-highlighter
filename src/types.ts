@@ -9,31 +9,15 @@ export interface LTWHP extends LTWH {
   pageNumber?: number;
 }
 
-export interface Scaled {
-  x1: number;
-  y1: number;
 
-  x2: number;
-  y2: number;
-
-  width: number;
-  height: number;
-
-  pageNumber?: number;
-}
 
 export interface Position {
   boundingRect: LTWHP;
   rects: Array<LTWHP>;
   pageNumber: number;
-}
-
-export interface ScaledPosition {
-  boundingRect: Scaled;
-  rects: Array<Scaled>;
-  pageNumber: number;
   usePdfCoordinates?: boolean;
 }
+
 
 export interface Content {
   text?: string;
@@ -54,7 +38,7 @@ export interface HighlightComment {
 }
 
 export interface NewHighlight extends HighlightContent, HighlightComment {
-  position: ScaledPosition;
+  position: Position;
 }
 
 export interface IHighlight extends NewHighlight {
