@@ -17,18 +17,12 @@ interface Props {
     text: string;
   };
   isScrolledTo: boolean;
+  customRender?: React.ReactElement;
 }
 
 export class Highlight extends Component<Props> {
   render() {
-    const {
-      position,
-      onClick,
-      onMouseOver,
-      onMouseOut,
-      comment,
-      isScrolledTo,
-    } = this.props;
+    const { position, onClick, onMouseOver, onMouseOut, comment, isScrolledTo, customRender } = this.props;
 
     const { rects, boundingRect } = position;
 
@@ -56,7 +50,7 @@ export class Highlight extends Component<Props> {
               key={index}
               style={rect}
               className={`Highlight__part`}
-            />
+            >{customRender}</div>
           ))}
         </div>
       </div>
