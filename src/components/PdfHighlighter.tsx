@@ -76,7 +76,7 @@ interface Props<T_HT> {
   ) => JSX.Element;
   highlights: Array<T_HT>;
   onScrollChange: () => void;
-  scrollRef: (scrollTo: (highlight: IHighlight) => void) => void;
+  scrollRef: (scrollTo: (highlight: T_HT) => void) => void;
   pdfDocument: PDFDocumentProxy;
   pdfScaleValue: string;
   onSelectionFinished: (
@@ -432,7 +432,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     this.renderHighlights();
   };
 
-  scrollTo = (highlight: IHighlight) => {
+  scrollTo = (highlight: T_HT) => {
     const { pageNumber, boundingRect, usePdfCoordinates } = highlight.position;
 
     this.viewer.container.removeEventListener("scroll", this.onScroll);
