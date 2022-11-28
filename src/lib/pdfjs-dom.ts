@@ -62,6 +62,7 @@ export const getPagesFromRange = (range: Range): Page[] => {
     if (currentPage) {
       pages.push(currentPage);
     }
+    currentPageNumber++;
   }
 
   return pages as Page[];
