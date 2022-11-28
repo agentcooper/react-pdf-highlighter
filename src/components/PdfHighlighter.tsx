@@ -6,6 +6,7 @@ import {
   EventBus,
   PDFViewer,
   PDFLinkService,
+  NullL10n,
 } from "pdfjs-dist/legacy/web/pdf_viewer";
 
 import "pdfjs-dist/web/pdf_viewer.css";
@@ -181,8 +182,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
         textLayerMode: 2,
         removePageBorders: true,
         linkService: this.linkService,
-        renderer: "canvas",
-        l10n: null,
+        l10n: NullL10n,
       });
 
     this.linkService.setDocument(pdfDocument);
