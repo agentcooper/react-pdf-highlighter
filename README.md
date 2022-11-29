@@ -19,14 +19,14 @@ npm install
 npm start
 ```
 
-Create React App example is available in [`./create-react-app-example`](https://github.com/agentcooper/react-pdf-highlighter/tree/master/create-react-app-example). Make sure to run `npm install` there as well.
+Create React App example is available in [`./create-react-app-example`](https://github.com/agentcooper/react-pdf-highlighter/tree/main/create-react-app-example). Make sure to run `npm install` there as well.
 
 ### Installation
 
 `npm install react-pdf-highlighter`
 
 See
-[`./example/src/App.tsx`](https://github.com/agentcooper/react-pdf-highlighter/blob/master/example/src/App.tsx)
+[`./example/src/App.tsx`](https://github.com/agentcooper/react-pdf-highlighter/blob/main/example/src/App.tsx)
 for React component API example.
 
 ### Prior art
