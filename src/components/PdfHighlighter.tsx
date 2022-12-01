@@ -75,8 +75,10 @@ interface Props<T_HT> {
     isScrolledTo: boolean
   ) => JSX.Element;
   highlights: Array<T_HT>;
-  onScrollChange: () => void;
+  onScrollChange: (pageNumber?: number) => void;
+  onDocumentLoad: (pdfDoc: PDFDocumentProxy) => void;
   scrollRef: (scrollTo: (highlight: T_HT) => void) => void;
+  zoomRef: (onZoom: (zoomIn: boolean) => void) => void;
   pdfDocument: PDFDocumentProxy;
   pdfScaleValue: string;
   onSelectionFinished: (
@@ -436,8 +438,11 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     const { pageNumber, boundingRect, usePdfCoordinates } = highlight.position;
 
     this.viewer.container.removeEventListener("scroll", this.onScroll);
-
-    const pageViewport = this.viewer.getPageView(pageNumber - 1).viewport;
+    this.viewer.container.removeEventListener("scroll", this.onScrollTracker);
+    const pageViewport = this.viewer.getPageView(pageNumber)?.viewport;
+    if (!pageViewport) {
+      return;
+    }
 
     const scrollMargin = 10;
 
@@ -465,15 +470,22 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     // wait for scrolling to finish
     setTimeout(() => {
       this.viewer.container.addEventListener("scroll", this.onScroll);
+      this.viewer.container.addEventListener("scroll", this.onScrollTracker);
     }, 100);
   };
 
-  onDocumentReady = () => {
-    const { scrollRef } = this.props;
+  onZoom = (zoomIn: boolean) => {
+    zoomIn ? this.viewer.increaseScale() : this.viewer.decreaseScale();
+  };
 
+  onDocumentReady = () => {
+    const { scrollRef, onDocumentLoad, pdfDocument, zoomRef } = this.props;
+    onDocumentLoad(pdfDocument);
     this.handleScaleValue();
+    this.viewer.container.addEventListener("scroll", this.onScrollTracker);
 
     scrollRef(this.scrollTo);
+    zoomRef(this.onZoom);
   };
 
   onSelectionChange = () => {
@@ -510,7 +522,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
   onScroll = () => {
     const { onScrollChange } = this.props;
 
-    onScrollChange();
+    onScrollChange(this.viewer.currentPageNumber);
 
     this.setState(
       {
@@ -520,6 +532,12 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     );
 
     this.viewer.container.removeEventListener("scroll", this.onScroll);
+  };
+
+  onScrollTracker = () => {
+    const { onScrollChange } = this.props;
+
+    onScrollChange(this.viewer.currentPageNumber);
   };
 
   onMouseDown: PointerEventHandler = (event) => {

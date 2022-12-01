@@ -19,7 +19,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "(cd ./example && vite)",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:copy-styles && npm run build:example",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:copy-styles",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir ./dist/cjs",
     "build:copy-styles": "cp -r ./src/style ./dist/esm; cp -r ./src/style ./dist/cjs",
@@ -30,13 +30,13 @@
     "clean": "rm -rf dist"
   },
   "peerDependencies": {
-    "react": ">=16.4.0",
-    "react-dom": ">=16.4.0"
+    "react": ">=18.0.25",
+    "react-dom": ">=18.0.9"
   },
   "dependencies": {
     "@types/lodash.debounce": "^4.0.6",
-    "@types/react": "^16.4.0",
-    "@types/react-dom": "^16.4.0",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
     "lodash.debounce": "^4.0.8",
     "pdfjs-dist": "2.16.105",
     "react-rnd": "^10.1.10"
@@ -56,5 +56,9 @@
     "puppeteer": "^9.1.1",
     "typescript": "4.4.2",
     "vite": "^2.8.0"
+  },
+  "resolutions": {
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9"
   }
 }

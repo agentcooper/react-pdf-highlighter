@@ -14,29 +14,34 @@
   z-index: 3;
 }
 
-html
-  body
-  .textLayer
-  > div:not(.PdfHighlighter__highlight-layer):not(.Highlight):not(.Highlight-emoji) {
+html body .textLayer>div:not(.PdfHighlighter__highlight-layer):not(.Highlight):not(.Highlight-emoji) {
   opacity: 1;
   mix-blend-mode: multiply;
 }
 
 .textLayer ::selection {
-  background: rgba(252, 232, 151, 1);
+  background: rgba(173, 181, 255, 0.4);
   mix-blend-mode: multiply;
 }
 
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .textLayer {opacity: 0.5;}
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .textLayer {
+    opacity: 0.5;
+  }
 }
 
 /* Internet Explorer support method */
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .textLayer {opacity: 0.5 }
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .textLayer {
+    opacity: 0.5
+  }
 }
 
 /* Microsoft Edge Browser 12+ (All) - @supports method */
 @supports (-ms-ime-align:auto) {
-  .textLayer {opacity: 0.5 }
+  .textLayer {
+    opacity: 0.5
+  }
 }

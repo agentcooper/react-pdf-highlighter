@@ -22,16 +22,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm install, build, and test
+      - name: yarn install, build, and test
         run: |
-          npm ci
-          npm run build
-          npm test
+          yarn ci
+          yarn run build
+          yarn test
         env:
           CI: true
-      - name: Deploy
-        if: ${{ github.ref == 'refs/heads/master' }}
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./example/dist
+      # - name: Deploy
+      #   if: ${{ github.ref == 'refs/heads/master' }}
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./example/dist

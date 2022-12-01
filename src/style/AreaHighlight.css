@@ -8,10 +8,10 @@
 .AreaHighlight__part {
   cursor: pointer;
   position: absolute;
-  background: rgba(255, 226, 143, 1);
+  background: rgba(173, 181, 255, 0.4);
   transition: background 0.3s;
 }
 
 .AreaHighlight--scrolledTo .AreaHighlight__part {
-  background: #ff4141;
+  background: rgba(173, 181, 255, 0.4);
 }
