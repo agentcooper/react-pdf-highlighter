@@ -219,7 +219,6 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
   findOrCreateTablesLayer(page: number) {
     const { textLayer } = this.viewer.getPageView(page - 1) || {};
-    console.log(this.viewer.getPageView(page - 1) || {})
     if (!textLayer) {
         return null;
     }
@@ -470,7 +469,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     }
 
     const scrollMargin = 10;
-  
+
     this.viewer.scrollPageIntoView({
       pageNumber,
       destArray: [
