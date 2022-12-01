@@ -75,10 +75,13 @@ interface Props<T_HT> {
     isScrolledTo: boolean
   ) => JSX.Element;
   highlights: Array<T_HT>;
+  tables: Array<any>;
+  renderTables: (props: {scale: number; pageIndex: number}) => React.ReactElement | null;
   onScrollChange: (pageNumber?: number) => void;
   onDocumentLoad: (pdfDoc: PDFDocumentProxy) => void;
   scrollRef: (scrollTo: (highlight: T_HT) => void) => void;
   zoomRef: (onZoom: (zoomIn: boolean) => void) => void;
+  setDocumentDimensions: (dimensions:{width: number; height: number}) => void;
   pdfDocument: PDFDocumentProxy;
   pdfScaleValue: string;
   onSelectionFinished: (
@@ -170,11 +173,13 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     if (prevProps.highlights !== this.props.highlights) {
       this.renderHighlights(this.props);
     }
+    if (prevProps.tables.length > 0) {
+      this.renderTables(this.props);
+    }
   }
 
   init() {
     const { pdfDocument } = this.props;
-
     this.viewer =
       this.viewer ||
       new PDFViewer({
@@ -210,6 +215,15 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
       textLayer.textLayerDiv,
       "PdfHighlighter__highlight-layer"
     );
+  }
+
+  findOrCreateTablesLayer(page: number) {
+    const { textLayer } = this.viewer.getPageView(page - 1) || {};
+    console.log(this.viewer.getPageView(page - 1) || {})
+    if (!textLayer) {
+        return null;
+    }
+    return findOrCreateContainerLayer(textLayer.textLayerDiv, "PdfHighlighter__table-layer");
   }
 
   groupHighlightsByPage(highlights: Array<T_HT>): {
@@ -311,13 +325,24 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     return getAreaAsPng(canvas, position);
   }
 
+  renderTables(nextProps?: Props<T_HT>) {
+    const { pdfDocument, renderTables } = nextProps || this.props;
+    const scale = this.viewer.currentScale;
+    for (let pageNumber = 1; pageNumber <= pdfDocument.numPages; pageNumber++) {
+      const tableLayer = this.findOrCreateTablesLayer(pageNumber);
+      if (tableLayer) {
+        const tables = renderTables({ scale,pageIndex: pageNumber - 1});
+        tables && ReactDom.render(tables, tableLayer);
+      }
+    }
+  }
+
   renderHighlights(nextProps?: Props<T_HT>) {
     const { highlightTransform, highlights } = nextProps || this.props;
 
     const { pdfDocument } = this.props;
 
     const { tip, scrolledToHighlightId } = this.state;
-
     const highlightsByPage = this.groupHighlightsByPage(highlights);
 
     for (let pageNumber = 1; pageNumber <= pdfDocument.numPages; pageNumber++) {
@@ -432,20 +457,20 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
   onTextLayerRendered = () => {
     this.renderHighlights();
+    this.renderTables();
   };
 
   scrollTo = (highlight: T_HT) => {
     const { pageNumber, boundingRect, usePdfCoordinates } = highlight.position;
-
     this.viewer.container.removeEventListener("scroll", this.onScroll);
-    this.viewer.container.removeEventListener("scroll", this.onScrollTracker);
+    this.viewer.container.removeEventListener("scroll", this.onScrollTracker)
     const pageViewport = this.viewer.getPageView(pageNumber)?.viewport;
     if (!pageViewport) {
       return;
     }
 
     const scrollMargin = 10;
-
+  
     this.viewer.scrollPageIntoView({
       pageNumber,
       destArray: [
@@ -469,20 +494,22 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
     // wait for scrolling to finish
     setTimeout(() => {
+      this.viewer.container.addEventListener("scroll", this.onScrollTracker)
       this.viewer.container.addEventListener("scroll", this.onScroll);
-      this.viewer.container.addEventListener("scroll", this.onScrollTracker);
     }, 100);
   };
 
   onZoom = (zoomIn: boolean) => {
     zoomIn ? this.viewer.increaseScale() : this.viewer.decreaseScale();
-  };
+  }
 
   onDocumentReady = () => {
-    const { scrollRef, onDocumentLoad, pdfDocument, zoomRef } = this.props;
+    const { scrollRef, onDocumentLoad, pdfDocument, zoomRef, setDocumentDimensions } = this.props;
+    setDocumentDimensions({height: this.viewer.container.offsetHeight, width: this.viewer.container.offsetWidth});
     onDocumentLoad(pdfDocument);
     this.handleScaleValue();
-    this.viewer.container.addEventListener("scroll", this.onScrollTracker);
+    this.viewer.container.offsetHeight
+    this.viewer.container.addEventListener("scroll", this.onScrollTracker)
 
     scrollRef(this.scrollTo);
     zoomRef(this.onZoom);
@@ -521,9 +548,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
   onScroll = () => {
     const { onScrollChange } = this.props;
-
     onScrollChange(this.viewer.currentPageNumber);
-
     this.setState(
       {
         scrolledToHighlightId: EMPTY_ID,
@@ -536,7 +561,6 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
   onScrollTracker = () => {
     const { onScrollChange } = this.props;
-
     onScrollChange(this.viewer.currentPageNumber);
   };
 
@@ -560,7 +584,6 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 
   afterSelection = () => {
     const { onSelectionFinished } = this.props;
-
     const { isCollapsed, range } = this.state;
 
     if (!range || isCollapsed) {

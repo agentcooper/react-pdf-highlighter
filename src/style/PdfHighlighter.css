@@ -11,6 +11,12 @@
   left: 0;
 }
 
+.PdfHighlighter__table-layer {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+}
+
 .PdfHighlighter__tip-container {
   z-index: 6;
   position: absolute;
