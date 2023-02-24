@@ -19,7 +19,7 @@
     "eject": "react-scripts eject",
     "postinstall": "npm run sync-source-files",
     "clean": "rm -rf ./src/{style,index.tsx,App.tsx,Sidebar.tsx,Spinner.tsx,test-highlights.ts}",
-    "sync-source-files": "npm run clean && rsync --recursive --ignore-existing --verbose ../example/src/* ./src"
+    "sync-source-files": "npm run clean && cp -r ../example/src/* ./src"
   },
   "eslintConfig": {
     "extends": [
