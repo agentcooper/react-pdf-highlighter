@@ -1,18 +1,10 @@
-import React, { PointerEventHandler, PureComponent, RefObject } from "react";
-import { createRoot } from "react-dom/client";
-import debounce from "lodash.debounce";
-
-import { EventBus, NullL10n, PDFLinkService, PDFViewer } from "pdfjs-dist/legacy/web/pdf_viewer";
-
 import "pdfjs-dist/web/pdf_viewer.css";
 import "../style/pdf_viewer.css";
-
 import "../style/PdfHighlighter.css";
 
-import getBoundingRect from "../lib/get-bounding-rect";
-import getClientRects from "../lib/get-client-rects";
-import getAreaAsPng from "../lib/get-area-as-png";
-
+import { EventBus, NullL10n, PDFLinkService, PDFViewer } from "pdfjs-dist/legacy/web/pdf_viewer";
+import type { IHighlight, LTWH, LTWHP, Position, Scaled, ScaledPosition } from "../types";
+import React, { PointerEventHandler, PureComponent, RefObject } from "react";
 import {
   asElement,
   findOrCreateContainerLayer,
@@ -21,15 +13,17 @@ import {
   getWindow,
   isHTMLElement
 } from "../lib/pdfjs-dom";
-
-import TipContainer from "./TipContainer";
-import MouseSelection from "./MouseSelection";
-
 import { scaledToViewport, viewportToScaled } from "../lib/coordinates";
 
-import type { IHighlight, LTWH, LTWHP, Position, Scaled, ScaledPosition } from "../types";
-import type { PDFDocumentProxy } from "pdfjs-dist";
 import Highlight from "./Highlight";
+import MouseSelection from "./MouseSelection";
+import type { PDFDocumentProxy } from "pdfjs-dist";
+import TipContainer from "./TipContainer";
+import { createRoot } from "react-dom/client";
+import debounce from "lodash.debounce";
+import getAreaAsPng from "../lib/get-area-as-png";
+import getBoundingRect from "../lib/get-bounding-rect";
+import getClientRects from "../lib/get-client-rects";
 
 type T_ViewportHighlight<T_HT> = { position: Position } & T_HT;
 
@@ -617,9 +611,6 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
           className="PdfHighlighter"
           onContextMenu={(e) => e.preventDefault()}
         >
-          <div className="highlights-overlay">
-
-          </div>
           <div className="pdfViewer" />
           {this.renderTip()}
           {typeof enableAreaSelection === "function" ? (
@@ -709,7 +700,11 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
                                     highlightTransform={highlightTransform}
                                     tip={tip}
                                     scaledPositionToViewport={this.scaledPositionToViewport.bind(this)}
-                                    hideTipAndSelection={this.hideTipAndSelection.bind(this)} />);
+                                    hideTipAndSelection={this.hideTipAndSelection.bind(this)}
+                                    viewer={this.viewer}
+                                    screenshot={this.screenshot.bind(this)}
+                                    showTip={this.showTip.bind(this)}
+                                    setState={this.setState.bind(this)} />);
       }
     }
   }
@@ -737,13 +732,17 @@ interface HighlightLayerProps<T_HT> {
     highlight: any;
     callback: (highlight: any) => JSX.Element;
   } | null;
-  scaledPositionToViewport: (ScaledPosition) => Position;
+  scaledPositionToViewport: (scaledPosition: ScaledPosition) => Position;
   hideTipAndSelection: () => void;
+  viewer: any;
+  screenshot: (position: LTWH, pageNumber: number) => string;
+  showTip: (highlight: any, content: JSX.Element) => void;
+  setState: (state: any) => void;
 }
 
 // TODO eventually this should only contain the highlights for a single page
 function HighlightLayer<T_HT> ({highlights, highlightsByPage, scaledPositionToViewport, pageNumber, scrolledToHighlightId,
-                                 highlightTransform, tip, hideTipAndSelection}: HighlightLayerProps<T_HT>) {
+                                 highlightTransform, tip, hideTipAndSelection, viewer, screenshot, showTip, setState}: HighlightLayerProps<T_HT>) {
   const currentHighlights = highlightsByPage[String(pageNumber)] || []
   return (
       <div style={{backgroundColor: "blueviolet"}}>
@@ -756,7 +755,7 @@ function HighlightLayer<T_HT> ({highlights, highlightsByPage, scaledPositionToVi
             };
 
             if (tip && tip.highlight.id === String(id)) {
-              this.showTip(tip.highlight, tip.callback(viewportHighlight));
+              showTip(tip.highlight, tip.callback(viewportHighlight));
             }
 
             const isScrolledTo = Boolean(scrolledToHighlightId === id);
@@ -765,21 +764,21 @@ function HighlightLayer<T_HT> ({highlights, highlightsByPage, scaledPositionToVi
               viewportHighlight,
               index,
               (highlight, callback) => {
-                this.setState({
+                setState({
                   tip: { highlight, callback },
                 });
 
-                this.showTip(highlight, callback(highlight));
+                showTip(highlight, callback(highlight));
               },
               hideTipAndSelection,
               (rect) => {
-                const viewport = this.viewer.getPageView(
-                  (rect.pageNumber || pageNumber) - 1
+                const viewport = viewer.getPageView(
+                  (rect.pageNumber || parseInt(pageNumber)) - 1
                 ).viewport;
 
                 return viewportToScaled(rect, viewport);
               },
-              (boundingRect) => this.screenshot(boundingRect, parseInt(pageNumber)),
+              (boundingRect) => screenshot(boundingRect, parseInt(pageNumber)),
               isScrolledTo
             );
           }
