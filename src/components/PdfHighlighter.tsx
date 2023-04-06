@@ -24,7 +24,7 @@ import getBoundingRect from "../lib/get-bounding-rect";
 import getClientRects from "../lib/get-client-rects";
 import { HighlightLayer } from "./HighlightLayer";
 
-type T_ViewportHighlight<T_HT> = { position: Position } & T_HT;
+export type T_ViewportHighlight<T_HT> = { position: Position } & T_HT;
 
 interface State<T_HT> {
   ghostHighlight: {
@@ -102,7 +102,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
   resizeObserver: ResizeObserver | null = null;
   containerNode?: HTMLDivElement | null = null;
   containerNodeRef: RefObject<HTMLDivElement>;
-  highlightReactRoots: {[page: number], Root} = {};
+  highlightReactRoots: { [page: number]: Root } = {};
   unsubscribe = () => {};
 
   constructor(props: Props<T_HT>) {
@@ -592,13 +592,13 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
                     { image },
                     () => this.hideTipAndSelection(),
                     () => {
-                      console.log('setting ghost highlight', scaledPosition)
+                      console.log("setting ghost highlight", scaledPosition);
                       this.setState(
                         {
                           ghostHighlight: {
                             position: scaledPosition,
-                            content: { image }
-                          }
+                            content: { image },
+                          },
                         },
                         () => {
                           resetSelection();
@@ -636,20 +636,20 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
   private renderHighlightLayer(root: Root, pageNumber: number) {
     const { highlightTransform, highlights } = this.props;
     const { tip, scrolledToHighlightId } = this.state;
-    const highlightsByPage = this.groupHighlightsByPage(highlights);
-    root.render(<HighlightLayer highlights={highlights}
-                                highlightsByPage={highlightsByPage}
-                                pageNumber={pageNumber.toString()}
-                                scrolledToHighlightId={scrolledToHighlightId}
-                                highlightTransform={highlightTransform}
-                                tip={tip}
-                                scaledPositionToViewport={this.scaledPositionToViewport.bind(this)}
-                                hideTipAndSelection={this.hideTipAndSelection.bind(this)}
-                                viewer={this.viewer}
-                                screenshot={this.screenshot.bind(this)}
-                                showTip={this.showTip.bind(this)}
-                                setState={this.setState.bind(this)} />);
+    root.render(
+      <HighlightLayer
+        highlightsByPage={this.groupHighlightsByPage(highlights)}
+        pageNumber={pageNumber.toString()}
+        scrolledToHighlightId={scrolledToHighlightId}
+        highlightTransform={highlightTransform}
+        tip={tip}
+        scaledPositionToViewport={this.scaledPositionToViewport.bind(this)}
+        hideTipAndSelection={this.hideTipAndSelection.bind(this)}
+        viewer={this.viewer}
+        screenshot={this.screenshot.bind(this)}
+        showTip={this.showTip.bind(this)}
+        setState={this.setState.bind(this)}
+      />
+    );
   }
 }
-
-

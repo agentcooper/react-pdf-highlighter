@@ -1,19 +1,15 @@
-import Highlight from "./Highlight";
 import { viewportToScaled } from "../lib/coordinates";
 import React from "react";
-import { LTWH, LTWHP, Position, Scaled, ScaledPosition } from "../types";
+import { IHighlight, LTWH, LTWHP, Position, Scaled, ScaledPosition } from "../types";
 
 interface HighlightLayerProps<T_HT> {
-  highlightsByPage: Record<string, Array<T_HT>>;
+  highlightsByPage: {[pageNumber: string]: Array<T_HT>};
   pageNumber: string;
   scrolledToHighlightId: string;
   highlightTransform: (
     highlight: any,
     index: number,
-    setTip: (
-      highlight: any,
-      callback: (highlight: any) => JSX.Element
-    ) => void,
+    setTip: (highlight: any, callback: (highlight: any) => JSX.Element) => void,
     hideTip: () => void,
     viewportToScaled: (rect: LTWHP) => Scaled,
     screenshot: (position: LTWH) => string,
@@ -29,26 +25,25 @@ interface HighlightLayerProps<T_HT> {
   screenshot: (position: LTWH, pageNumber: number) => string;
   showTip: (highlight: any, content: JSX.Element) => void;
   setState: (state: any) => void;
-  counter: number;
 }
 
-export function HighlightLayer<T_HT>({
-                                       highlightsByPage,
-                                       scaledPositionToViewport,
-                                       pageNumber,
-                                       scrolledToHighlightId,
-                                       highlightTransform,
-                                       tip,
-                                       hideTipAndSelection,
-                                       viewer,
-                                       screenshot,
-                                       showTip,
-                                       setState
-                                     }: HighlightLayerProps<T_HT>) {
+export function HighlightLayer<T_HT extends IHighlight>({
+  highlightsByPage,
+  scaledPositionToViewport,
+  pageNumber,
+  scrolledToHighlightId,
+  highlightTransform,
+  tip,
+  hideTipAndSelection,
+  viewer,
+  screenshot,
+  showTip,
+  setState,
+}: HighlightLayerProps<T_HT>) {
   const currentHighlights = highlightsByPage[String(pageNumber)] || [];
   return (
     <div>
-      {currentHighlights.map(({ position, id, ...highlight }: Highlight, index) => {
+      {currentHighlights.map(({ position, id, ...highlight }, index) => {
           // @ts-ignore
           const viewportHighlight: any = {
             id,
@@ -67,7 +62,7 @@ export function HighlightLayer<T_HT>({
             index,
             (highlight, callback) => {
               setState({
-                tip: { highlight, callback }
+                tip: { highlight, callback },
               });
 
               showTip(highlight, callback(highlight));
