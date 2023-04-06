@@ -2,8 +2,20 @@ import "pdfjs-dist/web/pdf_viewer.css";
 import "../style/pdf_viewer.css";
 import "../style/PdfHighlighter.css";
 
-import { EventBus, NullL10n, PDFLinkService, PDFViewer } from "pdfjs-dist/legacy/web/pdf_viewer";
-import type { IHighlight, LTWH, LTWHP, Position, Scaled, ScaledPosition } from "../types";
+import {
+  EventBus,
+  NullL10n,
+  PDFLinkService,
+  PDFViewer,
+} from "pdfjs-dist/legacy/web/pdf_viewer";
+import type {
+  IHighlight,
+  LTWH,
+  LTWHP,
+  Position,
+  Scaled,
+  ScaledPosition,
+} from "../types";
 import React, { PointerEventHandler, PureComponent, RefObject } from "react";
 import {
   asElement,
@@ -11,7 +23,7 @@ import {
   getPageFromElement,
   getPagesFromRange,
   getWindow,
-  isHTMLElement
+  isHTMLElement,
 } from "../lib/pdfjs-dom";
 import { scaledToViewport, viewportToScaled } from "../lib/coordinates";
 import MouseSelection from "./MouseSelection";
