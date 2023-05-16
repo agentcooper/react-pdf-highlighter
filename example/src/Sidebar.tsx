@@ -21,7 +21,7 @@ export function Sidebar({
 
   const [url, setUrl] = useState('');
   return (
-    <div className="sidebar" style={{ width: "25vw" }}>
+    <div className="sidebar" style={{ width: "25vw", backgroundColor: "lightblue" }}>
       <div style={{ padding: "1rem" }}>
         <input
           type="text"
@@ -36,13 +36,9 @@ export function Sidebar({
 
 
       <div className="description" style={{ padding: "1rem" }}>
-        <h2 style={{ marginBottom: "1rem" }}>react-pdf-highlighter</h2>
+        <h2 style={{ marginBottom: "1rem" }}>pdf-highlighter</h2>
 
-        <p style={{ fontSize: "0.7rem" }}>
-          <a href="https://github.com/agentcooper/react-pdf-highlighter">
-            Open in GitHub
-          </a>
-        </p>
+
 
         <p>
           <small>
@@ -83,9 +79,9 @@ export function Sidebar({
           </li>
         ))}
       </ul>
-      <div style={{ padding: "1rem" }}>
+      {/* <div style={{ padding: "1rem" }}>
         <button onClick={toggleDocument}>Toggle PDF document</button>
-      </div>
+      </div> */}
       {highlights.length > 0 ? (
         <div style={{ padding: "1rem" }}>
           <button onClick={resetHighlights}>Reset highlights</button>
