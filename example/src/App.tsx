@@ -79,6 +79,8 @@ class App extends Component<{}, State> {
     this.setState({
       highlights: [],
     });
+
+    localStorage.removeItem('highlights');
   };
 
   toggleDocument = () => {
@@ -107,6 +109,14 @@ class App extends Component<{}, State> {
       this.scrollToHighlightFromHash,
       false
     );
+
+    const savedHighlights = localStorage.getItem('highlights');
+
+    if (savedHighlights) {
+      this.setState({
+        highlights: JSON.parse(savedHighlights),
+      });
+    }
   }
 
   getHighlightById(id: string) {
@@ -120,32 +130,40 @@ class App extends Component<{}, State> {
 
     console.log("Saving highlight", highlight);
 
+    const newHighlights = [{ ...highlight, id: getNextId() }, ...highlights];
+
     this.setState({
-      highlights: [{ ...highlight, id: getNextId() }, ...highlights],
+      highlights: newHighlights,
     });
+
+    localStorage.setItem('highlights', JSON.stringify(newHighlights));
+
   }
 
   updateHighlight(highlightId: string, position: Object, content: Object) {
     console.log("Updating highlight", highlightId, position, content);
 
-    this.setState({
-      highlights: this.state.highlights.map((h) => {
-        const {
+    const newHighlights = this.state.highlights.map((h) => {
+      const {
+        id,
+        position: originalPosition,
+        content: originalContent,
+        ...rest
+      } = h;
+      return id === highlightId
+        ? {
           id,
-          position: originalPosition,
-          content: originalContent,
-          ...rest
-        } = h;
-        return id === highlightId
-          ? {
-            id,
-            position: { ...originalPosition, ...position },
-            content: { ...originalContent, ...content },
-            ...rest,
-          }
-          : h;
-      }),
+          position: { ...originalPosition, ...position },
+          content: { ...originalContent, ...content },
+          ...rest,
+        }
+        : h;
     });
+
+    this.setState({
+      highlights: newHighlights,
+    });
+    localStorage.setItem('highlights', JSON.stringify(newHighlights));
   }
 
   render() {
