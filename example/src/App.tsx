@@ -35,12 +35,15 @@ const resetHash = () => {
 
 const HighlightPopup = ({
   comment,
+  onDelete,
 }: {
   comment: { text: string; emoji: string };
+  onDelete: () => void;
 }) =>
   comment.text ? (
     <div className="Highlight__popup">
       {comment.emoji} {comment.text}
+      <button onClick={onDelete}>Delete</button>
     </div>
   ) : null;
 
@@ -167,6 +170,16 @@ class App extends Component<{}, State> {
     localStorage.setItem('highlights', JSON.stringify(newHighlights));
   };
 
+  deleteHighlight = (highlightId: string) => {
+    console.log("Deleting highlight", highlightId);
+    const newHighlights = this.state.highlights.filter(h => h.id !== highlightId);
+
+    this.setState({
+      highlights: newHighlights,
+    });
+    localStorage.setItem('highlights', JSON.stringify(newHighlights));
+  }
+
 
   render() {
     const { url, highlights } = this.state;
@@ -251,7 +264,7 @@ class App extends Component<{}, State> {
 
                   return (
                     <Popup
-                      popupContent={<HighlightPopup {...highlight} />}
+                      popupContent={<HighlightPopup {...highlight} onDelete={() => this.deleteHighlight(highlight.id)} />}
                       onMouseOver={(popupContent) =>
                         setTip(highlight, (highlight) => popupContent)
                       }
