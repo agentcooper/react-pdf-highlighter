@@ -19,6 +19,8 @@ export function Sidebar({
   loadPdfFromUrl,
 }: Props) {
 
+  const [searchKeyword, setSearchKeyword] = useState('');
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -35,9 +37,32 @@ export function Sidebar({
     }
   };
 
+  const handleSearch = () => {
+
+  }
+
+  const filteredHighlights = highlights.filter((highlight) =>
+    highlight.comment.text.toLowerCase().includes(searchKeyword.toLowerCase())
+  )
+
   const [url, setUrl] = useState('');
+
   return (
     <div className="sidebar" style={{ width: "25vw", backgroundColor: "lightblue" }}>
+      <div style={{ padding: "1rem" }}>
+        <input
+          type="text"
+          placeholder="Search annotations"
+          value={searchKeyword}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+        />
+        <button onClick={handleSearch}>Search</button>
+      </div>
+
+
+
+
+
       <div style={{ padding: "1rem" }}>
         <input
           type="text"
@@ -69,7 +94,7 @@ export function Sidebar({
       </div>
 
       <ul className="sidebar__highlights">
-        {highlights.map((highlight, index) => (
+        {filteredHighlights.map((highlight, index) => (
           <li
             key={index}
             className="sidebar__highlight"
