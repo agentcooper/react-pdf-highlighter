@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import type { IHighlight } from "./react-pdf-highlighter";
 
 interface Props {
   highlights: Array<IHighlight>;
   resetHighlights: () => void;
   toggleDocument: () => void;
+  loadPdfFromUrl: (url: string) => void;
 }
 
 const updateHash = (highlight: IHighlight) => {
@@ -15,9 +16,25 @@ export function Sidebar({
   highlights,
   toggleDocument,
   resetHighlights,
+  loadPdfFromUrl,
 }: Props) {
+
+  const [url, setUrl] = useState('');
   return (
     <div className="sidebar" style={{ width: "25vw" }}>
+      <div style={{ padding: "1rem" }}>
+        <input
+          type="text"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder="PDF URL"
+        />
+        <button onClick={() => loadPdfFromUrl(url)}>Load pdf</button>
+      </div>
+
+
+
+
       <div className="description" style={{ padding: "1rem" }}>
         <h2 style={{ marginBottom: "1rem" }}>react-pdf-highlighter</h2>
 

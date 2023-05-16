@@ -59,6 +59,22 @@ class App extends Component<{}, State> {
       : [],
   };
 
+  loadPdfFromUrl = (url: string) => {
+    this.setState({
+      url: url,
+      highlights: testHighlights[url] ? [...testHighlights[url]] : [],
+    });
+  };
+
+  fileInput: React.RefObject<HTMLInputElement> = React.createRef();
+
+  constructor(props: {}) {
+    super(props);
+    this.fileInput = React.createRef();
+  }
+
+
+
   resetHighlights = () => {
     this.setState({
       highlights: [],
@@ -75,7 +91,7 @@ class App extends Component<{}, State> {
     });
   };
 
-  scrollViewerTo = (highlight: any) => {};
+  scrollViewerTo = (highlight: any) => { };
 
   scrollToHighlightFromHash = () => {
     const highlight = this.getHighlightById(parseIdFromHash());
@@ -122,11 +138,11 @@ class App extends Component<{}, State> {
         } = h;
         return id === highlightId
           ? {
-              id,
-              position: { ...originalPosition, ...position },
-              content: { ...originalContent, ...content },
-              ...rest,
-            }
+            id,
+            position: { ...originalPosition, ...position },
+            content: { ...originalContent, ...content },
+            ...rest,
+          }
           : h;
       }),
     });
@@ -141,7 +157,10 @@ class App extends Component<{}, State> {
           highlights={highlights}
           resetHighlights={this.resetHighlights}
           toggleDocument={this.toggleDocument}
+          loadPdfFromUrl={this.loadPdfFromUrl}
+
         />
+
         <div
           style={{
             height: "100vh",
