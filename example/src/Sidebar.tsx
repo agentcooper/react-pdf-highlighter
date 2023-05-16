@@ -6,6 +6,7 @@ interface Props {
   resetHighlights: () => void;
   toggleDocument: () => void;
   loadPdfFromUrl: (url: string) => void;
+  editHighlight: (id: string, text: string) => void;
 }
 
 const updateHash = (highlight: IHighlight) => {
@@ -17,7 +18,22 @@ export function Sidebar({
   toggleDocument,
   resetHighlights,
   loadPdfFromUrl,
+  editHighlight,
 }: Props) {
+
+  const [editing, setEditing] = useState<string | null>(null);
+  const [editText, setEditText] = useState('');
+
+  const handleEdit = (highlight: IHighlight) => {
+    setEditing(highlight.id);
+    setEditText(highlight.comment.text);
+  };
+
+  const handleSave = (id: string) => {
+    editHighlight(id, editText);
+    setEditing(null);
+    setEditText('');
+  };
 
   const [searchKeyword, setSearchKeyword] = useState('');
 
@@ -96,14 +112,26 @@ export function Sidebar({
       <ul className="sidebar__highlights">
         {filteredHighlights.map((highlight, index) => (
           <li
-            key={index}
+            key={highlight.id}
             className="sidebar__highlight"
             onClick={() => {
               updateHash(highlight);
             }}
           >
             <div>
-              <strong>{highlight.comment.text}</strong>
+              {editing === highlight.id ? (
+                <>
+                  <input value={editText} onChange={(e) => setEditText(e.target.value)} />
+                  <button onClick={() => handleSave(highlight.id)}>Save</button>
+                </>
+              ) : (
+                <>
+                  <strong>{highlight.comment.text}</strong>
+                  <button onClick={() => handleEdit(highlight)}>Edit</button>
+                </>
+              )}
+
+
               {highlight.content.text ? (
                 <blockquote style={{ marginTop: "0.5rem" }}>
                   {`${highlight.content.text.slice(0, 90).trim()}…`}

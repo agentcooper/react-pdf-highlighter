@@ -140,22 +140,23 @@ class App extends Component<{}, State> {
 
   }
 
-  updateHighlight(highlightId: string, position: Object, content: Object) {
-    console.log("Updating highlight", highlightId, position, content);
+  editHighlight = (highlightId: string, text: string, boundingRect: any, image?: string) => {
+    console.log("Updating highlight", highlightId, text, boundingRect, image);
 
     const newHighlights = this.state.highlights.map((h) => {
-      const {
-        id,
-        position: originalPosition,
-        content: originalContent,
-        ...rest
-      } = h;
+      const { id } = h;
       return id === highlightId
         ? {
           id,
-          position: { ...originalPosition, ...position },
-          content: { ...originalContent, ...content },
-          ...rest,
+          comment: { ...h.comment, text },
+          position: {
+            ...h.position,
+            boundingRect: boundingRect ? boundingRect : h.position.boundingRect
+          },
+          content: {
+            ...h.content,
+            image: image ? image : h.content.image
+          },
         }
         : h;
     });
@@ -164,7 +165,8 @@ class App extends Component<{}, State> {
       highlights: newHighlights,
     });
     localStorage.setItem('highlights', JSON.stringify(newHighlights));
-  }
+  };
+
 
   render() {
     const { url, highlights } = this.state;
@@ -176,6 +178,7 @@ class App extends Component<{}, State> {
           resetHighlights={this.resetHighlights}
           toggleDocument={this.toggleDocument}
           loadPdfFromUrl={this.loadPdfFromUrl}
+          editHighlight={this.editHighlight}
 
         />
 
@@ -237,11 +240,11 @@ class App extends Component<{}, State> {
                       isScrolledTo={isScrolledTo}
                       highlight={highlight}
                       onChange={(boundingRect) => {
-                        this.updateHighlight(
+                        this.editHighlight(
                           highlight.id,
-                          { boundingRect: viewportToScaled(boundingRect) },
-                          { image: screenshot(boundingRect) }
-                        );
+                          highlight.comment.text,
+                          viewportToScaled(boundingRect),
+                          screenshot(boundingRect));
                       }}
                     />
                   );
