@@ -6,7 +6,7 @@ interface Props {
   resetHighlights: () => void;
   toggleDocument: () => void;
   loadPdfFromUrl: (url: string) => void;
-  editHighlight: (id: string, text: string) => void;
+  editHighlight: (id: string, text: string, boundingRect?: any, image?: string) => void;
 }
 
 const updateHash = (highlight: IHighlight) => {
