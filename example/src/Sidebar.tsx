@@ -19,6 +19,22 @@ export function Sidebar({
   loadPdfFromUrl,
 }: Props) {
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        if (event.target && event.target.result) {
+          const newUrl = event.target.result as string;
+          loadPdfFromUrl(newUrl);
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   const [url, setUrl] = useState('');
   return (
     <div className="sidebar" style={{ width: "25vw", backgroundColor: "lightblue" }}>
@@ -30,6 +46,10 @@ export function Sidebar({
           placeholder="PDF URL"
         />
         <button onClick={() => loadPdfFromUrl(url)}>Load pdf</button>
+      </div>
+
+      <div style={{ padding: "1rem" }}>
+        <input type="file" onChange={handleFileUpload} />
       </div>
 
 
