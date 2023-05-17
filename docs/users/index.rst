@@ -6,7 +6,10 @@ This section provides a guide on how to use AnnoPDF.
 Accessing AnnoPDF
 -----------------
 
-AnnoPDF can be accessed at 'http://localhost:3000/react-pdf-highlighter/' in your web browser. 
+To set up AnnoPDF on your local machine, please refer to the `installation guide <https://pdf-highlighter.readthedocs.io/en/latest/developers/index.html#installing-annopdf-on-a-local-machine>`_ for detailed instructions.
+
+AnnoPDF is now ready for you to explore and enhance your PDF reading and annotation experience!
+
 
 Loading a PDF
 -------------
