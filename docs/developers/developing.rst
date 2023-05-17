@@ -43,30 +43,32 @@ a browser follow these steps.
 #. go to 'http://localhost:3000/react-pdf-highlighter/'
 
 
-StickIT Architecture
+AnnoPDF Architecture
 ====================
 
-Browser extension (Chrome extension): The front-end of the application, which allows users to annotate web content while browsing. It should be able to capture user annotations, such as highlights, comments, or tags, and send them to the back-end for storage and processing.
+The application is built using **React**, a JavaScript library for building user interfaces. The architecture is **component-based**, which promotes reusability and maintainability.
 
-API Gateway: Acts as a "front door" for the back-end services, allowing the browser extension to communicate with the back-end securely and efficiently. API Gateway can be used to define RESTful APIs, manage access control, and handle request/response processing.
+Main Components
+---------------
+The main components and files of the application are as follows:
 
-AWS Lambda functions: Serverless functions that handle various tasks, such as processing user annotations, managing user accounts, and retrieving annotations from the database. Lambda functions can be written in multiple languages (e.g., Python, Node.js) and are triggered by events, such as API Gateway requests.
+- **index.tsx:** This is the entry point of the application. It renders the main **App** component into a DOM node.
 
-AWS RDS: A managed relational database service that stores user data, including account information and annotations. RDS provides automatic backups, scaling, and maintenance, making it a suitable choice for this architecture. You could use a database engine like PostgreSQL or MySQL, depending on your preference and requirements.
+- **App.tsx:** This is the main component of the application that controls the primary state and handles interactions related to highlights, such as adding, editing, and deleting. It also handles the loading of different PDFs either by URL or file upload. The state in this component includes the current URL of the PDF document and the array of highlights.
 
-AWS S3 (Optional): A storage service that can be used to store static assets like images or documents, if needed. For example, if the extension allows users to upload images as part of their annotations, those images could be stored in an S3 bucket.
+- **Sidebar.tsx:** This component represents the sidebar on the application interface, where the highlights are listed. It handles displaying, searching, and editing of highlights. It also provides the UI for loading a PDF via a URL or file upload.
 
-AWS Cognito: A fully managed user authentication and authorization service that integrates seamlessly with other AWS services. Cognito handles user registration, login, and access control, allowing you to create secure and scalable applications. The Chrome extension communicates with Cognito for user authentication, and the authenticated user tokens are used to authorize requests to the back-end services.
+- **react-pdf-highlighter components:** The application uses several components from the **react-pdf-highlighter** library, including PdfLoader, PdfHighlighter, Tip, Highlight, Popup, and AreaHighlight. These components handle the loading of the PDF document, the highlighting of the text and area on the document, and the popups that show when a highlight is selected.
 
-Here's a summary of the components and their interactions:
+- **HighlightPopup:** This component displays the text comment and a delete button for each highlight when it's selected.
 
-The user interacts with the Chrome extension to create annotations.
-The extension communicates with AWS Cognito for user authentication and registration.
-The authenticated user tokens are used to authorize requests to the API Gateway.
-The extension sends annotation data to the API Gateway.
-API Gateway triggers the appropriate AWS Lambda function(s) to process the data.
-Lambda functions interact with the RDS database to store or retrieve annotation data.
-(Optional) Lambda functions store or retrieve static assets from S3, if needed.
+- **Spinner.tsx:** This is a small component that displays a loading spinner while the PDF document is loading. It's rendered by the **PdfLoader** component from the **react-pdf-highlighter** library during the loading process.
+
+Application State and Persistence
+---------------------------------
+The application state is managed locally within the React components, primarily within the **App** component. The state includes the URL of the PDF document and the array of highlights. The **App** component passes down parts of its state and its state handling functions as props to the child components.
+
+The application also uses the **LocalStorage Web API** to persist the highlights across browser sessions.
 
 
 Folders & files
