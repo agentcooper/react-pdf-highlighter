@@ -9,5 +9,7 @@ AnnoPDF is a dynamic tool designed to enhance your interaction with PDF files. A
    :maxdepth: 2
    :caption: Contents
 
-   developers/index
+   About/index
    users/index
+   developers/index
+   
