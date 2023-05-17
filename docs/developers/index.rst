@@ -1,4 +1,4 @@
-How to install AnnoPDF
+For developers
 =====================
 
 This section documents how to setup a development environment for AnnoPDF
