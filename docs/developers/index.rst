@@ -2,7 +2,7 @@ For Developers
 ==============
 
 This section contains documentation for **developers** contributing code to
-StickIT
+AnnoPDF
 
 .. toctree::
    :maxdepth: 2
