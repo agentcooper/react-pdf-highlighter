@@ -50,6 +50,10 @@ The application is built using **React**, a JavaScript library for building user
 
 Main Components
 ---------------
+
+*Github repository link: `installation guide <https://github.com/shlee87/pdf-highlighter>`_ 
+
+
 The main components and files of the application are as follows:
 
 - **index.tsx:** This is the entry point of the application. It renders the main **App** component into a DOM node.
