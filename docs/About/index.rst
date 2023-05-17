@@ -26,7 +26,7 @@ AnnoPDF is replete with features specifically crafted for students interacting w
 
 References
 ----------
-AnnoPDF is built upon the robust foundations of the `pdf.js <https://mozilla.github.io/pdf.js/>`_ and `react-pdf-highlighter.js <https://react-pdf-highlighter.banga.js.org/>`_ libraries, synergizing their capabilities to deliver an interactive PDF viewer and annotator.
+AnnoPDF is built upon the robust foundations of the `pdf.js <https://mozilla.github.io/pdf.js/>`_ and `react-pdf-highlighter.js <https://github.com/agentcooper/react-pdf-highlighter>`_ libraries, synergizing their capabilities to deliver an interactive PDF viewer and annotator.
 
 Get Involved
 ------------
