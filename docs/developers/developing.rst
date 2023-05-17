@@ -1,9 +1,9 @@
-How to install StickIT
+How to install AnnoPDF
 =====================
 
-This section documents how to setup a development environment for StickIT.
+This section documents how to setup a development environment for AnnoPDF
 
-Installing StickIT on a local machine
+Installing AnnoPDF on a local machine
 -------------------------------------
 
 Prerequisites
@@ -12,19 +12,19 @@ Prerequisites
 You will need:
 
 * `git <https://git-scm.com/>`_
-* `Node.js <https://nodejs.org/en/>`_ v6.3+
-* `Amazon Web Service Account <https://aws.amazon.com>`_ 
+* `React.js <https://react.dev/>`_
 
 Building
 ########
 
-To build StickIT for development:
+To build AnnoPDF for development:
 
 .. code-block:: sh
 
-   git clone 'https://github.com/shlee87/public-sticky-notes-for-open-source-textbooks.git'
-   cd public-sticky-notes-for-open-source-textbooks
-   npm run build
+   git clone 'https://github.com/shlee87/pdf-highlighter.git'
+   cd pdf-highlighter/AnnoPDF
+   npm install
+   npm start
 
 You now have a development built. 
 
@@ -32,16 +32,7 @@ You now have a development built.
 
 
 
-.. you'll need a local copy of either the Hypothesis Chrome extension or
-.. h. Follow either :ref:`running-from-browser-ext` or
-.. :ref:`running-from-h` below.
-.. If you're only interested in making changes to the client (and not to h)
-.. then running the client from the browser extension is easiest.
-
-
-.. .. _running-from-browser-ext:
-
-Running the Chrome extension
+Running AnnoPDF
 ---------------------------------------------
 
 
@@ -49,11 +40,7 @@ To run your development client in
 a browser follow these steps.
 
 #. open a chrome browser.
-#. go to chrome://extensions
-#. click on "Load unpacked"
-#. select the build folder in the public-sticky-notes-for-open-source-textbooks folder
-#. click on the extension icon on the top right of the browser
-
+#. go to 'http://localhost:3000/react-pdf-highlighter/'
 
 
 StickIT Architecture

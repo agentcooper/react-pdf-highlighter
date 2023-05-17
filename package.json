@@ -18,7 +18,7 @@
   "module": "./dist/esm/index.js",
   "scripts": {
     "start": "npm run dev",
-    "dev": "(cd ./example && vite)",
+    "dev": "(cd ./AnnoPDF && vite)",
     "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:copy-styles && npm run build:example",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir ./dist/cjs",
