@@ -44,7 +44,7 @@ a browser follow these steps.
 
 
 AnnoPDF Architecture
-====================
+-----------------
 
 The application is built using **React**, a JavaScript library for building user interfaces. The architecture is **component-based**, which promotes reusability and maintainability.
 
@@ -76,7 +76,7 @@ The application also uses the **LocalStorage Web API** to persist the highlights
 
 
 Development Timeline
-====================
+-----------------
 
 1. **Research Phase (March 17 - March 30):** During this phase, I conducted research to identify the features that the application would need and formulated a plan on how to implement them.
 
