@@ -71,42 +71,25 @@ The application state is managed locally within the React components, primarily 
 The application also uses the **LocalStorage Web API** to persist the highlights across browser sessions.
 
 
-Folders & files
+Development Timeline
 ====================
-.. This sections explain how the folders and files are organized in StickIT.
 
+1. **Research Phase (March 17 - March 30):** During this phase, I conducted research to identify the features that the application would need and formulated a plan on how to implement them.
 
-.. Folders
-.. ---------------------------------------------
+2. **Building Basic Features (March 31 - April 13):**
+   
+   - *External PDF Link Retrieval:* This feature allows the application to fetch and display a PDF using an external link.
+   - *Local File Loading:* This feature enables users to upload and view a PDF from their local file system.
 
-.. public-sticky-notes-for-open-source-textbooks/sticky-chrome-extension
-.. #####################################################################
-.. this is a folder that has all files for the chrome extension.
+3. **Building Annotation Features (April 14 - April 27):**
 
-.. public-sticky-notes-for-open-source-textbooks/docs
-.. ##################################################
-.. This folder houses all the files related to code documentation.
+   - *Annotating:* This feature allows users to make annotations on the PDF.
+   - *Editing Annotations:* With this feature, users can edit their existing annotations.
+   - *Deleting Annotations:* This feature lets users remove any annotations they no longer need.
 
-.. public-sticky-notes-for-open-source-textbooks/lambda
-.. #####################################################
-.. This folder contains function files for AWS lambda.
+4. **Building Advanced Features (April 28 - May 11):**
 
+   - *Saving Annotations to Local Storage:* This feature allows the application to save annotations in the local storage for future access.
+   - *Search Feature for Annotations:* This feature enables users to search through their annotations.
 
-
-.. feature-related files
-.. ---------------------------------------------
-
-Sign up
-########
-
-Sign In
-#######
-
-Search
-######
-
-Highlight
-#########
-
-Note
-####
+5. **Debugging and Documentation (May 12 - May 17):** In the final phase, I focused on debugging the application to ensure its smooth operation and writing comprehensive documentation to help users understand how to use the application.
