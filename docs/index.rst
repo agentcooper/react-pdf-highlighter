@@ -1,4 +1,4 @@
-Welcome to the Stickit Documentation!
+Welcome to the AnnoPDF Documentation!
 =================================================
 
 The `stickit <https://github.com/shlee87/public-sticky-notes-for-open-source-textbooks>`_ is a browser-based tool for making annotations on web
