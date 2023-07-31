@@ -31,7 +31,7 @@ it("should display hover tips over highlights", async () => {
   await page.waitForSelector(".PdfHighlighter__tip-container", {
     visible: true,
   });
-  await expect(page).toMatch("Flow or TypeScript?");
+  await expect(page).toMatchTextContent("Flow or TypeScript?");
 });
 
 // it("should highlight text", async () => {

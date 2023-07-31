@@ -1,6 +1,6 @@
 module.exports = {
   launch: {
-    headless: true,
+    headless: "new",
   },
   server: {
     protocol: "http-get",
