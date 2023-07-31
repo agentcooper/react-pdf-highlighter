@@ -114,7 +114,9 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
   resizeObserver: ResizeObserver | null = null;
   containerNode?: HTMLDivElement | null = null;
   containerNodeRef: RefObject<HTMLDivElement>;
-  highlightReactRoots: { [page: number]: Root } = {};
+  highlightRoots: {
+    [page: number]: { reactRoot: Root; container: Element };
+  } = {};
   unsubscribe = () => {};
 
   constructor(props: Props<T_HT>) {
@@ -631,15 +633,19 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
   private renderHighlightLayers() {
     const { pdfDocument } = this.props;
     for (let pageNumber = 1; pageNumber <= pdfDocument.numPages; pageNumber++) {
-      const root = this.highlightReactRoots[pageNumber];
-      if (root != null) {
-        this.renderHighlightLayer(root, pageNumber);
+      const highlightRoot = this.highlightRoots[pageNumber];
+      /** Need to check if container is still attached to the DOM as PDF.js can unload pages. */
+      if (highlightRoot && highlightRoot.container.isConnected) {
+        this.renderHighlightLayer(highlightRoot.reactRoot, pageNumber);
       } else {
         const highlightLayer = this.findOrCreateHighlightLayer(pageNumber);
         if (highlightLayer) {
-          const root = createRoot(highlightLayer!);
-          this.highlightReactRoots[pageNumber] = root;
-          this.renderHighlightLayer(root, pageNumber);
+          const reactRoot = createRoot(highlightLayer);
+          this.highlightRoots[pageNumber] = {
+            reactRoot,
+            container: highlightLayer,
+          };
+          this.renderHighlightLayer(reactRoot, pageNumber);
         }
       }
     }
