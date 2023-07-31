@@ -34,9 +34,6 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
-    "@types/lodash.debounce": "^4.0.6",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
     "lodash.debounce": "^4.0.8",
     "pdfjs-dist": "2.16.105",
     "react-rnd": "^10.1.10"
@@ -55,6 +52,9 @@
     "prettier": "^2.3.2",
     "puppeteer": "^9.1.1",
     "typescript": "4.4.2",
-    "vite": "^2.8.0"
+    "vite": "^2.8.0",
+    "@types/lodash.debounce": "^4.0.6",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0"
   }
 }
