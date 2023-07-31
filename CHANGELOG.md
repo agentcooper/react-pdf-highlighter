@@ -1,3 +1,8 @@
+# 6.0.0
+
+* Support for React 18 (https://github.com/agentcooper/react-pdf-highlighter/pull/232)
+* Fix for `usePdfCoordinates` (https://github.com/agentcooper/react-pdf-highlighter/pull/244)
+
 # 5.3.0
 
 * [Added support of multi-page highlights](https://github.com/agentcooper/react-pdf-highlighter/pull/167), thanks to @jonathanbyrne!
