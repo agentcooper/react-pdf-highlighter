@@ -38,11 +38,11 @@ const pdfToViewport = (pdf: Scaled, viewport: Viewport): LTWHP => {
   ]);
 
   return {
-    left: x1,
-    top: y1,
+    left: Math.min(x1,x2),
+    top: Math.min(y1,y2),
 
-    width: x2 - x1,
-    height: y1 - y2,
+    width: Math.abs(x2 - x1),
+    height: Math.abs(y1 - y2),
 
     pageNumber: pdf.pageNumber,
   };
