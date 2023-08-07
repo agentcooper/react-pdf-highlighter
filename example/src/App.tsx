@@ -21,6 +21,7 @@ const testHighlights: Record<string, Array<IHighlight>> = _testHighlights;
 
 interface State {
   url: string;
+  scaleValue: string;
   highlights: Array<IHighlight>;
 }
 
@@ -57,6 +58,7 @@ class App extends Component<{}, State> {
     highlights: testHighlights[initialUrl]
       ? [...testHighlights[initialUrl]]
       : [],
+    scaleValue: "page-width",
   };
 
   resetHighlights = () => {
@@ -133,7 +135,7 @@ class App extends Component<{}, State> {
   }
 
   render() {
-    const { url, highlights } = this.state;
+    const { url, highlights, scaleValue } = this.state;
 
     return (
       <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -141,6 +143,9 @@ class App extends Component<{}, State> {
           highlights={highlights}
           resetHighlights={this.resetHighlights}
           toggleDocument={this.toggleDocument}
+          setScale={(newScaleValue) =>
+            this.setState({ scaleValue: newScaleValue })
+          }
         />
         <div
           style={{
@@ -155,7 +160,7 @@ class App extends Component<{}, State> {
                 pdfDocument={pdfDocument}
                 enableAreaSelection={(event) => event.altKey}
                 onScrollChange={resetHash}
-                // pdfScaleValue="page-width"
+                pdfScaleValue={scaleValue}
                 scrollRef={(scrollTo) => {
                   this.scrollViewerTo = scrollTo;
 
