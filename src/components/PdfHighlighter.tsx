@@ -73,6 +73,7 @@ interface Props<T_HT> {
   scrollRef: (scrollTo: (highlight: T_HT) => void) => void;
   pdfDocument: PDFDocumentProxy;
   pdfScaleValue: string;
+  pagesRotation: number;
   onSelectionFinished: (
     position: ScaledPosition,
     content: { text?: string; image?: string },
@@ -90,6 +91,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
 > {
   static defaultProps = {
     pdfScaleValue: "auto",
+    pagesRotation: 0,
   };
 
   state: State<T_HT> = {
@@ -166,6 +168,9 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     }
     if (prevProps.highlights !== this.props.highlights) {
       this.renderHighlightLayers();
+    }
+    if (prevProps.pagesRotation != this.props.pagesRotation) {
+      this.viewer.pagesRotation = this.props.pagesRotation;
     }
   }
 
@@ -280,9 +285,19 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     const viewport = this.viewer.getPageView(pageNumber - 1).viewport;
 
     return {
-      boundingRect: scaledToViewport(boundingRect, viewport, usePdfCoordinates),
+      boundingRect: scaledToViewport(
+        boundingRect,
+        viewport,
+        usePdfCoordinates,
+        this.viewer.pagesRotation
+      ),
       rects: (rects || []).map((rect) =>
-        scaledToViewport(rect, viewport, usePdfCoordinates)
+        scaledToViewport(
+          rect,
+          viewport,
+          usePdfCoordinates,
+          this.viewer.pagesRotation
+        )
       ),
       pageNumber,
     };
@@ -296,8 +311,14 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     const viewport = this.viewer.getPageView(pageNumber - 1).viewport;
 
     return {
-      boundingRect: viewportToScaled(boundingRect, viewport),
-      rects: (rects || []).map((rect) => viewportToScaled(rect, viewport)),
+      boundingRect: viewportToScaled(
+        boundingRect,
+        viewport,
+        this.viewer.pagesRotation
+      ),
+      rects: (rects || []).map((rect) =>
+        viewportToScaled(rect, viewport, this.viewer.pagesRotation)
+      ),
       pageNumber,
     };
   }
