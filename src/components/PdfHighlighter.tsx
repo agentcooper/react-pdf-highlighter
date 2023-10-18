@@ -45,6 +45,7 @@ interface State<T_HT> {
   } | null;
   isCollapsed: boolean;
   range: Range | null;
+  selectedText: string;
   tip: {
     highlight: T_ViewportHighlight<T_HT>;
     callback: (highlight: T_ViewportHighlight<T_HT>) => JSX.Element;
@@ -96,6 +97,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     ghostHighlight: null,
     isCollapsed: true,
     range: null,
+    selectedText: "",
     scrolledToHighlightId: EMPTY_ID,
     isAreaSelectionInProgress: false,
     tip: null,
@@ -422,6 +424,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     if (!selection) {
       return;
     }
+    const selectedText = selection.toString()?.split("\n")?.join(" ");
 
     const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
 
@@ -441,6 +444,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     this.setState({
       isCollapsed: false,
       range,
+      selectedText,
     });
 
     this.debouncedAfterSelection();
@@ -509,7 +513,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     };
 
     const content = {
-      text: range.toString(),
+      text: this.state.selectedText,
     };
     const scaledPosition = this.viewportPositionToScaled(viewportPosition);
 
