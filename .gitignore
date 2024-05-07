@@ -5,3 +5,4 @@ dist-ssr
 dist-example
 *.local
 types
+.idea/
