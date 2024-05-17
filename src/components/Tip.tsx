@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import "../style/Tip.css";
-
 interface State {
   compact: boolean;
   text: string;

@@ -1,6 +1,4 @@
-import "pdfjs-dist/web/pdf_viewer.css";
-import "../style/pdf_viewer.css";
-import "../style/PdfHighlighter.css";
+import "../style/index.css";
 
 import {
   EventBus,

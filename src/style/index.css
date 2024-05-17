@@ -1,0 +1,9 @@
+@import url('pdfjs-dist/web/pdf_viewer.css');
+/* overrides for pdf_viewer.css from PDF.JS web viewer */
+
+@import url('./modules/AreaHighlight.css');
+@import url('./modules/Highlight.css');
+@import url('./modules/MouseSelection.css');
+@import url('./modules/PdfHighlighter.css');
+@import url('./modules/Tip.css');
+@import url('./modules/PdfViewer.css');
