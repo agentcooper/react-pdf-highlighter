@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
-import { Rnd } from "react-rnd";
+import { Rnd, Props as RndProps } from "react-rnd";
 import { getPageFromElement } from "../lib/pdfjs-dom";
 
 import "../style/AreaHighlight.css";
 
 import type { LTWHP, ViewportHighlight } from "../types";
 
-interface Props {
+interface Props extends RndProps {
   highlight: ViewportHighlight;
   onChange: (rect: LTWHP) => void;
   isScrolledTo: boolean;
