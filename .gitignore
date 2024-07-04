@@ -1,7 +1,2 @@
 node_modules
 .DS_Store
-dist
-dist-ssr
-dist-example
-*.local
-types
