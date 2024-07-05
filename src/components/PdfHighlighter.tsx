@@ -80,6 +80,7 @@ interface Props<T_HT> {
     transformSelection: () => void
   ) => JSX.Element | null;
   enableAreaSelection: (event: MouseEvent) => boolean;
+  selectionOnMouseUp?: boolean;
 }
 
 const EMPTY_ID = "empty-id";
@@ -140,7 +141,10 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
       const { ownerDocument: doc } = ref;
       eventBus.on("textlayerrendered", this.onTextLayerRendered);
       eventBus.on("pagesinit", this.onDocumentReady);
-      doc.addEventListener("selectionchange", this.onSelectionChange);
+      doc.addEventListener(
+        this.props.selectionOnMouseUp ? "mouseup" : "selectionchange",
+        this.onSelectionChange
+      );
       doc.addEventListener("keydown", this.handleKeyDown);
       doc.defaultView?.addEventListener("resize", this.debouncedScaleValue);
       if (observer) observer.observe(ref);
@@ -148,7 +152,10 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
       this.unsubscribe = () => {
         eventBus.off("pagesinit", this.onDocumentReady);
         eventBus.off("textlayerrendered", this.onTextLayerRendered);
-        doc.removeEventListener("selectionchange", this.onSelectionChange);
+        doc.removeEventListener(
+          this.props.selectionOnMouseUp ? "mouseup" : "selectionchange",
+          this.onSelectionChange
+        );
         doc.removeEventListener("keydown", this.handleKeyDown);
         doc.defaultView?.removeEventListener(
           "resize",
