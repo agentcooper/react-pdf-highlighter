@@ -5,3 +5,7 @@ dist-ssr
 dist-example
 *.local
 types
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
