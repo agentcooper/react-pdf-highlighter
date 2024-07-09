@@ -29,7 +29,7 @@
   "dependencies": {
     "debounce": "^2.1.0",
     "pdfjs-dist": "^4.4.168",
-    "react-rnd": "^10.1.10"
+    "react-rnd": "^10.4.11"
   },
   "repository": {
     "type": "git",
