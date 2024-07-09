@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf";
+import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 
 interface Props {
@@ -28,7 +28,7 @@ export class PdfLoader extends Component<Props, State> {
   };
 
   static defaultProps = {
-    workerSrc: "https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js",
+    workerSrc: "https://unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs",
   };
 
   documentRef = React.createRef<HTMLElement>();
@@ -77,12 +77,14 @@ export class PdfLoader extends Component<Props, State> {
           return;
         }
 
-        return getDocument({
+        const document = {
           ...this.props,
           ownerDocument,
           cMapUrl,
           cMapPacked,
-        }).promise.then((pdfDocument) => {
+        };
+
+        return getDocument(document).promise.then((pdfDocument) => {
           this.setState({ pdfDocument });
         });
       })

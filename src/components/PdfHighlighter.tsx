@@ -2,12 +2,7 @@ import "pdfjs-dist/web/pdf_viewer.css";
 import "../style/pdf_viewer.css";
 import "../style/PdfHighlighter.css";
 
-import {
-  EventBus,
-  NullL10n,
-  PDFLinkService,
-  PDFViewer,
-} from "pdfjs-dist/legacy/web/pdf_viewer";
+import type { EventBus, PDFViewer } from "pdfjs-dist/legacy/web/pdf_viewer.mjs";
 import type {
   IHighlight,
   LTWH,
@@ -103,12 +98,6 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     tipChildren: null,
   };
 
-  eventBus = new EventBus();
-  linkService = new PDFLinkService({
-    eventBus: this.eventBus,
-    externalLinkTarget: 2,
-  });
-
   viewer!: PDFViewer;
 
   resizeObserver: ResizeObserver | null = null;
@@ -131,8 +120,8 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     this.init();
   }
 
-  attachRef = () => {
-    const { eventBus, resizeObserver: observer } = this;
+  attachRef = (eventBus: EventBus) => {
+    const { resizeObserver: observer } = this;
     const ref = (this.containerNode = this.containerNodeRef!.current);
     this.unsubscribe();
 
@@ -169,25 +158,33 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     }
   }
 
-  init() {
+  async init() {
     const { pdfDocument } = this.props;
-    this.attachRef();
+    const pdfjs = await import("pdfjs-dist/web/pdf_viewer.mjs");
+
+    const eventBus = new pdfjs.EventBus();
+    const linkService = new pdfjs.PDFLinkService({
+      eventBus,
+      externalLinkTarget: 2,
+    });
 
     this.viewer =
       this.viewer ||
-      new PDFViewer({
+      new pdfjs.PDFViewer({
         container: this.containerNodeRef!.current!,
-        eventBus: this.eventBus,
+        eventBus: eventBus,
         // enhanceTextSelection: true, // deprecated. https://github.com/mozilla/pdf.js/issues/9943#issuecomment-409369485
         textLayerMode: 2,
         removePageBorders: true,
-        linkService: this.linkService,
-        l10n: NullL10n,
+        linkService: linkService,
       });
 
-    this.linkService.setDocument(pdfDocument);
-    this.linkService.setViewer(this.viewer);
+    linkService.setDocument(pdfDocument);
+    linkService.setViewer(this.viewer);
     this.viewer.setDocument(pdfDocument);
+
+    this.attachRef(eventBus);
+
     // debug
     (window as any).PdfViewer = this;
   }
@@ -204,7 +201,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
     }
 
     return findOrCreateContainerLayer(
-      textLayer.textLayerDiv,
+      textLayer.div,
       "PdfHighlighter__highlight-layer"
     );
   }
