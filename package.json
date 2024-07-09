@@ -11,18 +11,17 @@
     "react-component"
   ],
   "files": [
-    "dist"
+    "dist", "README.md", "LICENSE"
   ],
-  "types": "./dist/esm/index.d.ts",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
   "scripts": {
     "start": "npm run dev",
     "dev": "(cd ./example && vite)",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:copy-styles && npm run build:example",
+    "build": "npm run clean && npm run build:esm && npm run build:copy-styles && npm run build:example",
     "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir ./dist/cjs",
-    "build:copy-styles": "cp -r ./src/style ./dist/esm; cp -r ./src/style ./dist/cjs",
+    "build:copy-styles": "cp -r ./src/style ./dist",
     "build:example": "(cd ./example && tsc && vite build)",
     "test": "tsc && npm run format:check && npm run test:e2e",
     "test:e2e": "playwright test",

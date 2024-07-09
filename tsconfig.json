@@ -11,7 +11,7 @@
     "noUnusedParameters": false,
     "noImplicitReturns": true,
     "jsx": "react",
-    "outDir": "./dist/esm",
+    "outDir": "./dist",
     "isolatedModules": true,
     "declaration": true
   },
