@@ -57,6 +57,7 @@ export class Tip extends Component<Props, State> {
             <div>
               <textarea
                 placeholder="Your comment"
+                // biome-ignore lint/a11y/noAutofocus: This is an example app
                 autoFocus
                 value={text}
                 onChange={(event) =>

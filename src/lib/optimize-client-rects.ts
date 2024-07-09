@@ -59,14 +59,14 @@ const optimizeClientRects = (clientRects: Array<LTWHP>): Array<LTWHP> => {
   let passCount = 0;
 
   while (passCount <= 2) {
-    firstPass.forEach((A) => {
-      firstPass.forEach((B) => {
+    for (const A of firstPass) {
+      for (const B of firstPass) {
         if (A === B || toRemove.has(A) || toRemove.has(B)) {
-          return;
+          continue;
         }
 
         if (!sameLine(A, B)) {
-          return;
+          continue;
         }
 
         if (overlaps(A, B)) {
@@ -81,8 +81,8 @@ const optimizeClientRects = (clientRects: Array<LTWHP>): Array<LTWHP> => {
 
           toRemove.add(B);
         }
-      });
-    });
+      }
+    }
     passCount += 1;
   }
 

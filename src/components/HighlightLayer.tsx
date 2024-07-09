@@ -1,6 +1,6 @@
-import { viewportToScaled } from "../lib/coordinates";
 import React from "react";
-import {
+import { viewportToScaled } from "../lib/coordinates";
+import type {
   IHighlight,
   LTWH,
   LTWHP,
@@ -9,29 +9,38 @@ import {
   ScaledPosition,
 } from "../types";
 
+import type { PDFViewer } from "pdfjs-dist/web/pdf_viewer.mjs";
+import type { T_ViewportHighlight } from "./PdfHighlighter";
+
 interface HighlightLayerProps<T_HT> {
   highlightsByPage: { [pageNumber: string]: Array<T_HT> };
   pageNumber: string;
   scrolledToHighlightId: string;
   highlightTransform: (
-    highlight: any,
+    highlight: T_ViewportHighlight<T_HT>,
     index: number,
-    setTip: (highlight: any, callback: (highlight: any) => JSX.Element) => void,
+    setTip: (
+      highlight: T_ViewportHighlight<T_HT>,
+      callback: (highlight: T_ViewportHighlight<T_HT>) => JSX.Element,
+    ) => void,
     hideTip: () => void,
     viewportToScaled: (rect: LTWHP) => Scaled,
     screenshot: (position: LTWH) => string,
-    isScrolledTo: boolean
+    isScrolledTo: boolean,
   ) => JSX.Element;
   tip: {
-    highlight: any;
-    callback: (highlight: any) => JSX.Element;
+    highlight: T_ViewportHighlight<T_HT>;
+    callback: (highlight: T_ViewportHighlight<T_HT>) => JSX.Element;
   } | null;
   scaledPositionToViewport: (scaledPosition: ScaledPosition) => Position;
   hideTipAndSelection: () => void;
-  viewer: any;
+  viewer: PDFViewer;
   screenshot: (position: LTWH, pageNumber: number) => string;
-  showTip: (highlight: any, content: JSX.Element) => void;
-  setState: (state: any) => void;
+  showTip: (highlight: T_ViewportHighlight<T_HT>, content: JSX.Element) => void;
+  setTip: (state: {
+    highlight: T_ViewportHighlight<T_HT>;
+    callback: (highlight: T_ViewportHighlight<T_HT>) => JSX.Element;
+  }) => void;
 }
 
 export function HighlightLayer<T_HT extends IHighlight>({
@@ -45,45 +54,41 @@ export function HighlightLayer<T_HT extends IHighlight>({
   viewer,
   screenshot,
   showTip,
-  setState,
+  setTip,
 }: HighlightLayerProps<T_HT>) {
   const currentHighlights = highlightsByPage[String(pageNumber)] || [];
   return (
     <div>
-      {currentHighlights.map(({ position, id, ...highlight }, index) => {
-        // @ts-ignore
-        const viewportHighlight: any = {
-          id,
-          position: scaledPositionToViewport(position),
+      {currentHighlights.map((highlight, index) => {
+        const viewportHighlight: T_ViewportHighlight<T_HT> = {
           ...highlight,
+          position: scaledPositionToViewport(highlight.position),
         };
 
-        if (tip && tip.highlight.id === String(id)) {
+        if (tip && tip.highlight.id === String(highlight.id)) {
           showTip(tip.highlight, tip.callback(viewportHighlight));
         }
 
-        const isScrolledTo = Boolean(scrolledToHighlightId === id);
+        const isScrolledTo = Boolean(scrolledToHighlightId === highlight.id);
 
         return highlightTransform(
           viewportHighlight,
           index,
           (highlight, callback) => {
-            setState({
-              tip: { highlight, callback },
-            });
-
+            setTip({ highlight, callback });
             showTip(highlight, callback(highlight));
           },
           hideTipAndSelection,
           (rect) => {
             const viewport = viewer.getPageView(
-              (rect.pageNumber || parseInt(pageNumber)) - 1
+              (rect.pageNumber || Number.parseInt(pageNumber)) - 1,
             ).viewport;
 
             return viewportToScaled(rect, viewport);
           },
-          (boundingRect) => screenshot(boundingRect, parseInt(pageNumber)),
-          isScrolledTo
+          (boundingRect) =>
+            screenshot(boundingRect, Number.parseInt(pageNumber)),
+          isScrolledTo,
         );
       })}
     </div>

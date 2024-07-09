@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { asElement, isHTMLElement } from "../lib/pdfjs-dom";
+import { isHTMLElement } from "../lib/pdfjs-dom";
 import "../style/MouseSelection.css";
 
 import type { LTWH } from "../types.js";
@@ -20,7 +20,7 @@ interface Props {
   onSelection: (
     startTarget: HTMLElement,
     boundingRect: LTWH,
-    resetSelection: () => void
+    resetSelection: () => void,
   ) => void;
   onDragStart: () => void;
   onDragEnd: () => void;
@@ -68,13 +68,10 @@ class MouseSelection extends Component<Props, State> {
       return;
     }
 
-    const that = this;
-
     const { onSelection, onDragStart, onDragEnd, shouldStart } = this.props;
 
-    const container = asElement(this.root.parentElement);
-
-    if (!isHTMLElement(container)) {
+    const container = this.root.parentElement;
+    if (!container || !isHTMLElement(container)) {
       return;
     }
 
@@ -102,7 +99,7 @@ class MouseSelection extends Component<Props, State> {
         return;
       }
 
-      that.setState({
+      this.setState({
         ...this.state,
         end: containerCoords(event.pageX, event.pageY),
       });
@@ -114,8 +111,8 @@ class MouseSelection extends Component<Props, State> {
         return;
       }
 
-      const startTarget = asElement(event.target);
-      if (!isHTMLElement(startTarget)) {
+      const startTarget = event.target;
+      if (!(startTarget instanceof Element) || !isHTMLElement(startTarget)) {
         return;
       }
 
@@ -131,7 +128,7 @@ class MouseSelection extends Component<Props, State> {
         // emulate listen once
         event.currentTarget?.removeEventListener(
           "mouseup",
-          onMouseUp as EventListener
+          onMouseUp as EventListener,
         );
 
         const { start } = this.state;
@@ -142,35 +139,39 @@ class MouseSelection extends Component<Props, State> {
 
         const end = containerCoords(event.pageX, event.pageY);
 
-        const boundingRect = that.getBoundingRect(start, end);
+        const boundingRect = this.getBoundingRect(start, end);
 
         if (
+          !(event.target instanceof Element) ||
           !isHTMLElement(event.target) ||
-          !container.contains(asElement(event.target)) ||
-          !that.shouldRender(boundingRect)
+          !container.contains(event.target) ||
+          !this.shouldRender(boundingRect)
         ) {
-          that.reset();
+          this.reset();
           return;
         }
 
-        that.setState(
+        this.setState(
           {
             end,
             locked: true,
           },
           () => {
-            const { start, end } = that.state;
+            const { start, end } = this.state;
 
             if (!start || !end) {
               return;
             }
 
-            if (isHTMLElement(event.target)) {
-              onSelection(startTarget, boundingRect, that.reset);
+            if (
+              event.target instanceof Element &&
+              isHTMLElement(event.target)
+            ) {
+              onSelection(startTarget, boundingRect, this.reset);
 
               onDragEnd();
             }
-          }
+          },
         );
       };
 

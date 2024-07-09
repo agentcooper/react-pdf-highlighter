@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
+import { GlobalWorkerOptions, getDocument } from "pdfjs-dist";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 
 interface Props {
@@ -50,7 +50,7 @@ export class PdfLoader extends Component<Props, State> {
     }
   }
 
-  componentDidCatch(error: Error, info?: any) {
+  componentDidCatch(error: Error) {
     const { onError } = this.props;
 
     if (onError) {
@@ -71,7 +71,7 @@ export class PdfLoader extends Component<Props, State> {
     }
 
     Promise.resolve()
-      .then(() => discardedDocument && discardedDocument.destroy())
+      .then(() => discardedDocument?.destroy())
       .then(() => {
         if (!url) {
           return;
@@ -100,8 +100,8 @@ export class PdfLoader extends Component<Props, State> {
         {error
           ? this.renderError()
           : !pdfDocument || !children
-          ? beforeLoad
-          : children(pdfDocument)}
+            ? beforeLoad
+            : children(pdfDocument)}
       </>
     );
   }

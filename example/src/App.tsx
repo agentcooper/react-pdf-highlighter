@@ -1,19 +1,24 @@
 import React, { Component } from "react";
 
 import {
-  PdfLoader,
-  PdfHighlighter,
-  Tip,
-  Highlight,
-  Popup,
   AreaHighlight,
+  Highlight,
+  PdfHighlighter,
+  PdfLoader,
+  Popup,
+  Tip,
 } from "./react-pdf-highlighter";
 
-import type { IHighlight, NewHighlight } from "./react-pdf-highlighter";
+import type {
+  Content,
+  IHighlight,
+  NewHighlight,
+  ScaledPosition,
+} from "./react-pdf-highlighter";
 
-import { testHighlights as _testHighlights } from "./test-highlights";
-import { Spinner } from "./Spinner";
 import { Sidebar } from "./Sidebar";
+import { Spinner } from "./Spinner";
+import { testHighlights as _testHighlights } from "./test-highlights";
 
 import "./style/App.css";
 
@@ -51,6 +56,7 @@ const searchParams = new URLSearchParams(document.location.search);
 
 const initialUrl = searchParams.get("url") || PRIMARY_PDF_URL;
 
+// biome-ignore lint/complexity/noBannedTypes: Not sure what to use instead of {}
 class App extends Component<{}, State> {
   state = {
     url: initialUrl,
@@ -75,7 +81,7 @@ class App extends Component<{}, State> {
     });
   };
 
-  scrollViewerTo = (highlight: any) => {};
+  scrollViewerTo = (highlight: IHighlight) => {};
 
   scrollToHighlightFromHash = () => {
     const highlight = this.getHighlightById(parseIdFromHash());
@@ -89,7 +95,7 @@ class App extends Component<{}, State> {
     window.addEventListener(
       "hashchange",
       this.scrollToHighlightFromHash,
-      false
+      false,
     );
   }
 
@@ -109,7 +115,11 @@ class App extends Component<{}, State> {
     });
   }
 
-  updateHighlight(highlightId: string, position: Object, content: Object) {
+  updateHighlight(
+    highlightId: string,
+    position: Partial<ScaledPosition>,
+    content: Partial<Content>,
+  ) {
     console.log("Updating highlight", highlightId, position, content);
 
     this.setState({
@@ -165,7 +175,7 @@ class App extends Component<{}, State> {
                   position,
                   content,
                   hideTipAndSelection,
-                  transformSelection
+                  transformSelection,
                 ) => (
                   <Tip
                     onOpen={transformSelection}
@@ -183,11 +193,9 @@ class App extends Component<{}, State> {
                   hideTip,
                   viewportToScaled,
                   screenshot,
-                  isScrolledTo
+                  isScrolledTo,
                 ) => {
-                  const isTextHighlight = !Boolean(
-                    highlight.content && highlight.content.image
-                  );
+                  const isTextHighlight = !highlight.content?.image;
 
                   const component = isTextHighlight ? (
                     <Highlight
@@ -203,7 +211,7 @@ class App extends Component<{}, State> {
                         this.updateHighlight(
                           highlight.id,
                           { boundingRect: viewportToScaled(boundingRect) },
-                          { image: screenshot(boundingRect) }
+                          { image: screenshot(boundingRect) },
                         );
                       }}
                     />
@@ -217,8 +225,9 @@ class App extends Component<{}, State> {
                       }
                       onMouseOut={hideTip}
                       key={index}
-                      children={component}
-                    />
+                    >
+                      {component}
+                    </Popup>
                   );
                 }}
                 highlights={highlights}

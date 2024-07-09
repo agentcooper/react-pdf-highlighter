@@ -1,4 +1,4 @@
-import { test, expect, Page } from "@playwright/test";
+import { type Page, expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:3003/react-pdf-highlighter/");
