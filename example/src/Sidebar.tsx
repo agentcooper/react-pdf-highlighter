@@ -5,6 +5,7 @@ interface Props {
   highlights: Array<IHighlight>;
   resetHighlights: () => void;
   toggleDocument: () => void;
+  setScale: (scaleValue: string) => void;
 }
 
 const updateHash = (highlight: IHighlight) => {
@@ -17,6 +18,7 @@ export function Sidebar({
   highlights,
   toggleDocument,
   resetHighlights,
+  setScale,
 }: Props) {
   return (
     <div className="sidebar" style={{ width: "25vw" }}>
@@ -37,6 +39,11 @@ export function Sidebar({
             drag.
           </small>
         </p>
+
+        <h3 style={{ marginBottom: "1rem" }}>Set Scale</h3>
+        {["page-width", "1", "2", "3"].map((scaleValue) => (
+          <button onClick={() => setScale(scaleValue)}>{scaleValue}</button>
+        ))}
       </div>
 
       <ul className="sidebar__highlights">
