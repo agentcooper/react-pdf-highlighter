@@ -27,7 +27,7 @@ import {
 } from "../lib/pdfjs-dom";
 import { scaledToViewport, viewportToScaled } from "../lib/coordinates";
 import MouseSelection from "./MouseSelection";
-import type { PDFDocumentProxy } from "pdfjs-dist";
+import { AnnotationMode, type PDFDocumentProxy } from "pdfjs-dist";
 import TipContainer from "./TipContainer";
 import { createRoot, Root } from "react-dom/client";
 import debounce from "lodash.debounce";
@@ -183,6 +183,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
         removePageBorders: true,
         linkService: this.linkService,
         l10n: NullL10n,
+        annotationMode: AnnotationMode.DISABLE,
       });
 
     this.linkService.setDocument(pdfDocument);
