@@ -11,20 +11,38 @@ interface Props {
   highlight: ViewportHighlight;
   onChange: (rect: LTWHP) => void;
   isScrolledTo: boolean;
+  highlightColor?: { default: string; onScroll: string };
 }
 
 export class AreaHighlight extends Component<Props> {
   render() {
-    const { highlight, onChange, isScrolledTo, ...otherProps } = this.props;
+    const {
+      highlight,
+      onChange,
+      isScrolledTo,
+      highlightColor = {
+        default: "rgba(252, 232, 151, 1.0)",
+        onScroll: "#ff4141",
+      },
+      ...otherProps
+    } = this.props;
 
     return (
       <div
         className={`AreaHighlight ${
           isScrolledTo ? "AreaHighlight--scrolledTo" : ""
         }`}
+        style={{
+          backgroundColor: highlightColor.default,
+        }}
       >
         <Rnd
           className="AreaHighlight__part"
+          style={{
+            background: isScrolledTo
+              ? highlightColor.onScroll
+              : highlightColor.default,
+          }}
           onDragStop={(_, data) => {
             const boundingRect: LTWHP = {
               ...highlight.position.boundingRect,

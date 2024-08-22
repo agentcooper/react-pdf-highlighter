@@ -95,7 +95,7 @@ class App extends Component<{}, State> {
     window.addEventListener(
       "hashchange",
       this.scrollToHighlightFromHash,
-      false,
+      false
     );
   }
 
@@ -118,7 +118,7 @@ class App extends Component<{}, State> {
   updateHighlight(
     highlightId: string,
     position: Partial<ScaledPosition>,
-    content: Partial<Content>,
+    content: Partial<Content>
   ) {
     console.log("Updating highlight", highlightId, position, content);
 
@@ -159,7 +159,15 @@ class App extends Component<{}, State> {
             position: "relative",
           }}
         >
-          <PdfLoader url={url} beforeLoad={<Spinner />}>
+          <PdfLoader
+            url={url}
+            beforeLoad={<Spinner />}
+            onLoad={(pdfDocument) =>
+              console.log(
+                `PDF document loaded with ${pdfDocument.numPages} pages`
+              )
+            }
+          >
             {(pdfDocument) => (
               <PdfHighlighter
                 pdfDocument={pdfDocument}
@@ -175,7 +183,7 @@ class App extends Component<{}, State> {
                   position,
                   content,
                   hideTipAndSelection,
-                  transformSelection,
+                  transformSelection
                 ) => (
                   <Tip
                     onOpen={transformSelection}
@@ -193,7 +201,7 @@ class App extends Component<{}, State> {
                   hideTip,
                   viewportToScaled,
                   screenshot,
-                  isScrolledTo,
+                  isScrolledTo
                 ) => {
                   const isTextHighlight = !highlight.content?.image;
 
@@ -202,6 +210,10 @@ class App extends Component<{}, State> {
                       isScrolledTo={isScrolledTo}
                       position={highlight.position}
                       comment={highlight.comment}
+                      highlightColor={{
+                        default: "#90EE90",
+                        onScroll: "#FF7F7F",
+                      }}
                     />
                   ) : (
                     <AreaHighlight
@@ -211,8 +223,12 @@ class App extends Component<{}, State> {
                         this.updateHighlight(
                           highlight.id,
                           { boundingRect: viewportToScaled(boundingRect) },
-                          { image: screenshot(boundingRect) },
+                          { image: screenshot(boundingRect) }
                         );
+                      }}
+                      highlightColor={{
+                        default: "#90EE90",
+                        onScroll: "#FF7F7F",
                       }}
                     />
                   );
