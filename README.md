@@ -13,6 +13,14 @@ Features:
 - Popover text for highlights
 - Scroll to highlights
 
+## Importing CSS
+
+The bundled CSS include the CSS for pdfjs.
+
+```tsx
+import "react-pdf-highlighter/dist/style.css";
+```
+
 ## Example
 
 See demo https://agentcooper.github.io/react-pdf-highlighter/.
