@@ -12,9 +12,8 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "(cd ./example && vite)",
-    "build": "npm run clean && npm run build:esm && npm run build:copy-styles && npm run build:example",
+    "build": "npm run clean && npm run build:esm && npm run build:example",
     "build:esm": "tsc",
-    "build:copy-styles": "cp -r ./src/style ./dist",
     "build:example": "(cd ./example && tsc && vite build)",
     "test": "tsc && npm run lint && npm run test:e2e",
     "test:e2e": "playwright test",

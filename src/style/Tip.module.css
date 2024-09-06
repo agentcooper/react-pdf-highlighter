@@ -1,4 +1,4 @@
-.Tip__compact {
+.compact {
   cursor: pointer;
   background-color: #3d464d;
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -7,7 +7,7 @@
   border-radius: 3px;
 }
 
-.Tip__card {
+.card {
   padding: 10px;
   background: #fff;
   background-clip: padding-box;
@@ -16,13 +16,13 @@
   box-shadow: 0 2px 4px rgba(37, 40, 43, 0.2);
 }
 
-.Tip__card textarea {
+.card textarea {
   font-size: 16px;
   width: 200px;
   height: 70px;
 }
 
-.Tip__card input[type="submit"] {
+.card input[type="submit"] {
   margin-top: 5px;
   font-size: large;
 }

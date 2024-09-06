@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "../style/Highlight.css";
+import styles from "../style/Highlight.module.css";
 
 import type { LTWHP } from "../types.js";
 
@@ -34,11 +34,11 @@ export class Highlight extends Component<Props> {
 
     return (
       <div
-        className={`Highlight ${isScrolledTo ? "Highlight--scrolledTo" : ""}`}
+        className={`Highlight ${styles.highlight} ${isScrolledTo ? styles.scrolledTo : ""}`}
       >
         {comment ? (
           <div
-            className="Highlight__emoji"
+            className={`Highlight__emoji ${styles.emoji}`}
             style={{
               left: 20,
               top: boundingRect.top,
@@ -47,7 +47,7 @@ export class Highlight extends Component<Props> {
             {comment.emoji}
           </div>
         ) : null}
-        <div className="Highlight__parts">
+        <div className={`Highlight__parts ${styles.parts}`}>
           {rects.map((rect, index) => (
             <div
               onMouseOver={onMouseOver}
@@ -56,7 +56,7 @@ export class Highlight extends Component<Props> {
               // biome-ignore lint/suspicious/noArrayIndexKey: We can use position hash at some point in future
               key={index}
               style={rect}
-              className={"Highlight__part"}
+              className={`Highlight__part ${styles.part}`}
             />
           ))}
         </div>

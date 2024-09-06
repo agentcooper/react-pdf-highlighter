@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { isHTMLElement } from "../lib/pdfjs-dom";
-import "../style/MouseSelection.css";
+import styles from "../style/MouseSelection.module.css";
 
 import type { LTWH } from "../types.js";
 
@@ -191,7 +191,6 @@ class MouseSelection extends Component<Props, State> {
 
     return (
       <div
-        className="MouseSelection-container"
         ref={(node) => {
           if (!node) {
             return;
@@ -201,7 +200,7 @@ class MouseSelection extends Component<Props, State> {
       >
         {start && end ? (
           <div
-            className="MouseSelection"
+            className={styles.mouseSelection}
             style={this.getBoundingRect(start, end)}
           />
         ) : null}

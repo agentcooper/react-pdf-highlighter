@@ -15,5 +15,5 @@
     "isolatedModules": true,
     "declaration": true
   },
-  "include": ["./src"]
+  "include": ["./src", "./decs.d.ts"]
 }

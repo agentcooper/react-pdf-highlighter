@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Rnd } from "react-rnd";
 import { getPageFromElement } from "../lib/pdfjs-dom";
 
-import "../style/AreaHighlight.css";
+import styles from "../style/AreaHighlight.module.css";
 
 import type { LTWHP, ViewportHighlight } from "../types";
 
@@ -19,12 +19,12 @@ export class AreaHighlight extends Component<Props> {
 
     return (
       <div
-        className={`AreaHighlight ${
-          isScrolledTo ? "AreaHighlight--scrolledTo" : ""
+        className={`${styles.areaHighlight} ${
+          isScrolledTo ? styles.scrolledTo : ""
         }`}
       >
         <Rnd
-          className="AreaHighlight__part"
+          className={styles.part}
           onDragStop={(_, data) => {
             const boundingRect: LTWHP = {
               ...highlight.position.boundingRect,

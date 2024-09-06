@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import styles from "../style/TipContainer.module.css";
 import type { LTWHP } from "../types";
 
 interface State {
@@ -88,7 +88,8 @@ class TipContainer extends Component<Props, State> {
 
     return (
       <div
-        className="PdfHighlighter__tip-container"
+        id="PdfHighlighter__tip-container"
+        className={styles.tipContainer}
         style={{
           visibility: isStyleCalculationInProgress ? "hidden" : "visible",
           top,

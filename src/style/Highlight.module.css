@@ -1,26 +1,26 @@
-.Highlight {
+.highlight {
   position: absolute;
 }
 
-.Highlight__emoji {
+.emoji {
   position: absolute;
   color: black;
   opacity: 1;
   font-size: 28px;
 }
 
-.Highlight__parts {
+.parts {
   opacity: 1;
 }
 
-.Highlight__part {
+.part {
   cursor: pointer;
   position: absolute;
   background: rgba(255, 226, 143, 1);
   transition: background 0.3s;
 }
 
-.Highlight__popup {
+.popup {
   background-color: #3d464d;
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: white;
@@ -31,6 +31,6 @@
   overflow-y: scroll;
 }
 
-.Highlight--scrolledTo .Highlight__part {
+.scrolledTo .part {
   background: #ff4141;
 }
