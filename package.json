@@ -8,7 +8,7 @@
   "files": ["dist", "README.md", "LICENSE"],
   "type": "module",
   "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
+  "main": "./dist/src/index.js",
   "style": "./dist/style.css",
   "scripts": {
     "start": "npm run dev",
