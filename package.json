@@ -8,7 +8,7 @@
   "files": ["dist", "README.md", "LICENSE"],
   "type": "module",
   "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
+  "main": "./dist/src/index.js",
   "style": "./dist/style.css",
   "scripts": {
     "start": "npm run dev",
@@ -19,7 +19,8 @@
     "test:e2e": "playwright test",
     "format": "biome format --write",
     "lint": "biome check",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
@@ -40,7 +41,6 @@
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
     "@playwright/test": "^1.45.1",
-    "@rollup/plugin-typescript": "^11.1.6",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -48,10 +48,8 @@
     "playwright": "^1.45.1",
     "postcss-import": "^16.1.0",
     "typescript": "^5.5.3",
-    "vite": "^5.3.3"
-  },
-  "directories": {
-    "example": "example"
+    "vite": "^5.3.3",
+    "vite-plugin-dts": "^4.1.1"
   },
   "homepage": "https://github.com/agentcooper/react-pdf-highlighter#readme"
 }
