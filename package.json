@@ -13,7 +13,8 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "vite build && (cd ./example && vite)",
-    "build": "npm run clean && vite build",
+    "build": "npm run clean && npm run compile && vite build",
+    "compile": "tsc --noEmit",
     "build:example": "vite build && (cd ./example && vite build)",
     "test": "npm run build && npm run lint && npm run test:e2e",
     "test:e2e": "playwright test",
@@ -47,7 +48,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "playwright": "^1.45.1",
     "postcss-import": "^16.1.0",
-    "typescript": "^5.5.3",
+    "typescript": "^5.6.2",
     "vite": "^5.3.3",
     "vite-plugin-dts": "^4.1.1"
   },
