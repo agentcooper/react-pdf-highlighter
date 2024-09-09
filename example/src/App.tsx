@@ -21,6 +21,7 @@ import { Spinner } from "./Spinner";
 import { testHighlights as _testHighlights } from "./test-highlights";
 
 import "./style/App.css";
+import "../../dist/style.css";
 
 const testHighlights: Record<string, Array<IHighlight>> = _testHighlights;
 

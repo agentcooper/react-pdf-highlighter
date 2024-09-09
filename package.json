@@ -9,14 +9,13 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
+  "style": "./dist/style.css",
   "scripts": {
     "start": "npm run dev",
-    "dev": "(cd ./example && vite)",
-    "build": "npm run clean && npm run build:esm && npm run build:copy-styles && npm run build:example",
-    "build:esm": "tsc",
-    "build:copy-styles": "cp -r ./src/style ./dist",
-    "build:example": "(cd ./example && tsc && vite build)",
-    "test": "tsc && npm run lint && npm run test:e2e",
+    "dev": "vite build && (cd ./example && vite)",
+    "build": "npm run clean && vite build",
+    "build:example": "vite build && (cd ./example && vite build)",
+    "test": "npm run build && npm run lint && npm run test:e2e",
     "test:e2e": "playwright test",
     "format": "biome format --write",
     "lint": "biome check",
@@ -41,12 +40,18 @@
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
     "@playwright/test": "^1.45.1",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "playwright": "^1.45.1",
+    "postcss-import": "^16.1.0",
     "typescript": "^5.5.3",
     "vite": "^5.3.3"
-  }
+  },
+  "directories": {
+    "example": "example"
+  },
+  "homepage": "https://github.com/agentcooper/react-pdf-highlighter#readme"
 }
