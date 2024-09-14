@@ -30,6 +30,7 @@ import type {
 import { HighlightLayer } from "./HighlightLayer";
 import { MouseSelection } from "./MouseSelection";
 import { TipContainer } from "./TipContainer";
+import type { PDFViewerOptions } from "pdfjs-dist/types/web/pdf_viewer";
 
 export type T_ViewportHighlight<T_HT> = { position: Position } & T_HT;
 
@@ -75,6 +76,7 @@ interface Props<T_HT> {
     transformSelection: () => void,
   ) => JSX.Element | null;
   enableAreaSelection: (event: MouseEvent) => boolean;
+  pdfViewerOptions?: PDFViewerOptions;
 }
 
 const EMPTY_ID = "empty-id";
@@ -159,7 +161,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
   }
 
   async init() {
-    const { pdfDocument } = this.props;
+    const { pdfDocument, pdfViewerOptions } = this.props;
     const pdfjs = await import("pdfjs-dist/web/pdf_viewer.mjs");
 
     const eventBus = new pdfjs.EventBus();
@@ -181,6 +183,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
         textLayerMode: 2,
         removePageBorders: true,
         linkService: linkService,
+        ...pdfViewerOptions,
       });
 
     linkService.setDocument(pdfDocument);
