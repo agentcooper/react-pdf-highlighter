@@ -1,5 +1,6 @@
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import type { EventBus, PDFViewer } from "pdfjs-dist/legacy/web/pdf_viewer.mjs";
+import type { PDFViewerOptions } from "pdfjs-dist/types/web/pdf_viewer";
 import React, {
   type PointerEventHandler,
   PureComponent,
@@ -30,7 +31,6 @@ import type {
 import { HighlightLayer } from "./HighlightLayer";
 import { MouseSelection } from "./MouseSelection";
 import { TipContainer } from "./TipContainer";
-import type { PDFViewerOptions } from "pdfjs-dist/types/web/pdf_viewer";
 
 export type T_ViewportHighlight<T_HT> = { position: Position } & T_HT;
 
