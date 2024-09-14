@@ -28,7 +28,7 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
-    "pdfjs-dist": "^4.4.168",
+    "pdfjs-dist": "4.4.168",
     "react-rnd": "^10.4.11",
     "ts-debounce": "^4.0.0"
   },
