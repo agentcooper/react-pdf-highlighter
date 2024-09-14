@@ -1,11 +1,20 @@
 {
   "name": "react-pdf-highlighter",
-  "version": "7.0.0",
+  "version": "8.0.0-rc.0",
   "description": "Set of React components for PDF annotation",
   "author": "Artem Tyurin <artem.tyurin@gmail.com>",
   "license": "MIT",
-  "keywords": ["pdf", "highlight", "annotator", "react-component"],
-  "files": ["dist", "README.md", "LICENSE"],
+  "keywords": [
+    "pdf",
+    "highlight",
+    "annotator",
+    "react-component"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "type": "module",
   "types": "./dist/index.d.ts",
   "main": "./dist/src/index.js",
