@@ -1,4 +1,4 @@
-import debounce from "debounce";
+import { debounce } from "ts-debounce";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import type { EventBus, PDFViewer } from "pdfjs-dist/legacy/web/pdf_viewer.mjs";
 import React, {

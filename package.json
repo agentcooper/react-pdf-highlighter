@@ -28,9 +28,9 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
-    "debounce": "^2.1.0",
     "pdfjs-dist": "^4.4.168",
-    "react-rnd": "^10.4.11"
+    "react-rnd": "^10.4.11",
+    "ts-debounce": "^4.0.0"
   },
   "repository": {
     "type": "git",
