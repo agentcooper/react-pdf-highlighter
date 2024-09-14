@@ -13,7 +13,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "vite build && (cd ./example && vite)",
-    "build": "npm run clean && npm run compile && vite build",
+    "build": "npm run clean && npm run compile && vite build && npm run build:example",
     "compile": "tsc --noEmit",
     "build:example": "vite build && (cd ./example && vite build)",
     "test": "npm run build && npm run lint && npm run test:e2e",
