@@ -30,7 +30,7 @@ import type {
 } from "../types";
 import { HighlightLayer } from "./HighlightLayer";
 import MouseSelection from "./MouseSelection";
-import TipContainer from "./TipContainer";
+import { TipContainer } from "./TipContainer";
 
 export type T_ViewportHighlight<T_HT> = { position: Position } & T_HT;
 

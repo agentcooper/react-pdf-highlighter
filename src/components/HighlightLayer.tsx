@@ -1,4 +1,4 @@
-import React from "react";
+import type { PDFViewer } from "pdfjs-dist/web/pdf_viewer.mjs";
 import { viewportToScaled } from "../lib/coordinates";
 import type {
   IHighlight,
@@ -8,8 +8,6 @@ import type {
   Scaled,
   ScaledPosition,
 } from "../types";
-
-import type { PDFViewer } from "pdfjs-dist/web/pdf_viewer.mjs";
 import type { T_ViewportHighlight } from "./PdfHighlighter";
 
 interface HighlightLayerProps<T_HT> {

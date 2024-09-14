@@ -1,8 +1,6 @@
-import React, { Component } from "react";
-
+import { Component } from "react";
 import { isHTMLElement } from "../lib/pdfjs-dom";
 import styles from "../style/MouseSelection.module.css";
-
 import type { LTWH } from "../types.js";
 
 interface Coords {

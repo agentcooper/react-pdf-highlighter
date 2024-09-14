@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-
+import { Component } from "react";
 import styles from "../style/Tip.module.css";
 
 interface State {
@@ -22,7 +21,7 @@ export class Tip extends Component<Props, State> {
   };
 
   // for TipContainer
-  componentDidUpdate(nextProps: Props, nextState: State) {
+  componentDidUpdate(_: Props, nextState: State) {
     const { onUpdate } = this.props;
 
     if (onUpdate && this.state.compact !== nextState.compact) {
