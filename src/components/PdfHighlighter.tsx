@@ -1,4 +1,3 @@
-import { debounce } from "ts-debounce";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import type { EventBus, PDFViewer } from "pdfjs-dist/legacy/web/pdf_viewer.mjs";
 import React, {
@@ -7,6 +6,7 @@ import React, {
   type RefObject,
 } from "react";
 import { type Root, createRoot } from "react-dom/client";
+import { debounce } from "ts-debounce";
 import { scaledToViewport, viewportToScaled } from "../lib/coordinates";
 import { getAreaAsPNG } from "../lib/get-area-as-png";
 import { getBoundingRect } from "../lib/get-bounding-rect";
