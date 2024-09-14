@@ -58,5 +58,3 @@ export function AreaHighlight({
     </div>
   );
 }
-
-export default AreaHighlight;

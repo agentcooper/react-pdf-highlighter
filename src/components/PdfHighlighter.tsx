@@ -1,5 +1,3 @@
-import styles from "../style/PdfHighlighter.module.css";
-
 import debounce from "debounce";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import type { EventBus, PDFViewer } from "pdfjs-dist/legacy/web/pdf_viewer.mjs";
@@ -10,9 +8,9 @@ import React, {
 } from "react";
 import { type Root, createRoot } from "react-dom/client";
 import { scaledToViewport, viewportToScaled } from "../lib/coordinates";
-import getAreaAsPng from "../lib/get-area-as-png";
-import getBoundingRect from "../lib/get-bounding-rect";
-import getClientRects from "../lib/get-client-rects";
+import { getAreaAsPNG } from "../lib/get-area-as-png";
+import { getBoundingRect } from "../lib/get-bounding-rect";
+import { getClientRects } from "../lib/get-client-rects";
 import {
   findOrCreateContainerLayer,
   getPageFromElement,
@@ -20,6 +18,7 @@ import {
   getWindow,
   isHTMLElement,
 } from "../lib/pdfjs-dom";
+import styles from "../style/PdfHighlighter.module.css";
 import type {
   IHighlight,
   LTWH,
@@ -29,7 +28,7 @@ import type {
   ScaledPosition,
 } from "../types";
 import { HighlightLayer } from "./HighlightLayer";
-import MouseSelection from "./MouseSelection";
+import { MouseSelection } from "./MouseSelection";
 import { TipContainer } from "./TipContainer";
 
 export type T_ViewportHighlight<T_HT> = { position: Position } & T_HT;
@@ -307,7 +306,7 @@ export class PdfHighlighter<T_HT extends IHighlight> extends PureComponent<
   screenshot(position: LTWH, pageNumber: number) {
     const canvas = this.viewer.getPageView(pageNumber - 1).canvas;
 
-    return getAreaAsPng(canvas, position);
+    return getAreaAsPNG(canvas, position);
   }
 
   hideTipAndSelection = () => {

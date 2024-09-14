@@ -26,7 +26,7 @@ interface Props {
   onChange: (isVisible: boolean) => void;
 }
 
-class MouseSelection extends Component<Props, State> {
+export class MouseSelection extends Component<Props, State> {
   state: State = {
     locked: false,
     start: null,
@@ -206,5 +206,3 @@ class MouseSelection extends Component<Props, State> {
     );
   }
 }
-
-export default MouseSelection;

@@ -114,5 +114,3 @@ export class PdfLoader extends Component<Props, State> {
     return null;
   }
 }
-
-export default PdfLoader;

@@ -1,7 +1,10 @@
 import type { LTWHP } from "../types.js";
 import { isHTMLCanvasElement } from "./pdfjs-dom";
 
-const getAreaAsPNG = (canvas: HTMLCanvasElement, position: LTWHP): string => {
+export const getAreaAsPNG = (
+  canvas: HTMLCanvasElement,
+  position: LTWHP,
+): string => {
   const { left, top, width, height } = position;
 
   const doc = canvas ? canvas.ownerDocument : null;
@@ -37,5 +40,3 @@ const getAreaAsPNG = (canvas: HTMLCanvasElement, position: LTWHP): string => {
 
   return newCanvas.toDataURL("image/png");
 };
-
-export default getAreaAsPNG;

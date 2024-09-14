@@ -45,7 +45,9 @@ const extendWidth = (A: LTWHP, B: LTWHP) => {
   A.width = Math.max(B.width - A.left + B.left, A.width);
 };
 
-const optimizeClientRects = (clientRects: Array<LTWHP>): Array<LTWHP> => {
+export const optimizeClientRects = (
+  clientRects: Array<LTWHP>,
+): Array<LTWHP> => {
   const rects = sort(clientRects);
 
   const toRemove = new Set();
@@ -88,5 +90,3 @@ const optimizeClientRects = (clientRects: Array<LTWHP>): Array<LTWHP> => {
 
   return firstPass.filter((rect) => !toRemove.has(rect));
 };
-
-export default optimizeClientRects;

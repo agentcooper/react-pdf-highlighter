@@ -94,5 +94,3 @@ export class Tip extends Component<Props, State> {
     );
   }
 }
-
-export default Tip;

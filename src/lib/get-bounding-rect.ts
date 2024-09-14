@@ -1,6 +1,6 @@
 import type { LTWHP } from "../types.js";
 
-const getBoundingRect = (clientRects: Array<LTWHP>): LTWHP => {
+export const getBoundingRect = (clientRects: Array<LTWHP>): LTWHP => {
   const rects = Array.from(clientRects).map((rect) => {
     const { left, top, width, height, pageNumber } = rect;
 
@@ -50,5 +50,3 @@ const getBoundingRect = (clientRects: Array<LTWHP>): LTWHP => {
     pageNumber,
   };
 };
-
-export default getBoundingRect;
