@@ -23,5 +23,8 @@
   "vcs": {
     "enabled": true,
     "clientKind": "git"
+  },
+  "files": {
+    "ignore": ["package.json"]
   }
 }
