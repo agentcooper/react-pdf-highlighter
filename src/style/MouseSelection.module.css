@@ -1,15 +1,20 @@
-.MouseSelection {
+.mouseSelection {
   position: absolute;
   border: 1px dashed #333;
   background: rgba(252, 232, 151, 1);
   mix-blend-mode: multiply;
 }
 /* Internet Explorer support method */
+/* biome-ignore lint/correctness/noUnknownMediaFeatureName: update this */
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .MouseSelection {opacity: 0.5 }
+  .mouseSelection {
+    opacity: 0.5;
+  }
 }
 
 /* Microsoft Edge Browser 12+ (All) - @supports method */
-@supports (-ms-ime-align:auto) {
-  .MouseSelection {opacity: 0.5 }
+@supports (-ms-ime-align: auto) {
+  .mouseSelection {
+    opacity: 0.5;
+  }
 }

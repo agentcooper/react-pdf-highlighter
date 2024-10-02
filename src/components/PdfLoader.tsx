@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-
-import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf";
+import { GlobalWorkerOptions, getDocument } from "pdfjs-dist";
 import type { PDFDocumentProxy } from "pdfjs-dist";
+import React, { Component } from "react";
 
 interface Props {
   /** See `GlobalWorkerOptionsType`. */
@@ -28,7 +27,7 @@ export class PdfLoader extends Component<Props, State> {
   };
 
   static defaultProps = {
-    workerSrc: "https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js",
+    workerSrc: "https://unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs",
   };
 
   documentRef = React.createRef<HTMLElement>();
@@ -50,7 +49,7 @@ export class PdfLoader extends Component<Props, State> {
     }
   }
 
-  componentDidCatch(error: Error, info?: any) {
+  componentDidCatch(error: Error) {
     const { onError } = this.props;
 
     if (onError) {
@@ -71,18 +70,20 @@ export class PdfLoader extends Component<Props, State> {
     }
 
     Promise.resolve()
-      .then(() => discardedDocument && discardedDocument.destroy())
+      .then(() => discardedDocument?.destroy())
       .then(() => {
         if (!url) {
           return;
         }
 
-        return getDocument({
+        const document = {
           ...this.props,
           ownerDocument,
           cMapUrl,
           cMapPacked,
-        }).promise.then((pdfDocument) => {
+        };
+
+        return getDocument(document).promise.then((pdfDocument) => {
           this.setState({ pdfDocument });
         });
       })
@@ -98,8 +99,8 @@ export class PdfLoader extends Component<Props, State> {
         {error
           ? this.renderError()
           : !pdfDocument || !children
-          ? beforeLoad
-          : children(pdfDocument)}
+            ? beforeLoad
+            : children(pdfDocument)}
       </>
     );
   }
@@ -113,5 +114,3 @@ export class PdfLoader extends Component<Props, State> {
     return null;
   }
 }
-
-export default PdfLoader;

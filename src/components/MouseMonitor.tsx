@@ -7,7 +7,7 @@ interface Props {
   children: JSX.Element;
 }
 
-class MouseMonitor extends Component<Props> {
+export class MouseMonitor extends Component<Props> {
   container: HTMLDivElement | null = null;
   unsubscribe = () => {};
 
@@ -58,5 +58,3 @@ class MouseMonitor extends Component<Props> {
     );
   }
 }
-
-export default MouseMonitor;

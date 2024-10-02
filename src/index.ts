@@ -5,4 +5,6 @@ export { Popup } from "./components/Popup";
 export { AreaHighlight } from "./components/AreaHighlight";
 export { PdfLoader } from "./components/PdfLoader";
 
+import "./style/index.css";
+
 export * from "./types";

@@ -13,7 +13,7 @@ interface WIDTH_HEIGHT {
 
 export const viewportToScaled = (
   rect: LTWHP,
-  { width, height }: WIDTH_HEIGHT
+  { width, height }: WIDTH_HEIGHT,
 ): Scaled => {
   return {
     x1: rect.left,
@@ -51,7 +51,7 @@ const pdfToViewport = (pdf: Scaled, viewport: Viewport): LTWHP => {
 export const scaledToViewport = (
   scaled: Scaled,
   viewport: Viewport,
-  usePdfCoordinates: boolean = false
+  usePdfCoordinates = false,
 ): LTWHP => {
   const { width, height } = viewport;
 

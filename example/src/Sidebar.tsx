@@ -1,4 +1,3 @@
-import React from "react";
 import type { IHighlight } from "./react-pdf-highlighter";
 
 interface Props {
@@ -42,6 +41,7 @@ export function Sidebar({
       <ul className="sidebar__highlights">
         {highlights.map((highlight, index) => (
           <li
+            // biome-ignore lint/suspicious/noArrayIndexKey: This is an example app
             key={index}
             className="sidebar__highlight"
             onClick={() => {
@@ -71,11 +71,15 @@ export function Sidebar({
         ))}
       </ul>
       <div style={{ padding: "1rem" }}>
-        <button onClick={toggleDocument}>Toggle PDF document</button>
+        <button type="button" onClick={toggleDocument}>
+          Toggle PDF document
+        </button>
       </div>
       {highlights.length > 0 ? (
         <div style={{ padding: "1rem" }}>
-          <button onClick={resetHighlights}>Reset highlights</button>
+          <button type="button" onClick={resetHighlights}>
+            Reset highlights
+          </button>
         </div>
       ) : null}
     </div>
