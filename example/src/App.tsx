@@ -69,12 +69,15 @@ export function App() {
 
   const scrollViewerTo = useRef((highlight: IHighlight) => {});
 
+  const getHighlightById = useCallback(
+    (id: string) => highlights.find((h) => h.id === id),
+    [highlights],
+  );
+
   const scrollToHighlightFromHash = useCallback(() => {
     const highlight = getHighlightById(parseIdFromHash());
-    if (highlight) {
-      scrollViewerTo.current(highlight);
-    }
-  }, []);
+    if (highlight) scrollViewerTo.current(highlight);
+  }, [getHighlightById]);
 
   useEffect(() => {
     window.addEventListener("hashchange", scrollToHighlightFromHash, false);
@@ -86,10 +89,6 @@ export function App() {
       );
     };
   }, [scrollToHighlightFromHash]);
-
-  const getHighlightById = (id: string) => {
-    return highlights.find((highlight) => highlight.id === id);
-  };
 
   const addHighlight = (highlight: NewHighlight) => {
     console.log("Saving highlight", highlight);
