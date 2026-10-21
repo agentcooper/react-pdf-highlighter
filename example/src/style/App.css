@@ -7,6 +7,11 @@ body {
   color: #fff;
 }
 
+.pdf-error {
+  padding: 1rem;
+  color: #b42318;
+}
+
 .sidebar {
   overflow: auto;
   color: rgb(119, 119, 119);

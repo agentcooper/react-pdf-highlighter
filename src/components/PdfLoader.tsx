@@ -27,7 +27,7 @@ export class PdfLoader extends Component<Props, State> {
   };
 
   static defaultProps = {
-    workerSrc: "https://unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs",
+    workerSrc: "https://unpkg.com/pdfjs-dist@6.3.289/build/pdf.worker.min.mjs",
   };
 
   documentRef = React.createRef<HTMLElement>();
@@ -39,7 +39,7 @@ export class PdfLoader extends Component<Props, State> {
   componentWillUnmount() {
     const { pdfDocument: discardedDocument } = this.state;
     if (discardedDocument) {
-      discardedDocument.destroy();
+      discardedDocument.loadingTask.destroy();
     }
   }
 
@@ -70,7 +70,7 @@ export class PdfLoader extends Component<Props, State> {
     }
 
     Promise.resolve()
-      .then(() => discardedDocument?.destroy())
+      .then(() => discardedDocument?.loadingTask.destroy())
       .then(() => {
         if (!url) {
           return;
