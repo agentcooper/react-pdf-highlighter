@@ -44,6 +44,13 @@ const HighlightPopup = ({
     </div>
   ) : null;
 
+const PdfError = ({ error }: { error?: Error }) => (
+  // biome-ignore lint/a11y/useSemanticElements: HTML has no native alert element.
+  <div className="pdf-error" role="alert">
+    Unable to load PDF: {error?.message}
+  </div>
+);
+
 const PRIMARY_PDF_URL = "https://arxiv.org/pdf/1708.08021";
 const SECONDARY_PDF_URL = "https://arxiv.org/pdf/1604.02480";
 
@@ -139,7 +146,11 @@ export function App() {
           position: "relative",
         }}
       >
-        <PdfLoader url={url} beforeLoad={<Spinner />}>
+        <PdfLoader
+          url={url}
+          beforeLoad={<Spinner />}
+          errorMessage={<PdfError />}
+        >
           {(pdfDocument) => (
             <PdfHighlighter
               pdfDocument={pdfDocument}
